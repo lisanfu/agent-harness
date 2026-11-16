@@ -1,0 +1,28 @@
+{
+  "name": "agent-harness",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "最小但五脏俱全的 Agent harness：零依赖、Node 22 原生 TS、大脑可插拔、证据无损",
+  "engines": { "node": ">=22.18" },
+  "scripts": {
+    "start": "node src/cli.ts",
+    "test": "node --test test/*.test.ts",
+    "smoke": "node src/cli.ts --brain mock --task \"机械冒烟：只验接线，mock 不是大脑\" --max-steps 6 --i-know-mock-is-not-a-brain",
+    "verify:replay": "node verify/replay.ts runs/20261113-204204-s6",
+    "verify:predict": "node verify/predict-audit.ts runs/20261113-203623-s6 runs/20261113-204204-s6 runs/20261113-204625-s6",
+    "verify:board": "node verify/board-audit.ts $(node verify/board-fixture.ts)",
+    "verify:board:selftest": "node verify/board-audit-selftest.ts",
+    "verify:goal": "node verify/goal-audit.ts $(node verify/goal-fixture.ts)",
+    "verify:goal:selftest": "node verify/goal-audit-selftest.ts",
+    "verify:m4": "node verify/replay.ts runs/20261113-203623-s6 && node verify/replay.ts runs/20261113-204204-s6 && node verify/replay.ts runs/20261113-204625-s6 && node verify/predict-audit.ts runs/20261113-203623-s6 runs/20261113-204204-s6 runs/20261113-204625-s6",
+    "verify:ablation": "node verify/ablation.ts runs/20261113-234041-s6 runs/m4b2-goal-on/20261113-234338-s6 runs/m4b2-goal-on/20261113-234921-s6 runs/m4e-goal-on/20261114-083043-s6 runs/m4e-goal-on/20261114-083409-s6 runs/m4b2-goal-off/20261113-234650-s6 runs/m4b2-goal-off/20261113-235237-s6 runs/m4e-goal-off/20261114-083720-s6 runs/m4e-goal-off/20261114-084053-s6 runs/m4e-goal-off/20261114-084406-s6",
+    "verify:random": "node verify/random-baseline.ts",
+    "verify:detect": "node verify/detect-audit.ts $(node verify/detect-fixture.ts) --ceiling runs/m4f-ceiling --ceiling-check 40",
+    "verify:detect:reference": "node verify/detect-audit.ts runs/m4f-model/*/* runs/20261113-203623-s6 runs/20261113-204204-s6 runs/20261113-204625-s6 runs/20261113-214900-s6 runs/20261113-215401-s6 runs/20261113-220900-s6 runs/20261113-230348-s6 runs/20261113-230359-s6 runs/20261113-234041-s6",
+    "verify:detect:selftest": "node verify/detect-selftest.ts",
+    "verify:detect:ceiling": "node src/m4f.ts --policy random --out runs/m4f-ceiling",
+    "verify:detect:model": "node src/m4f.ts --policy model --mutants M01,M03,M05,M07,D02 --arms on --seed 6 --max-steps 40 --out runs/m4f-model",
+    "verify:m4e": "node verify/board-audit.ts runs/20261113-234041-s6 runs/m4b2-goal-on/20261113-234338-s6 runs/m4b2-goal-on/20261113-234921-s6 runs/m4e-goal-on/20261114-083043-s6 runs/m4e-goal-on/20261114-083409-s6 runs/m4b2-goal-off/20261113-234650-s6 runs/m4b2-goal-off/20261113-235237-s6 runs/m4e-goal-off/20261114-083720-s6 runs/m4e-goal-off/20261114-084053-s6 runs/m4e-goal-off/20261114-084406-s6 && node verify/goal-audit.ts runs/20261113-234041-s6 runs/m4b2-goal-on/20261113-234338-s6 runs/m4b2-goal-on/20261113-234921-s6 runs/m4e-goal-on/20261114-083043-s6 runs/m4e-goal-on/20261114-083409-s6 runs/m4b2-goal-off/20261113-234650-s6 runs/m4b2-goal-off/20261113-235237-s6 runs/m4e-goal-off/20261114-083720-s6 runs/m4e-goal-off/20261114-084053-s6 runs/m4e-goal-off/20261114-084406-s6 && node verify/predict-audit.ts runs/20261113-234041-s6 runs/m4b2-goal-on/20261113-234338-s6 runs/m4b2-goal-on/20261113-234921-s6 runs/m4e-goal-on/20261114-083043-s6 runs/m4e-goal-on/20261114-083409-s6 runs/m4b2-goal-off/20261113-234650-s6 runs/m4b2-goal-off/20261113-235237-s6 runs/m4e-goal-off/20261114-083720-s6 runs/m4e-goal-off/20261114-084053-s6 runs/m4e-goal-off/20261114-084406-s6 && npm run verify:ablation"
+  }
+}
