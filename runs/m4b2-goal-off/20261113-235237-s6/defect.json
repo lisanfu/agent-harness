@@ -1,0 +1,180 @@
+{
+  "seed": 6,
+  "initialHash": "0bcfad38fddbfa66",
+  "mutant": null,
+  "agentClaims": {
+    "finishSummary": null,
+    "notes": [],
+    "hypotheses": [
+      {
+        "id": "H1",
+        "text": "攻击会击退而非击杀敌人（敌人从[1,0]移到[6,0]）。移动至可拾取物位置自动拾取。击杀似乎需要某种条件（多次攻击？特定武器？）",
+        "status": "proposed",
+        "statusWhy": "等待未恢复攻击冷却，且敌人位置变化幅度大（可能移动速度比预期快）。新增可拾取物暗示游戏有持续的内容生成。保留假设但需调整对冷却机制的理解。"
+      },
+      {
+        "id": "H2",
+        "text": "敌人具有AI追击行为。当玩家靠近时，敌人会主动移动并造成伤害（每次接触-2HP）。 enemyCount下降可能与位置变化、墙壁或特定互动条件有关，需进一步测试。",
+        "status": "proposed",
+        "statusWhy": ""
+      }
+    ],
+    "goals": []
+  },
+  "notary": {
+    "mutant": null,
+    "diverged": false,
+    "firstStep": null,
+    "firstFields": [],
+    "masked": false,
+    "divergedFrames": 0,
+    "minimized": null
+  },
+  "evidenceConsistent": true,
+  "coverage": {
+    "ticks": 21,
+    "cellsVisited": 8,
+    "cellsTotal": 64,
+    "hpSeen": [
+      6,
+      8,
+      10
+    ],
+    "hpZeroReached": false,
+    "hpBelowZeroReached": false,
+    "hpAboveMaxReached": false,
+    "died": false,
+    "adjacentEnemyReached": true,
+    "touchedByEnemy": true,
+    "stoodOnPickup": false,
+    "pickupAtFullHp": false,
+    "pickupsTaken": 0,
+    "kills": 2,
+    "attacksWhileCooldown": 0,
+    "wallAttempts": 0,
+    "boundaryAttempts": 0
+  },
+  "predictionStats": {
+    "checked": 22,
+    "staticChecks": 1,
+    "given": 22,
+    "missing": 0,
+    "fields": 153,
+    "ok": 135,
+    "violated": 18,
+    "unverifiable": 0,
+    "surpriseGiven": 19,
+    "surpriseUnexpected": 2,
+    "surpriseMalformed": 0,
+    "violatedButNotSurprised": 9
+  },
+  "hypothesisChecks": [
+    {
+      "id": "H1",
+      "checks": 49,
+      "supported": 46,
+      "contradicted": 3,
+      "unverifiable": 0
+    },
+    {
+      "id": "H2",
+      "checks": 14,
+      "supported": 12,
+      "contradicted": 2,
+      "unverifiable": 0
+    }
+  ],
+  "hypothesisStats": {
+    "proposed": 2,
+    "confirmed": 0,
+    "retired": 0,
+    "revised": 0,
+    "plainNotes": 0,
+    "attributed": 15,
+    "unattributed": 7,
+    "unknownTarget": 0,
+    "malformed": 0,
+    "notChecked": 0,
+    "fieldAbsent": 0,
+    "contradictedNotRetired": 2,
+    "confirmedNoChecks": 0
+  },
+  "goalChecks": [],
+  "goalStats": null,
+  "fullWorldActions": [
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "wait"
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "wait"
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "wait"
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "wait"
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    }
+  ]
+}

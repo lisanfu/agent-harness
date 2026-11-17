@@ -1,0 +1,75 @@
+{
+  "seed": 6,
+  "initialHash": "0bcfad38fddbfa66",
+  "mutant": null,
+  "agentClaims": {
+    "finishSummary": "mock 脚本耗尽",
+    "notes": [],
+    "hypotheses": [],
+    "goals": []
+  },
+  "notary": {
+    "mutant": null,
+    "diverged": false,
+    "firstStep": null,
+    "firstFields": [],
+    "masked": false,
+    "divergedFrames": 0,
+    "minimized": null
+  },
+  "evidenceConsistent": true,
+  "coverage": {
+    "ticks": 0,
+    "cellsVisited": 1,
+    "cellsTotal": 64,
+    "hpSeen": [
+      10
+    ],
+    "hpZeroReached": false,
+    "hpBelowZeroReached": false,
+    "hpAboveMaxReached": false,
+    "died": false,
+    "adjacentEnemyReached": true,
+    "touchedByEnemy": false,
+    "stoodOnPickup": false,
+    "pickupAtFullHp": false,
+    "pickupsTaken": 0,
+    "kills": 0,
+    "attacksWhileCooldown": 0,
+    "wallAttempts": 0,
+    "boundaryAttempts": 0
+  },
+  "predictionStats": {
+    "checked": 0,
+    "staticChecks": 0,
+    "given": 0,
+    "missing": 0,
+    "fields": 0,
+    "ok": 0,
+    "violated": 0,
+    "unverifiable": 0,
+    "surpriseGiven": 0,
+    "surpriseUnexpected": 0,
+    "surpriseMalformed": 0,
+    "violatedButNotSurprised": 0
+  },
+  "hypothesisChecks": [],
+  "hypothesisStats": {
+    "proposed": 0,
+    "confirmed": 0,
+    "retired": 0,
+    "revised": 0,
+    "plainNotes": 0,
+    "attributed": 0,
+    "unattributed": 0,
+    "unknownTarget": 0,
+    "malformed": 0,
+    "notChecked": 0,
+    "fieldAbsent": 0,
+    "contradictedNotRetired": 0,
+    "confirmedNoChecks": 0
+  },
+  "goalChecks": [],
+  "goalStats": null,
+  "fullWorldActions": []
+}

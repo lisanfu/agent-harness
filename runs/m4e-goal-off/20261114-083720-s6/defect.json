@@ -1,0 +1,179 @@
+{
+  "seed": 6,
+  "initialHash": "0bcfad38fddbfa66",
+  "mutant": null,
+  "agentClaims": {
+    "finishSummary": null,
+    "notes": [],
+    "hypotheses": [
+      {
+        "id": "H1",
+        "text": "敌人会主动移动（验证中），拾取不等于立刻加分，攻击能杀敌并得分",
+        "status": "proposed",
+        "statusWhy": ""
+      }
+    ],
+    "goals": []
+  },
+  "notary": {
+    "mutant": null,
+    "diverged": false,
+    "firstStep": null,
+    "firstFields": [],
+    "masked": false,
+    "divergedFrames": 0,
+    "minimized": null
+  },
+  "evidenceConsistent": true,
+  "coverage": {
+    "ticks": 23,
+    "cellsVisited": 18,
+    "cellsTotal": 64,
+    "hpSeen": [
+      10
+    ],
+    "hpZeroReached": false,
+    "hpBelowZeroReached": false,
+    "hpAboveMaxReached": false,
+    "died": false,
+    "adjacentEnemyReached": true,
+    "touchedByEnemy": false,
+    "stoodOnPickup": true,
+    "pickupAtFullHp": true,
+    "pickupsTaken": 2,
+    "kills": 1,
+    "attacksWhileCooldown": 0,
+    "wallAttempts": 1,
+    "boundaryAttempts": 1
+  },
+  "predictionStats": {
+    "checked": 24,
+    "staticChecks": 1,
+    "given": 22,
+    "missing": 2,
+    "fields": 113,
+    "ok": 107,
+    "violated": 4,
+    "unverifiable": 2,
+    "surpriseGiven": 0,
+    "surpriseUnexpected": 0,
+    "surpriseMalformed": 0,
+    "violatedButNotSurprised": 0
+  },
+  "hypothesisChecks": [
+    {
+      "id": "H1",
+      "checks": 0,
+      "supported": 0,
+      "contradicted": 0,
+      "unverifiable": 0
+    }
+  ],
+  "hypothesisStats": {
+    "proposed": 1,
+    "confirmed": 0,
+    "retired": 0,
+    "revised": 0,
+    "plainNotes": 0,
+    "attributed": 0,
+    "unattributed": 24,
+    "unknownTarget": 0,
+    "malformed": 0,
+    "notChecked": 0,
+    "fieldAbsent": 0,
+    "contradictedNotRetired": 0,
+    "confirmedNoChecks": 0
+  },
+  "goalChecks": [],
+  "goalStats": null,
+  "fullWorldActions": [
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "pickup"
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "pickup"
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "pickup"
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    }
+  ]
+}

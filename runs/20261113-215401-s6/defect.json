@@ -1,0 +1,105 @@
+{
+  "seed": 6,
+  "initialHash": "0bcfad38fddbfa66",
+  "mutant": null,
+  "agentClaims": {
+    "finishSummary": null,
+    "notes": [],
+    "hypotheses": [
+      {
+        "id": "H1",
+        "text": "敌人每帧朝玩家所在方向移动一格（沿最短路径的一个步长），移动到相邻的空地格子上。依据：三枚E分别向我的x/y坐标靠近移动了一格。",
+        "status": "confirmed",
+        "statusWhy": "敌人在每帧都向玩家方向移动一格，且会被攻击杀死并计分。此步验证了enemyCount和scoreDelta的预测与画面完全一致。"
+      }
+    ]
+  },
+  "notary": {
+    "mutant": null,
+    "diverged": false,
+    "firstStep": null,
+    "firstFields": [],
+    "masked": false,
+    "divergedFrames": 0,
+    "minimized": null
+  },
+  "evidenceConsistent": true,
+  "coverage": {
+    "ticks": 5,
+    "cellsVisited": 4,
+    "cellsTotal": 64,
+    "hpSeen": [
+      10
+    ],
+    "hpZeroReached": false,
+    "hpBelowZeroReached": false,
+    "hpAboveMaxReached": false,
+    "died": false,
+    "adjacentEnemyReached": true,
+    "touchedByEnemy": false,
+    "stoodOnPickup": false,
+    "pickupAtFullHp": false,
+    "pickupsTaken": 0,
+    "kills": 1,
+    "attacksWhileCooldown": 0,
+    "wallAttempts": 0,
+    "boundaryAttempts": 0
+  },
+  "predictionStats": {
+    "checked": 7,
+    "staticChecks": 2,
+    "given": 5,
+    "missing": 2,
+    "fields": 10,
+    "ok": 8,
+    "violated": 2,
+    "unverifiable": 0,
+    "surpriseGiven": 1,
+    "surpriseUnexpected": 1,
+    "surpriseMalformed": 0,
+    "violatedButNotSurprised": 0
+  },
+  "hypothesisChecks": [
+    {
+      "id": "H1",
+      "checks": 0,
+      "supported": 0,
+      "contradicted": 0,
+      "unverifiable": 0
+    }
+  ],
+  "hypothesisStats": {
+    "proposed": 0,
+    "confirmed": 1,
+    "retired": 0,
+    "revised": 0,
+    "plainNotes": 0,
+    "attributed": 0,
+    "unattributed": 7,
+    "unknownTarget": 0,
+    "malformed": 0,
+    "notChecked": 0,
+    "fieldAbsent": 0,
+    "contradictedNotRetired": 0
+  },
+  "fullWorldActions": [
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "wait"
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    }
+  ]
+}

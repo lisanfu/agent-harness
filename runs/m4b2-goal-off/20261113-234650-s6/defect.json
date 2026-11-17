@@ -1,0 +1,185 @@
+{
+  "seed": 6,
+  "initialHash": "0bcfad38fddbfa66",
+  "mutant": null,
+  "agentClaims": {
+    "finishSummary": null,
+    "notes": [],
+    "hypotheses": [
+      {
+        "id": "H1",
+        "text": "坐标系统：x从左到右递增，y从上到下递增。初始在(1,0)表示第2列第1行。玩家移动方向与预期不同，需进一步验证。",
+        "status": "confirmed",
+        "statusWhy": "坐标验证12次全部符合预期，x从左到右递增，y从上到下递增，移动方向与屏幕显示一致"
+      },
+      {
+        "id": "H2",
+        "text": "可拾取物品类型：+是回复类物品，能恢复血量。也可能是攻击性物品，能消灭附近敌人。需要进一步测试其他类型的物品。",
+        "status": "proposed",
+        "statusWhy": ""
+      }
+    ],
+    "goals": []
+  },
+  "notary": {
+    "mutant": null,
+    "diverged": false,
+    "firstStep": null,
+    "firstFields": [],
+    "masked": false,
+    "divergedFrames": 0,
+    "minimized": null
+  },
+  "evidenceConsistent": true,
+  "coverage": {
+    "ticks": 21,
+    "cellsVisited": 13,
+    "cellsTotal": 64,
+    "hpSeen": [
+      8,
+      9,
+      10
+    ],
+    "hpZeroReached": false,
+    "hpBelowZeroReached": false,
+    "hpAboveMaxReached": false,
+    "died": false,
+    "adjacentEnemyReached": true,
+    "touchedByEnemy": true,
+    "stoodOnPickup": true,
+    "pickupAtFullHp": false,
+    "pickupsTaken": 2,
+    "kills": 2,
+    "attacksWhileCooldown": 0,
+    "wallAttempts": 0,
+    "boundaryAttempts": 0
+  },
+  "predictionStats": {
+    "checked": 22,
+    "staticChecks": 1,
+    "given": 21,
+    "missing": 1,
+    "fields": 61,
+    "ok": 52,
+    "violated": 9,
+    "unverifiable": 0,
+    "surpriseGiven": 0,
+    "surpriseUnexpected": 0,
+    "surpriseMalformed": 0,
+    "violatedButNotSurprised": 0
+  },
+  "hypothesisChecks": [
+    {
+      "id": "H1",
+      "checks": 39,
+      "supported": 38,
+      "contradicted": 1,
+      "unverifiable": 0
+    },
+    {
+      "id": "H2",
+      "checks": 7,
+      "supported": 6,
+      "contradicted": 1,
+      "unverifiable": 0
+    }
+  ],
+  "hypothesisStats": {
+    "proposed": 1,
+    "confirmed": 1,
+    "retired": 0,
+    "revised": 0,
+    "plainNotes": 0,
+    "attributed": 16,
+    "unattributed": 6,
+    "unknownTarget": 0,
+    "malformed": 0,
+    "notChecked": 0,
+    "fieldAbsent": 0,
+    "contradictedNotRetired": 2,
+    "confirmedNoChecks": 0
+  },
+  "goalChecks": [],
+  "goalStats": null,
+  "fullWorldActions": [
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "pickup"
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "pickup"
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "pickup"
+    }
+  ]
+}

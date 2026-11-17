@@ -1,0 +1,10 @@
+{"tick":0,"action":null,"hash":"0bcfad38fddbfa66","events":[]}
+{"tick":1,"action":{"kind":"move","dir":1},"hash":"8f6ec2a30aeb4080","events":["你朝右走了一格。"]}
+{"tick":2,"action":{"kind":"attack"},"hash":"b29b54afae3c089e","events":["你朝身边的敌人挥击。"]}
+{"tick":3,"action":{"kind":"wait"},"hash":"002cfaccb90dc2bd","events":["你原地等待。"]}
+{"tick":4,"action":{"kind":"wait"},"hash":"8b27b4170491453f","events":["你原地等待。"]}
+{"tick":5,"action":{"kind":"move","dir":2},"hash":"f2085e0f2fa5a73e","events":["你朝下走了一格。"]}
+{"tick":6,"action":{"kind":"pickup"},"hash":"83d18f143a918093","events":["你脚下没有可拾取的东西。"]}
+{"tick":7,"action":{"kind":"move","dir":2},"hash":"171553a28bbd7fb5","events":["你朝下走了一格。"]}
+{"tick":8,"action":{"kind":"move","dir":2},"hash":"b6c2ae0896daf1fc","events":["你朝下走了一格。"]}
+{"tick":9,"action":{"kind":"move","dir":2},"hash":"e2c1285f0758459e","events":["你朝下走了一格。"]}

@@ -1,0 +1,44 @@
+{
+  "runId": "20261116-230713-s6",
+  "at": "2026-11-16T15:07:13.991Z",
+  "seed": 6,
+  "brainId": "openai:agnes-2.5-flash",
+  "task": "你在玩一个陌生的小游戏，没有说明书。自己玩、自己摸清规则。如果你发现任何不正常或不合理的地方，给出结论和依据。",
+  "sandbox": "/home/fuyuan/Documents/workspace/agent-harness/sandbox",
+  "config": {
+    "task": "你在玩一个陌生的小游戏，没有说明书。自己玩、自己摸清规则。如果你发现任何不正常或不合理的地方，给出结论和依据。",
+    "sandbox": "/home/fuyuan/Documents/workspace/agent-harness/sandbox",
+    "seed": 6,
+    "maxSteps": 25,
+    "maxWallMs": 300000,
+    "maxContextChars": 12000,
+    "keepRecent": 8,
+    "maxParseRetry": 2,
+    "repeatLimit": 3,
+    "outDir": "/home/fuyuan/Documents/workspace/agent-harness/runs/m4f-model/M07-on"
+  },
+  "judgement": {
+    "detector": "m4f-1",
+    "lexicon": "m4f-1",
+    "sha": "79662ae42474aab98d8dcef46b0a57bc0d4222b4fac66a09990a9533d28f9e54"
+  },
+  "seams": {
+    "predict": true,
+    "goal": true
+  },
+  "initialState": {
+    "notes": [],
+    "hypotheses": [],
+    "goals": [],
+    "sandboxEntries": [
+      "f hello.txt"
+    ],
+    "world": {
+      "kind": "arena",
+      "seed": 6,
+      "hash": "0bcfad38fddbfa66",
+      "screen": "+--------+\n|@E.....E|\n|........|\n|........|\n|..##..#E|\n|........|\n|.+.#....|\n|#.+...#+|\n|.....#..|\n+--------+\nHP [##########] 10/10   分数 0   第 0 帧\n攻击：就绪   状态：活着\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地",
+      "mutant": "M07"
+    }
+  }
+}

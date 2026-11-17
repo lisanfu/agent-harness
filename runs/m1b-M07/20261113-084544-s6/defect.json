@@ -1,0 +1,501 @@
+{
+  "seed": 6,
+  "initialHash": "0bcfad38fddbfa66",
+  "mutant": "M07",
+  "agentClaims": {
+    "finishSummary": null,
+    "notes": [
+      "攻击：命中得+1分，攻击有冷却CD；拾取成功一次（分数未立即变），目标位置可能有多个拾取物或存在视觉延迟；墙体不可穿过，例如(5,2)为墙。",
+      "攻击冷却约3帧（frame 40发动→53就绪）。连续无敌状态下分数不再增长，可能触发胜利条件或需激活隐藏事件。"
+    ]
+  },
+  "notary": {
+    "mutant": "M07",
+    "diverged": false,
+    "firstStep": null,
+    "firstFields": [],
+    "masked": false,
+    "divergedFrames": 0,
+    "minimized": null
+  },
+  "evidenceConsistent": true,
+  "coverage": {
+    "ticks": 117,
+    "cellsVisited": 43,
+    "cellsTotal": 64,
+    "hpSeen": [
+      10
+    ],
+    "hpZeroReached": false,
+    "hpBelowZeroReached": false,
+    "hpAboveMaxReached": false,
+    "died": false,
+    "adjacentEnemyReached": true,
+    "touchedByEnemy": false,
+    "stoodOnPickup": true,
+    "pickupAtFullHp": true,
+    "pickupsTaken": 2,
+    "kills": 3,
+    "attacksWhileCooldown": 0,
+    "wallAttempts": 4,
+    "boundaryAttempts": 12
+  },
+  "fullWorldActions": [
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "pickup"
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "pickup"
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "pickup"
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "pickup"
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "pickup"
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "wait"
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "pickup"
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    }
+  ]
+}

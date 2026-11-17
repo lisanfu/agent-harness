@@ -1,0 +1,208 @@
+{
+  "seed": 6,
+  "initialHash": "0bcfad38fddbfa66",
+  "mutant": null,
+  "agentClaims": {
+    "finishSummary": null,
+    "notes": [],
+    "hypotheses": [
+      {
+        "id": "H1",
+        "text": "初始观察：玩家位于左上区域，周围有多个敌人。移动机制需要进一步确认。",
+        "status": "proposed",
+        "statusWhy": "第一步观察"
+      },
+      {
+        "id": "H2",
+        "text": "碰撞战斗假设：玩家与敌人在同格相遇会同时受伤/死亡。每帧结束可能结算碰撞伤害。",
+        "status": "proposed",
+        "statusWhy": "移动至(1,3)时HP从10→8（扣2），同时敌人从3→2（减少1）。疑似撞上了某个敌人的格子，两败俱伤。"
+      }
+    ],
+    "goals": []
+  },
+  "notary": {
+    "mutant": null,
+    "diverged": false,
+    "firstStep": null,
+    "firstFields": [],
+    "masked": false,
+    "divergedFrames": 0,
+    "minimized": null
+  },
+  "evidenceConsistent": true,
+  "coverage": {
+    "ticks": 22,
+    "cellsVisited": 10,
+    "cellsTotal": 64,
+    "hpSeen": [
+      6,
+      8,
+      10
+    ],
+    "hpZeroReached": false,
+    "hpBelowZeroReached": false,
+    "hpAboveMaxReached": false,
+    "died": false,
+    "adjacentEnemyReached": true,
+    "touchedByEnemy": true,
+    "stoodOnPickup": false,
+    "pickupAtFullHp": false,
+    "pickupsTaken": 0,
+    "kills": 0,
+    "attacksWhileCooldown": 0,
+    "wallAttempts": 2,
+    "boundaryAttempts": 1
+  },
+  "predictionStats": {
+    "checked": 23,
+    "staticChecks": 1,
+    "given": 22,
+    "missing": 1,
+    "fields": 67,
+    "ok": 57,
+    "violated": 10,
+    "unverifiable": 0,
+    "surpriseGiven": 0,
+    "surpriseUnexpected": 0,
+    "surpriseMalformed": 0,
+    "violatedButNotSurprised": 0
+  },
+  "hypothesisChecks": [
+    {
+      "id": "H1",
+      "checks": 0,
+      "supported": 0,
+      "contradicted": 0,
+      "unverifiable": 0
+    },
+    {
+      "id": "H2",
+      "checks": 5,
+      "supported": 5,
+      "contradicted": 0,
+      "unverifiable": 0
+    }
+  ],
+  "hypothesisStats": {
+    "proposed": 2,
+    "confirmed": 0,
+    "retired": 0,
+    "revised": 0,
+    "plainNotes": 0,
+    "attributed": 3,
+    "unattributed": 20,
+    "unknownTarget": 0,
+    "malformed": 0,
+    "notChecked": 0,
+    "fieldAbsent": 0,
+    "contradictedNotRetired": 0,
+    "confirmedNoChecks": 0
+  },
+  "goalChecks": [],
+  "goalStats": {
+    "open": 0,
+    "achieved": 0,
+    "abandoned": 0,
+    "declared": 0,
+    "revised": 0,
+    "conditionRevised": 0,
+    "rejected": 0,
+    "conditionMalformed": 0,
+    "withCondition": 0,
+    "checks": 0,
+    "met": 0,
+    "unmet": 0,
+    "unverifiable": 0,
+    "metNotClosed": 0,
+    "closedNeverMet": 0,
+    "uncheckable": 0
+  },
+  "fullWorldActions": [
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "wait"
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    }
+  ]
+}

@@ -1,0 +1,194 @@
+{
+  "seed": 6,
+  "initialHash": "0bcfad38fddbfa66",
+  "mutant": null,
+  "agentClaims": {
+    "finishSummary": null,
+    "notes": [],
+    "hypotheses": [
+      {
+        "id": "H1",
+        "text": "敌人移动规律观察（第1-3帧）：\n- E初始(7,0)→(6,0)→向左\n- E初始(1,2)→(1,1)→向上\n- E初始(6,3)→(7,2)→右上对角线\n推测：敌人可能朝玩家位置移动，或有某种移动模式需要进一步验证。",
+        "status": "proposed",
+        "statusWhy": ""
+      },
+      {
+        "id": "H2",
+        "text": "敌人行动规律：\n- 第7帧敌人贴到玩家身上造成2点伤害\n- 攻击后进入冷却状态，无法连续攻击\n推测：敌我之间可能存在主动攻击/碰撞伤害，需观察更多战斗场景。",
+        "status": "proposed",
+        "statusWhy": ""
+      },
+      {
+        "id": "H3",
+        "text": "攻击机制异常：\n- 第6帧：玩家在(5,0)，相邻(4,0)有敌人，攻击显示'身边没有敌人'\n- 第15帧：玩家在(4,3)，相邻(3,3)有敌人(实际在(3,3)是墙#，上方(4,2)是空，左边(3,3)是墙，右边(5,3)是墙，下方(4,4)是空。等等，我检查坐标：在(4,3)，左上角(3,2)是空，正上(4,2)是空，右上(5,2)是空，左(3,3)是墙#，右(5,3)是墙#，下(4,4)是空。实际上没有相邻敌人！所以我预测错误。重新看第15帧画面：@在(4,3)，E在(3,2)左上对角线，不是紧邻四格。所以攻击'身边没有敌人'是正确的。之前我以为有相邻敌人是错误的。这意味着攻击只对紧邻四格目标有效。敌人可能在非紧邻位置，所以攻击不到。需要确认。",
+        "status": "proposed",
+        "statusWhy": ""
+      }
+    ],
+    "goals": []
+  },
+  "notary": {
+    "mutant": null,
+    "diverged": false,
+    "firstStep": null,
+    "firstFields": [],
+    "masked": false,
+    "divergedFrames": 0,
+    "minimized": null
+  },
+  "evidenceConsistent": true,
+  "coverage": {
+    "ticks": 21,
+    "cellsVisited": 13,
+    "cellsTotal": 64,
+    "hpSeen": [
+      8,
+      10
+    ],
+    "hpZeroReached": false,
+    "hpBelowZeroReached": false,
+    "hpAboveMaxReached": false,
+    "died": false,
+    "adjacentEnemyReached": true,
+    "touchedByEnemy": true,
+    "stoodOnPickup": false,
+    "pickupAtFullHp": false,
+    "pickupsTaken": 0,
+    "kills": 0,
+    "attacksWhileCooldown": 0,
+    "wallAttempts": 1,
+    "boundaryAttempts": 0
+  },
+  "predictionStats": {
+    "checked": 22,
+    "staticChecks": 1,
+    "given": 8,
+    "missing": 14,
+    "fields": 13,
+    "ok": 11,
+    "violated": 2,
+    "unverifiable": 0,
+    "surpriseGiven": 0,
+    "surpriseUnexpected": 0,
+    "surpriseMalformed": 0,
+    "violatedButNotSurprised": 0
+  },
+  "hypothesisChecks": [
+    {
+      "id": "H1",
+      "checks": 0,
+      "supported": 0,
+      "contradicted": 0,
+      "unverifiable": 0
+    },
+    {
+      "id": "H2",
+      "checks": 0,
+      "supported": 0,
+      "contradicted": 0,
+      "unverifiable": 0
+    },
+    {
+      "id": "H3",
+      "checks": 0,
+      "supported": 0,
+      "contradicted": 0,
+      "unverifiable": 0
+    }
+  ],
+  "hypothesisStats": {
+    "proposed": 3,
+    "confirmed": 0,
+    "retired": 0,
+    "revised": 0,
+    "plainNotes": 0,
+    "attributed": 4,
+    "unattributed": 16,
+    "unknownTarget": 0,
+    "malformed": 0,
+    "notChecked": 0,
+    "fieldAbsent": 2,
+    "contradictedNotRetired": 0,
+    "confirmedNoChecks": 0
+  },
+  "goalChecks": [],
+  "goalStats": null,
+  "fullWorldActions": [
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "wait"
+    },
+    {
+      "kind": "wait"
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "wait"
+    },
+    {
+      "kind": "wait"
+    },
+    {
+      "kind": "pickup"
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "runId": "20261112-225002-s2026",
+  "runDir": "/tmp/h-real-runs/20261112-225002-s2026",
+  "stopReason": "brain_failed",
+  "steps": [
+    {
+      "index": 1,
+      "at": "2026-11-12T14:50:06.069Z",
+      "decision": {
+        "thought": "Starting exploration of the game server configuration directory. Need to understand the structure first.",
+        "call": {
+          "name": "list_dir",
+          "args": {}
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "f changelog.md\nf rules.json\nf server.log"
+      },
+      "stateHash": "ff2572ab9c2be6bd",
+      "contextChars": 775,
+      "brainMs": 3192,
+      "toolMs": 2
+    }
+  ],
+  "notes": [],
+  "actionSequence": [
+    {
+      "name": "list_dir",
+      "args": {}
+    }
+  ],
+  "durationMs": 3802
+}

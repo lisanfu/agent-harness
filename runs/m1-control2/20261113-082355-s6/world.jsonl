@@ -1,0 +1,12 @@
+{"tick":0,"action":null,"hash":"0bcfad38fddbfa66","events":[]}
+{"tick":1,"action":{"kind":"move","dir":0},"hash":"4463a7b52f2b595b","events":["你朝上撞上了障碍，没能移动。"]}
+{"tick":2,"action":{"kind":"move","dir":2},"hash":"124ab4eeb4d9c1eb","events":["你朝下走了一格。"]}
+{"tick":3,"action":{"kind":"move","dir":0},"hash":"b9b9f049f90ebe36","events":["你朝上走了一格。"]}
+{"tick":4,"action":{"kind":"move","dir":1},"hash":"2a5178b0ea906c24","events":["你朝右走了一格。"]}
+{"tick":5,"action":{"kind":"move","dir":3},"hash":"51725c92847be798","events":["你朝左走了一格。"]}
+{"tick":6,"action":{"kind":"move","dir":2},"hash":"58e2b2165f3bab9f","events":["你朝下走了一格。"]}
+{"tick":7,"action":{"kind":"move","dir":1},"hash":"58f6a321dfecd3d5","events":["你朝右走了一格。"]}
+{"tick":8,"action":{"kind":"move","dir":2},"hash":"7f94f390cfce8569","events":["你朝下走了一格。"]}
+{"tick":9,"action":{"kind":"move","dir":1},"hash":"458e545fad5be9da","events":["你朝右走了一格。"]}
+{"tick":10,"action":{"kind":"move","dir":1},"hash":"04af5b22d9793782","events":["你朝右走了一格。"]}
+{"tick":11,"action":{"kind":"move","dir":1},"hash":"144e6d3d8c57f840","events":["你朝右走了一格。"]}

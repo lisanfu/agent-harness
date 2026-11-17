@@ -1,0 +1,28 @@
+{
+  "runId": "20261112-223305-s2026",
+  "at": "2026-11-12T14:33:05.337Z",
+  "seed": 2026,
+  "brainId": "stdio:host",
+  "task": "这是一个小游戏服务端的配置目录。请自己观察，判断线上实际行为是否与设计意图一致；若发现不一致，指出具体证据。没有说明书，规则要你自己从文件里读出来。",
+  "sandbox": "/tmp/h-e2e/sandbox",
+  "config": {
+    "task": "这是一个小游戏服务端的配置目录。请自己观察，判断线上实际行为是否与设计意图一致；若发现不一致，指出具体证据。没有说明书，规则要你自己从文件里读出来。",
+    "sandbox": "/tmp/h-e2e/sandbox",
+    "seed": 2026,
+    "maxSteps": 12,
+    "maxWallMs": 300000,
+    "maxContextChars": 12000,
+    "keepRecent": 8,
+    "maxParseRetry": 2,
+    "repeatLimit": 3,
+    "outDir": "/tmp/h-e2e/runs"
+  },
+  "initialState": {
+    "notes": [],
+    "sandboxEntries": [
+      "f changelog.md",
+      "f rules.json",
+      "f server.log"
+    ]
+  }
+}

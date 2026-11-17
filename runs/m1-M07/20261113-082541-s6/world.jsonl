@@ -1,0 +1,7 @@
+{"tick":0,"action":null,"hash":"0bcfad38fddbfa66","events":[]}
+{"tick":1,"action":{"kind":"move","dir":2},"hash":"fa088e949e592934","events":["你朝下走了一格。"]}
+{"tick":2,"action":{"kind":"move","dir":2},"hash":"48ad0fb2f8d5b7b0","events":["你朝下走了一格。"]}
+{"tick":3,"action":{"kind":"move","dir":1},"hash":"2fb42e2d01411ac6","events":["你朝右走了一格。"]}
+{"tick":4,"action":{"kind":"move","dir":2},"hash":"0ee937a0f3aa5927","events":["你朝下走了一格。"]}
+{"tick":5,"action":{"kind":"move","dir":2},"hash":"8397d140eef52fd9","events":["你朝下走了一格。"]}
+{"tick":6,"action":{"kind":"move","dir":2},"hash":"baae756b204c4c7f","events":["你朝下走了一格。"]}

@@ -1,0 +1,1840 @@
+{
+  "runId": "20261113-234338-s6",
+  "runDir": "/home/fuyuan/Documents/workspace/agent-harness/runs/m4b2-goal-on/20261113-234338-s6",
+  "stopReason": "max_steps",
+  "steps": [
+    {
+      "index": 1,
+      "at": "2026-11-13T15:43:45.394Z",
+      "decision": {
+        "thought": "游戏开始，我还没有任何信息。先使用 look 工具观察当前画面，了解地图、血量、分数和周围情况。",
+        "call": {
+          "name": "look",
+          "args": {}
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|@E.....E|\n|........|\n|........|\n|..##..#E|\n|........|\n|.+.#....|\n|#.+...#+|\n|.....#..|\n+--------+\nHP [##########] 10/10   分数 0   第 0 帧\n攻击：就绪   状态：活着\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "0bcfad38fddbfa66",
+      "contextChars": 2963,
+      "brainMs": 6481,
+      "toolMs": 1,
+      "prediction": {
+        "given": false,
+        "advanced": false,
+        "predicted": {},
+        "diffs": [],
+        "violated": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 2,
+      "at": "2026-11-13T15:43:48.132Z",
+      "decision": {
+        "thought": "看到画面了：我在(1,1)，有3个敌人在相邻格（上、右），还有4个可拾取物品和许多墙。HP满10/10，攻击就绪。先尝试 move up 看看能否接近上方敌人，观察移动机制。",
+        "call": {
+          "name": "move",
+          "args": {
+            "dir": "up"
+          }
+        },
+        "predict": {
+          "playerAt": [
+            1,
+            0
+          ]
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|@.....E.|\n|.E......|\n|.......E|\n|..##..#.|\n|........|\n|.+.#....|\n|#.+...#+|\n|.....#..|\n+--------+\nHP [##########] 10/10   分数 0   第 1 帧\n攻击：就绪   状态：活着\n刚才发生：\n  - 你朝上撞上了障碍，没能移动。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "4463a7b52f2b595b",
+      "contextChars": 3305,
+      "brainMs": 2733,
+      "toolMs": 2,
+      "prediction": {
+        "given": true,
+        "advanced": true,
+        "predicted": {
+          "playerAt": [
+            1,
+            0
+          ]
+        },
+        "diffs": [
+          {
+            "field": "playerAt",
+            "predicted": [
+              1,
+              0
+            ],
+            "actual": [
+              0,
+              0
+            ],
+            "status": "violated"
+          }
+        ],
+        "violated": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 3,
+      "at": "2026-11-13T15:43:57.395Z",
+      "decision": {
+        "thought": "第一次尝试移动，撞上了障碍但出现在了不同位置（可能是滑动或坐标偏移）。发现敌人也会移动——我初始位置的敌人现在在(1,1)。先 note 这些初步观察，再尝试攻击或捡拾来测试其他机制。",
+        "call": {
+          "name": "note",
+          "args": {
+            "id": "H1",
+            "text": "初始观察：玩家位于左上区域，周围有多个敌人。移动机制需要进一步确认。",
+            "status": "proposed",
+            "why": "第一步观察"
+          }
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "已立假设 H1 [proposed]。之后用 testing:\"H1\" 指出哪一步的预测在检验它，代码会把核对结果客观累加到它名下。"
+      },
+      "stateHash": "4463a7b52f2b595b",
+      "contextChars": 3845,
+      "brainMs": 9260,
+      "toolMs": 2
+    },
+    {
+      "index": 4,
+      "at": "2026-11-13T15:44:02.704Z",
+      "decision": {
+        "thought": "测试攻击机制，虽然相邻格没有敌人，但攻击可能影响更远或有特殊效果。同时注意观察血量、分数变化。",
+        "call": {
+          "name": "attack",
+          "args": {}
+        },
+        "predict": {
+          "playerAt": [
+            0,
+            0
+          ],
+          "hpDelta": 0,
+          "scoreDelta": 0,
+          "enemyCount": 3,
+          "alive": true,
+          "attackReady": false
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|@....E..|\n|.......E|\n|.E......|\n|..##..#.|\n|........|\n|.+.#....|\n|#.+...#+|\n|.....#..|\n+--------+\nHP [##########] 10/10   分数 0   第 2 帧\n攻击：冷却中   状态：活着\n刚才发生：\n  - 你挥击，但身边没有敌人。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "e7d67fc9610a687d",
+      "contextChars": 4169,
+      "brainMs": 5305,
+      "toolMs": 1,
+      "prediction": {
+        "given": true,
+        "advanced": true,
+        "predicted": {
+          "playerAt": [
+            0,
+            0
+          ],
+          "hpDelta": 0,
+          "scoreDelta": 0,
+          "enemyCount": 3,
+          "alive": true,
+          "attackReady": false
+        },
+        "diffs": [
+          {
+            "field": "playerAt",
+            "predicted": [
+              0,
+              0
+            ],
+            "actual": [
+              0,
+              0
+            ],
+            "status": "ok"
+          },
+          {
+            "field": "hpDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          },
+          {
+            "field": "scoreDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 3,
+            "actual": 3,
+            "status": "ok"
+          },
+          {
+            "field": "alive",
+            "predicted": true,
+            "actual": true,
+            "status": "ok"
+          },
+          {
+            "field": "attackReady",
+            "predicted": false,
+            "actual": false,
+            "status": "ok"
+          }
+        ],
+        "violated": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 5,
+      "at": "2026-11-13T15:44:04.673Z",
+      "decision": {
+        "thought": "攻击测试通过：没有敌人在身边时攻击无效但正常冷却，预测全部命中。当前攻击处于冷却中。下一步尝试 move right 探索右侧区域，并 note 攻击结果。",
+        "call": {
+          "name": "move",
+          "args": {
+            "dir": "right"
+          }
+        },
+        "predict": {
+          "playerAt": [
+            1,
+            0
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|.@..E..E|\n|........|\n|........|\n|.E##..#.|\n|........|\n|.+.#....|\n|#.+...#+|\n|.....#..|\n+--------+\nHP [##########] 10/10   分数 0   第 3 帧\n攻击：冷却中   状态：活着\n刚才发生：\n  - 你朝右走了一格。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "1346d9501dfb3175",
+      "contextChars": 4903,
+      "brainMs": 1966,
+      "toolMs": 1,
+      "prediction": {
+        "given": true,
+        "advanced": true,
+        "predicted": {
+          "playerAt": [
+            1,
+            0
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        },
+        "diffs": [
+          {
+            "field": "playerAt",
+            "predicted": [
+              1,
+              0
+            ],
+            "actual": [
+              1,
+              0
+            ],
+            "status": "ok"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 3,
+            "actual": 3,
+            "status": "ok"
+          },
+          {
+            "field": "hpDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          }
+        ],
+        "violated": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 6,
+      "at": "2026-11-13T15:44:06.814Z",
+      "decision": {
+        "thought": "移动成功，一格。注意敌人移动了：之前的敌人在(1,1)和(7,0)，现在出现在(6,0)和(2,3)附近，似乎朝我靠近。攻击冷却中，尝试 move down 接近下方敌人测试战斗。",
+        "call": {
+          "name": "move",
+          "args": {
+            "dir": "down"
+          }
+        },
+        "predict": {
+          "playerAt": [
+            1,
+            1
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|...E...E|\n|.@......|\n|........|\n|..##..#.|\n|.E......|\n|.+.#....|\n|#.+...#+|\n|.....#..|\n+--------+\nHP [##########] 10/10   分数 0   第 4 帧\n攻击：就绪   状态：活着\n刚才发生：\n  - 你朝下走了一格。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "bf729b8ea0fb4ab7",
+      "contextChars": 5518,
+      "brainMs": 2138,
+      "toolMs": 1,
+      "prediction": {
+        "given": true,
+        "advanced": true,
+        "predicted": {
+          "playerAt": [
+            1,
+            1
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        },
+        "diffs": [
+          {
+            "field": "playerAt",
+            "predicted": [
+              1,
+              1
+            ],
+            "actual": [
+              1,
+              1
+            ],
+            "status": "ok"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 3,
+            "actual": 3,
+            "status": "ok"
+          },
+          {
+            "field": "hpDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          }
+        ],
+        "violated": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 7,
+      "at": "2026-11-13T15:44:08.392Z",
+      "decision": {
+        "thought": "走到位了，攻击也转好了。现在在(1,1)，敌人在(1,4)方向还有三个格，我先继续往下逼近。",
+        "call": {
+          "name": "move",
+          "args": {
+            "dir": "down"
+          }
+        },
+        "predict": {
+          "playerAt": [
+            1,
+            2
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|..E....E|\n|........|\n|.@......|\n|..##..#.|\n|........|\n|.E.#....|\n|#.+...#+|\n|.....#..|\n+--------+\nHP [##########] 10/10   分数 0   第 5 帧\n攻击：就绪   状态：活着\n刚才发生：\n  - 你朝下走了一格。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "f8f486929b580d96",
+      "contextChars": 6143,
+      "brainMs": 1574,
+      "toolMs": 1,
+      "prediction": {
+        "given": true,
+        "advanced": true,
+        "predicted": {
+          "playerAt": [
+            1,
+            2
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        },
+        "diffs": [
+          {
+            "field": "playerAt",
+            "predicted": [
+              1,
+              2
+            ],
+            "actual": [
+              1,
+              2
+            ],
+            "status": "ok"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 3,
+            "actual": 3,
+            "status": "ok"
+          },
+          {
+            "field": "hpDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          }
+        ],
+        "violated": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 8,
+      "at": "2026-11-13T15:44:09.995Z",
+      "decision": {
+        "thought": "继续逼近下方敌人，测试能否在相邻格触发战斗。",
+        "call": {
+          "name": "move",
+          "args": {
+            "dir": "down"
+          }
+        },
+        "predict": {
+          "playerAt": [
+            1,
+            3
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|.E....E.|\n|........|\n|........|\n|.@##..#.|\n|........|\n|.+.#....|\n|#E+...#+|\n|.....#..|\n+--------+\nHP [##########] 10/10   分数 0   第 6 帧\n攻击：就绪   状态：活着\n刚才发生：\n  - 你朝下走了一格。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "9d5c9e364c251e5a",
+      "contextChars": 6724,
+      "brainMs": 1600,
+      "toolMs": 0,
+      "prediction": {
+        "given": true,
+        "advanced": true,
+        "predicted": {
+          "playerAt": [
+            1,
+            3
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        },
+        "diffs": [
+          {
+            "field": "playerAt",
+            "predicted": [
+              1,
+              3
+            ],
+            "actual": [
+              1,
+              3
+            ],
+            "status": "ok"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 3,
+            "actual": 3,
+            "status": "ok"
+          },
+          {
+            "field": "hpDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          }
+        ],
+        "violated": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 9,
+      "at": "2026-11-13T15:44:12.333Z",
+      "decision": {
+        "thought": "被墙挡住了。敌人分布在左上、右上和下方。尝试向上走避开可能的包围，同时观察敌人是否在靠近。",
+        "call": {
+          "name": "move",
+          "args": {
+            "dir": "up"
+          }
+        },
+        "predict": {
+          "playerAt": [
+            1,
+            2
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|E....E..|\n|........|\n|.@......|\n|..##..#.|\n|........|\n|.+.#....|\n|#.+...#+|\n|.E...#..|\n+--------+\nHP [##########] 10/10   分数 0   第 7 帧\n攻击：就绪   状态：活着\n刚才发生：\n  - 你朝上走了一格。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "b35c24c25b73be2e",
+      "contextChars": 7281,
+      "brainMs": 2335,
+      "toolMs": 1,
+      "prediction": {
+        "given": true,
+        "advanced": true,
+        "predicted": {
+          "playerAt": [
+            1,
+            2
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        },
+        "diffs": [
+          {
+            "field": "playerAt",
+            "predicted": [
+              1,
+              2
+            ],
+            "actual": [
+              1,
+              2
+            ],
+            "status": "ok"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 3,
+            "actual": 3,
+            "status": "ok"
+          },
+          {
+            "field": "hpDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          }
+        ],
+        "violated": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 10,
+      "at": "2026-11-13T15:44:14.254Z",
+      "decision": {
+        "thought": "观察敌人分布：左边一个、右边两个，距离适中。尝试 move right 测试横向移动，并观察是否会被敌人包围。",
+        "call": {
+          "name": "move",
+          "args": {
+            "dir": "right"
+          }
+        },
+        "predict": {
+          "playerAt": [
+            2,
+            2
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|E...E...|\n|........|\n|..@.....|\n|..##..#.|\n|........|\n|.+.#....|\n|#.+...#+|\n|.E...#..|\n+--------+\nHP [##########] 10/10   分数 0   第 8 帧\n攻击：就绪   状态：活着\n刚才发生：\n  - 你朝右走了一格。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "d2cc996efa9f398e",
+      "contextChars": 7859,
+      "brainMs": 1920,
+      "toolMs": 0,
+      "prediction": {
+        "given": true,
+        "advanced": true,
+        "predicted": {
+          "playerAt": [
+            2,
+            2
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        },
+        "diffs": [
+          {
+            "field": "playerAt",
+            "predicted": [
+              2,
+              2
+            ],
+            "actual": [
+              2,
+              2
+            ],
+            "status": "ok"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 3,
+            "actual": 3,
+            "status": "ok"
+          },
+          {
+            "field": "hpDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          }
+        ],
+        "violated": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 11,
+      "at": "2026-11-13T15:45:22.046Z",
+      "decision": {
+        "thought": "继续向左移动逼近左上角的敌人，同时保持警惕。注意攻击冷却已就绪，随时可以战斗。",
+        "call": {
+          "name": "move",
+          "args": {
+            "dir": "left"
+          }
+        },
+        "predict": {
+          "playerAt": [
+            1,
+            2
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|...E....|\n|E.......|\n|.@......|\n|..##..#.|\n|........|\n|.+.#....|\n|#E+...#+|\n|.....#..|\n+--------+\nHP [##########] 10/10   分数 0   第 9 帧\n攻击：就绪   状态：活着\n刚才发生：\n  - 你朝左走了一格。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "4a924918cd3d6b02",
+      "contextChars": 8450,
+      "brainMs": 67790,
+      "toolMs": 0,
+      "prediction": {
+        "given": true,
+        "advanced": true,
+        "predicted": {
+          "playerAt": [
+            1,
+            2
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        },
+        "diffs": [
+          {
+            "field": "playerAt",
+            "predicted": [
+              1,
+              2
+            ],
+            "actual": [
+              1,
+              2
+            ],
+            "status": "ok"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 3,
+            "actual": 3,
+            "status": "ok"
+          },
+          {
+            "field": "hpDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          }
+        ],
+        "violated": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 12,
+      "at": "2026-11-13T15:45:24.178Z",
+      "decision": {
+        "thought": "继续向上逼近左上角的敌人，测试接近后的反应。同时注意下方有可拾取物品，稍后探索。",
+        "call": {
+          "name": "move",
+          "args": {
+            "dir": "up"
+          }
+        },
+        "predict": {
+          "playerAt": [
+            1,
+            1
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|..E.....|\n|.@......|\n|E.......|\n|..##..#.|\n|........|\n|.E.#....|\n|#.+...#+|\n|.....#..|\n+--------+\nHP [##########] 10/10   分数 0   第 10 帧\n攻击：就绪   状态：活着\n刚才发生：\n  - 你朝上走了一格。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "d4ae2a8ead337a7b",
+      "contextChars": 9024,
+      "brainMs": 2130,
+      "toolMs": 1,
+      "prediction": {
+        "given": true,
+        "advanced": true,
+        "predicted": {
+          "playerAt": [
+            1,
+            1
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        },
+        "diffs": [
+          {
+            "field": "playerAt",
+            "predicted": [
+              1,
+              1
+            ],
+            "actual": [
+              1,
+              1
+            ],
+            "status": "ok"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 3,
+            "actual": 3,
+            "status": "ok"
+          },
+          {
+            "field": "hpDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          }
+        ],
+        "violated": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 13,
+      "at": "2026-11-13T15:45:30.754Z",
+      "decision": {
+        "thought": "在(1,1)，附近没有紧邻的敌人。接下来尝试向下移动，接近下方的可拾取物品并探索地图。",
+        "call": {
+          "name": "move",
+          "args": {
+            "dir": "down"
+          }
+        },
+        "predict": {
+          "playerAt": [
+            1,
+            2
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|.E......|\n|........|\n|.@......|\n|E.##..#.|\n|.E......|\n|.+.#....|\n|#.+...#+|\n|.....#..|\n+--------+\nHP [##########] 10/10   分数 0   第 11 帧\n攻击：就绪   状态：活着\n刚才发生：\n  - 你朝下走了一格。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "2925a1eb0cd5fa07",
+      "contextChars": 9598,
+      "brainMs": 6574,
+      "toolMs": 0,
+      "prediction": {
+        "given": true,
+        "advanced": true,
+        "predicted": {
+          "playerAt": [
+            1,
+            2
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        },
+        "diffs": [
+          {
+            "field": "playerAt",
+            "predicted": [
+              1,
+              2
+            ],
+            "actual": [
+              1,
+              2
+            ],
+            "status": "ok"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 3,
+            "actual": 3,
+            "status": "ok"
+          },
+          {
+            "field": "hpDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          }
+        ],
+        "violated": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 14,
+      "at": "2026-11-13T15:45:37.630Z",
+      "decision": {
+        "thought": "在(1,2)，四周无相邻敌人，攻击无效。尝试向下移动接近下方可拾取物品并探索地图。",
+        "call": {
+          "name": "move",
+          "args": {
+            "dir": "down"
+          }
+        },
+        "predict": {
+          "playerAt": [
+            1,
+            3
+          ],
+          "enemyCount": 4,
+          "hpDelta": 0
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|E.......|\n|........|\n|........|\n|.@##..#.|\n|E.......|\n|.+.#....|\n|#.+...#+|\n|.....#..|\n+--------+\nHP [########--] 8/10   分数 0   第 12 帧\n攻击：就绪   状态：活着\n刚才发生：\n  - 你朝下走了一格。\n  - 有敌人贴到了你身上。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "d2aff59fb7585e22",
+      "contextChars": 10177,
+      "brainMs": 6875,
+      "toolMs": 0,
+      "prediction": {
+        "given": true,
+        "advanced": true,
+        "predicted": {
+          "playerAt": [
+            1,
+            3
+          ],
+          "enemyCount": 4,
+          "hpDelta": 0
+        },
+        "diffs": [
+          {
+            "field": "playerAt",
+            "predicted": [
+              1,
+              3
+            ],
+            "actual": [
+              1,
+              3
+            ],
+            "status": "ok"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 4,
+            "actual": 2,
+            "status": "violated"
+          },
+          {
+            "field": "hpDelta",
+            "predicted": 0,
+            "actual": -2,
+            "status": "violated"
+          }
+        ],
+        "violated": 2,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 15,
+      "at": "2026-11-13T15:45:41.560Z",
+      "decision": {
+        "thought": "重要发现！移动后HP-2，敌人从3变2，说明碰撞导致两败俱伤——我用1命换1敌。这像是『相撞互毁』机制。先立假设，再试探确认。",
+        "call": {
+          "name": "note",
+          "args": {
+            "id": "H2",
+            "text": "碰撞战斗假设：玩家与敌人在同格相遇会同时受伤/死亡。每帧结束可能结算碰撞伤害。",
+            "status": "proposed",
+            "why": "移动至(1,3)时HP从10→8（扣2），同时敌人从3→2（减少1）。疑似撞上了某个敌人的格子，两败俱伤。"
+          }
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "已立假设 H2 [proposed]。之后用 testing:\"H2\" 指出哪一步的预测在检验它，代码会把核对结果客观累加到它名下。"
+      },
+      "stateHash": "d2aff59fb7585e22",
+      "contextChars": 10777,
+      "brainMs": 3928,
+      "toolMs": 0
+    },
+    {
+      "index": 16,
+      "at": "2026-11-13T15:45:52.998Z",
+      "decision": {
+        "thought": "H2碰撞战斗假设初步成立。尝试再次逼近碰撞，检验是否能重复触发『两败俱伤』并确认敌人数量变化。",
+        "call": {
+          "name": "move",
+          "args": {
+            "dir": "down"
+          }
+        },
+        "predict": {
+          "playerAt": [
+            1,
+            4
+          ],
+          "enemyCount": 2,
+          "hpDelta": -2
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|E.......|\n|........|\n|.E......|\n|..##..#.|\n|.@......|\n|E+.#....|\n|#.+...#+|\n|.....#..|\n+--------+\nHP [########--] 8/10   分数 0   第 13 帧\n攻击：就绪   状态：活着\n刚才发生：\n  - 你朝下走了一格。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "c998b1257bdbfb18",
+      "contextChars": 11125,
+      "brainMs": 11437,
+      "toolMs": 0,
+      "prediction": {
+        "given": true,
+        "advanced": true,
+        "predicted": {
+          "playerAt": [
+            1,
+            4
+          ],
+          "enemyCount": 2,
+          "hpDelta": -2
+        },
+        "diffs": [
+          {
+            "field": "playerAt",
+            "predicted": [
+              1,
+              4
+            ],
+            "actual": [
+              1,
+              4
+            ],
+            "status": "ok"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 2,
+            "actual": 3,
+            "status": "violated"
+          },
+          {
+            "field": "hpDelta",
+            "predicted": -2,
+            "actual": 0,
+            "status": "violated"
+          }
+        ],
+        "violated": 2,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 17,
+      "at": "2026-11-13T15:46:00.774Z",
+      "decision": {
+        "thought": "碰撞结果不符合预期。上一步移动后敌人数量反而增加了。需要检验H2碰撞假设是否成立，以及敌人的行为模式。尝试向左移动以接近左上角敌人并观察交互。",
+        "call": {
+          "name": "move",
+          "args": {
+            "dir": "left"
+          }
+        },
+        "predict": {
+          "playerAt": [
+            0,
+            4
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|........|\n|EE......|\n|........|\n|..##..#.|\n|@.......|\n|E+.#....|\n|#.+...#+|\n|.....#..|\n+--------+\nHP [########--] 8/10   分数 0   第 14 帧\n攻击：就绪   状态：活着\n刚才发生：\n  - 你朝左走了一格。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "b83cd0eb9badc572",
+      "contextChars": 11717,
+      "brainMs": 7774,
+      "toolMs": 0,
+      "prediction": {
+        "given": true,
+        "advanced": true,
+        "predicted": {
+          "playerAt": [
+            0,
+            4
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        },
+        "diffs": [
+          {
+            "field": "playerAt",
+            "predicted": [
+              0,
+              4
+            ],
+            "actual": [
+              0,
+              4
+            ],
+            "status": "ok"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 3,
+            "actual": 3,
+            "status": "ok"
+          },
+          {
+            "field": "hpDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          }
+        ],
+        "violated": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 18,
+      "at": "2026-11-13T15:46:03.033Z",
+      "decision": {
+        "thought": "测试H2碰撞假设：刚才向左移动未受伤，说明不是所有相邻移动都会扣血。需要检验碰撞是否必须『同时同格』或特定条件。现在尝试 up 向右上方的两个敌人靠近，看是否会被动造成伤害。",
+        "call": {
+          "name": "move",
+          "args": {
+            "dir": "up"
+          }
+        },
+        "predict": {
+          "playerAt": [
+            0,
+            3
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|.E......|\n|........|\n|E.......|\n|@.##..#.|\n|........|\n|.E.#....|\n|#.+...#+|\n|.....#..|\n+--------+\nHP [########--] 8/10   分数 0   第 15 帧\n攻击：就绪   状态：活着\n刚才发生：\n  - 你朝上走了一格。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "2f01e0e488382ece",
+      "contextChars": 11974,
+      "brainMs": 2258,
+      "toolMs": 1,
+      "prediction": {
+        "given": true,
+        "advanced": true,
+        "predicted": {
+          "playerAt": [
+            0,
+            3
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        },
+        "diffs": [
+          {
+            "field": "playerAt",
+            "predicted": [
+              0,
+              3
+            ],
+            "actual": [
+              0,
+              3
+            ],
+            "status": "ok"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 3,
+            "actual": 3,
+            "status": "ok"
+          },
+          {
+            "field": "hpDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          }
+        ],
+        "violated": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 19,
+      "at": "2026-11-13T15:46:11.120Z",
+      "decision": {
+        "thought": "多次移动未受伤，H2的『随意碰撞』假设存疑。需要继续观察敌人行为模式，检验是否是敌人主动攻击或特定条件触发伤害。现在尝试 wait 让时间推进一帧，观察敌人在无玩家干扰时的动态。",
+        "call": {
+          "name": "wait",
+          "args": {}
+        },
+        "predict": {
+          "playerAt": [
+            0,
+            3
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|.E......|\n|........|\n|........|\n|@.##..#.|\n|........|\n|.+E#....|\n|#.+...#+|\n|.....#..|\n+--------+\nHP [######----] 6/10   分数 0   第 16 帧\n攻击：就绪   状态：活着\n刚才发生：\n  - 你原地等待。\n  - 有敌人贴到了你身上。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "318c391e8525ef30",
+      "contextChars": 12054,
+      "brainMs": 8085,
+      "toolMs": 0,
+      "prediction": {
+        "given": true,
+        "advanced": true,
+        "predicted": {
+          "playerAt": [
+            0,
+            3
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        },
+        "diffs": [
+          {
+            "field": "playerAt",
+            "predicted": [
+              0,
+              3
+            ],
+            "actual": [
+              0,
+              3
+            ],
+            "status": "ok"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 3,
+            "actual": 2,
+            "status": "violated"
+          },
+          {
+            "field": "hpDelta",
+            "predicted": 0,
+            "actual": -2,
+            "status": "violated"
+          }
+        ],
+        "violated": 2,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 20,
+      "at": "2026-11-13T15:46:14.000Z",
+      "decision": {
+        "thought": "Wait后被敌贴身上扣2血、减1敌，验证了H2：玩家和敌人在同格相遇会同时受伤/死亡。敌人似乎在主动追击玩家。攻击已就绪，试着向右走试探一下敌人的追袭模式，同时看能否制造一次主动攻击的机会。",
+        "call": {
+          "name": "move",
+          "args": {
+            "dir": "right"
+          }
+        },
+        "predict": {
+          "playerAt": [
+            1,
+            3
+          ],
+          "enemyCount": 2,
+          "hpDelta": 0
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|..E.....|\n|........|\n|........|\n|.@##..#.|\n|E.......|\n|.+E#....|\n|#.+...#+|\n|.....#..|\n+--------+\nHP [######----] 6/10   分数 0   第 17 帧\n攻击：就绪   状态：活着\n刚才发生：\n  - 你朝右走了一格。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "5a557529606e2754",
+      "contextChars": 11630,
+      "brainMs": 2878,
+      "toolMs": 0,
+      "prediction": {
+        "given": true,
+        "advanced": true,
+        "predicted": {
+          "playerAt": [
+            1,
+            3
+          ],
+          "enemyCount": 2,
+          "hpDelta": 0
+        },
+        "diffs": [
+          {
+            "field": "playerAt",
+            "predicted": [
+              1,
+              3
+            ],
+            "actual": [
+              1,
+              3
+            ],
+            "status": "ok"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 2,
+            "actual": 3,
+            "status": "violated"
+          },
+          {
+            "field": "hpDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          }
+        ],
+        "violated": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 21,
+      "at": "2026-11-13T15:46:25.860Z",
+      "decision": {
+        "thought": "H2碰撞验证：wait时被贴身上扣2血减1敌，确认了『同格相遇两败俱伤』的机制。同时发现敌人可能在刷新或移动——enemyCount有时增加。攻击已就绪，现在试着 move right 继续观察敌人行为与地图边界。",
+        "call": {
+          "name": "move",
+          "args": {
+            "dir": "right"
+          }
+        },
+        "predict": {
+          "playerAt": [
+            2,
+            3
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|...E....|\n|........|\n|........|\n|.@##..#.|\n|........|\n|E+.#....|\n|#.E...#+|\n|.....#..|\n+--------+\nHP [######----] 6/10   分数 0   第 18 帧\n攻击：就绪   状态：活着\n刚才发生：\n  - 你朝右撞上了障碍，没能移动。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "3e33dc13e1b4354a",
+      "contextChars": 12056,
+      "brainMs": 11859,
+      "toolMs": 0,
+      "prediction": {
+        "given": true,
+        "advanced": true,
+        "predicted": {
+          "playerAt": [
+            2,
+            3
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        },
+        "diffs": [
+          {
+            "field": "playerAt",
+            "predicted": [
+              2,
+              3
+            ],
+            "actual": [
+              1,
+              3
+            ],
+            "status": "violated"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 3,
+            "actual": 3,
+            "status": "ok"
+          },
+          {
+            "field": "hpDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          }
+        ],
+        "violated": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 22,
+      "at": "2026-11-13T15:46:28.761Z",
+      "decision": {
+        "thought": "撞墙失败！确认墙壁阻挡移动。当前在(1,3)，附近无相邻敌人。尝试向下移动测试(1,4)是否安全，同时观察敌人动态。",
+        "call": {
+          "name": "move",
+          "args": {
+            "dir": "down"
+          }
+        },
+        "predict": {
+          "playerAt": [
+            1,
+            4
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|....E...|\n|........|\n|........|\n|..##..#.|\n|.@......|\n|E+.#....|\n|#.+...#+|\n|..E..#..|\n+--------+\nHP [######----] 6/10   分数 0   第 19 帧\n攻击：就绪   状态：活着\n刚才发生：\n  - 你朝下走了一格。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "d10790d8cc2b7292",
+      "contextChars": 11679,
+      "brainMs": 2900,
+      "toolMs": 0,
+      "prediction": {
+        "given": true,
+        "advanced": true,
+        "predicted": {
+          "playerAt": [
+            1,
+            4
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        },
+        "diffs": [
+          {
+            "field": "playerAt",
+            "predicted": [
+              1,
+              4
+            ],
+            "actual": [
+              1,
+              4
+            ],
+            "status": "ok"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 3,
+            "actual": 3,
+            "status": "ok"
+          },
+          {
+            "field": "hpDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          }
+        ],
+        "violated": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 23,
+      "at": "2026-11-13T15:46:33.971Z",
+      "decision": {
+        "thought": "当前位置(1,4)四周无相邻敌人，暂时安全。尝试向右移动接近右侧区域的可拾取物品与敌人，同时准备测试attack机制以验证H2碰撞假设的延伸。",
+        "call": {
+          "name": "move",
+          "args": {
+            "dir": "right"
+          }
+        },
+        "predict": {
+          "playerAt": [
+            2,
+            4
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        },
+        "testing": {
+          "id": "H2"
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|.....E..|\n|........|\n|........|\n|..##..#.|\n|..@.....|\n|E+.#....|\n|#.+...#+|\n|..E..#..|\n+--------+\nHP [######----] 6/10   分数 0   第 20 帧\n攻击：就绪   状态：活着\n刚才发生：\n  - 你朝右走了一格。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "bbef7644b4ebe2bb",
+      "contextChars": 11691,
+      "brainMs": 5208,
+      "toolMs": 1,
+      "prediction": {
+        "given": true,
+        "advanced": true,
+        "predicted": {
+          "playerAt": [
+            2,
+            4
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        },
+        "diffs": [
+          {
+            "field": "playerAt",
+            "predicted": [
+              2,
+              4
+            ],
+            "actual": [
+              2,
+              4
+            ],
+            "status": "ok"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 3,
+            "actual": 3,
+            "status": "ok"
+          },
+          {
+            "field": "hpDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          }
+        ],
+        "violated": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 24,
+      "at": "2026-11-13T15:46:41.074Z",
+      "decision": {
+        "thought": "test H2 延伸：attack就绪，尝试攻击紧邻敌人，观察是否『两败俱伤』或单纯消敌不扣血。现在位于(2,4)，右方远处有敌人(?,?)但不在邻格；直接attack看效果。",
+        "call": {
+          "name": "attack",
+          "args": {}
+        },
+        "predict": {
+          "playerAt": [
+            2,
+            4
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        },
+        "testing": {
+          "id": "H2",
+          "field": "enemyCount"
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|......E.|\n|........|\n|........|\n|..##..#.|\n|..@.....|\n|E+.#....|\n|#.+...#+|\n|...E.#..|\n+--------+\nHP [######----] 6/10   分数 0   第 21 帧\n攻击：冷却中   状态：活着\n刚才发生：\n  - 你挥击，但身边没有敌人。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "45a787f910f5aa82",
+      "contextChars": 11904,
+      "brainMs": 7100,
+      "toolMs": 1,
+      "prediction": {
+        "given": true,
+        "advanced": true,
+        "predicted": {
+          "playerAt": [
+            2,
+            4
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        },
+        "diffs": [
+          {
+            "field": "playerAt",
+            "predicted": [
+              2,
+              4
+            ],
+            "actual": [
+              2,
+              4
+            ],
+            "status": "ok"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 3,
+            "actual": 3,
+            "status": "ok"
+          },
+          {
+            "field": "hpDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          }
+        ],
+        "violated": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 25,
+      "at": "2026-11-13T15:46:50.365Z",
+      "decision": {
+        "thought": "攻击因无邻格敌人而失效，并进入冷却。这提示攻击机制需要『紧靠敌人』的条件。H2仍缺『主动attack碰撞』的证据，准备再寻敌一试。",
+        "call": {
+          "name": "move",
+          "args": {
+            "dir": "up"
+          }
+        },
+        "predict": {
+          "playerAt": [
+            2,
+            3
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        },
+        "testing": {
+          "id": "H2",
+          "field": "enemyCount"
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|.......E|\n|........|\n|........|\n|..##..#.|\n|..@.....|\n|.E.#....|\n|#.+...#+|\n|....E#..|\n+--------+\nHP [######----] 6/10   分数 0   第 22 帧\n攻击：冷却中   状态：活着\n刚才发生：\n  - 你朝上撞上了障碍，没能移动。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "ed97af134ea95a64",
+      "contextChars": 11922,
+      "brainMs": 9289,
+      "toolMs": 1,
+      "prediction": {
+        "given": true,
+        "advanced": true,
+        "predicted": {
+          "playerAt": [
+            2,
+            3
+          ],
+          "enemyCount": 3,
+          "hpDelta": 0
+        },
+        "diffs": [
+          {
+            "field": "playerAt",
+            "predicted": [
+              2,
+              3
+            ],
+            "actual": [
+              2,
+              4
+            ],
+            "status": "violated"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 3,
+            "actual": 3,
+            "status": "ok"
+          },
+          {
+            "field": "hpDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          }
+        ],
+        "violated": 1,
+        "unverifiable": 0
+      }
+    }
+  ],
+  "notes": [],
+  "hypotheses": [
+    {
+      "id": "H1",
+      "text": "初始观察：玩家位于左上区域，周围有多个敌人。移动机制需要进一步确认。",
+      "status": "proposed",
+      "createdAtStep": 3,
+      "statusAtStep": 3,
+      "statusWhy": "第一步观察",
+      "checks": 0,
+      "supported": 0,
+      "contradicted": 0,
+      "unverifiable": 0
+    },
+    {
+      "id": "H2",
+      "text": "碰撞战斗假设：玩家与敌人在同格相遇会同时受伤/死亡。每帧结束可能结算碰撞伤害。",
+      "status": "proposed",
+      "createdAtStep": 15,
+      "statusAtStep": 15,
+      "statusWhy": "移动至(1,3)时HP从10→8（扣2），同时敌人从3→2（减少1）。疑似撞上了某个敌人的格子，两败俱伤。",
+      "checks": 5,
+      "supported": 5,
+      "contradicted": 0,
+      "unverifiable": 0
+    }
+  ],
+  "goals": [],
+  "actionSequence": [
+    {
+      "name": "look",
+      "args": {}
+    },
+    {
+      "name": "move",
+      "args": {
+        "dir": "up"
+      }
+    },
+    {
+      "name": "note",
+      "args": {
+        "id": "H1",
+        "text": "初始观察：玩家位于左上区域，周围有多个敌人。移动机制需要进一步确认。",
+        "status": "proposed",
+        "why": "第一步观察"
+      }
+    },
+    {
+      "name": "attack",
+      "args": {}
+    },
+    {
+      "name": "move",
+      "args": {
+        "dir": "right"
+      }
+    },
+    {
+      "name": "move",
+      "args": {
+        "dir": "down"
+      }
+    },
+    {
+      "name": "move",
+      "args": {
+        "dir": "down"
+      }
+    },
+    {
+      "name": "move",
+      "args": {
+        "dir": "down"
+      }
+    },
+    {
+      "name": "move",
+      "args": {
+        "dir": "up"
+      }
+    },
+    {
+      "name": "move",
+      "args": {
+        "dir": "right"
+      }
+    },
+    {
+      "name": "move",
+      "args": {
+        "dir": "left"
+      }
+    },
+    {
+      "name": "move",
+      "args": {
+        "dir": "up"
+      }
+    },
+    {
+      "name": "move",
+      "args": {
+        "dir": "down"
+      }
+    },
+    {
+      "name": "move",
+      "args": {
+        "dir": "down"
+      }
+    },
+    {
+      "name": "note",
+      "args": {
+        "id": "H2",
+        "text": "碰撞战斗假设：玩家与敌人在同格相遇会同时受伤/死亡。每帧结束可能结算碰撞伤害。",
+        "status": "proposed",
+        "why": "移动至(1,3)时HP从10→8（扣2），同时敌人从3→2（减少1）。疑似撞上了某个敌人的格子，两败俱伤。"
+      }
+    },
+    {
+      "name": "move",
+      "args": {
+        "dir": "down"
+      }
+    },
+    {
+      "name": "move",
+      "args": {
+        "dir": "left"
+      }
+    },
+    {
+      "name": "move",
+      "args": {
+        "dir": "up"
+      }
+    },
+    {
+      "name": "wait",
+      "args": {}
+    },
+    {
+      "name": "move",
+      "args": {
+        "dir": "right"
+      }
+    },
+    {
+      "name": "move",
+      "args": {
+        "dir": "right"
+      }
+    },
+    {
+      "name": "move",
+      "args": {
+        "dir": "down"
+      }
+    },
+    {
+      "name": "move",
+      "args": {
+        "dir": "right"
+      }
+    },
+    {
+      "name": "attack",
+      "args": {}
+    },
+    {
+      "name": "move",
+      "args": {
+        "dir": "up"
+      }
+    }
+  ],
+  "durationMs": 191458,
+  "brainRetries": 12,
+  "predictionStats": {
+    "checked": 23,
+    "staticChecks": 1,
+    "given": 22,
+    "missing": 1,
+    "fields": 67,
+    "ok": 57,
+    "violated": 10,
+    "unverifiable": 0,
+    "surpriseGiven": 0,
+    "surpriseUnexpected": 0,
+    "surpriseMalformed": 0,
+    "violatedButNotSurprised": 0
+  },
+  "hypothesisStats": {
+    "proposed": 2,
+    "confirmed": 0,
+    "retired": 0,
+    "revised": 0,
+    "plainNotes": 0,
+    "attributed": 3,
+    "unattributed": 20,
+    "unknownTarget": 0,
+    "malformed": 0,
+    "notChecked": 0,
+    "fieldAbsent": 0,
+    "contradictedNotRetired": 0,
+    "confirmedNoChecks": 0
+  },
+  "goalStats": {
+    "open": 0,
+    "achieved": 0,
+    "abandoned": 0,
+    "declared": 0,
+    "revised": 0,
+    "conditionRevised": 0,
+    "rejected": 0,
+    "conditionMalformed": 0,
+    "withCondition": 0,
+    "checks": 0,
+    "met": 0,
+    "unmet": 0,
+    "unverifiable": 0,
+    "metNotClosed": 0,
+    "closedNeverMet": 0,
+    "uncheckable": 0
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "runId": "20261113-214900-s6",
+  "at": "2026-11-13T13:49:00.445Z",
+  "seed": 6,
+  "brainId": "script:FIXTURE（人写剧本，不是大脑）",
+  "task": "夹具：覆盖假设板全部归因路径（人写剧本，不代表模型能力）",
+  "sandbox": "/tmp/board-fixture-sbx-Dq8GHf",
+  "config": {
+    "task": "夹具：覆盖假设板全部归因路径（人写剧本，不代表模型能力）",
+    "sandbox": "/tmp/board-fixture-sbx-Dq8GHf",
+    "seed": 6,
+    "maxSteps": 24,
+    "maxWallMs": 60000,
+    "maxContextChars": 40000,
+    "keepRecent": 30,
+    "maxParseRetry": 2,
+    "repeatLimit": 9,
+    "outDir": "/home/fuyuan/Documents/workspace/agent-harness/runs"
+  },
+  "initialState": {
+    "notes": [],
+    "hypotheses": [],
+    "sandboxEntries": [
+      "f a.txt"
+    ],
+    "world": {
+      "kind": "arena",
+      "seed": 6,
+      "hash": "0bcfad38fddbfa66",
+      "screen": "+--------+\n|@E.....E|\n|........|\n|........|\n|..##..#E|\n|........|\n|.+.#....|\n|#.+...#+|\n|.....#..|\n+--------+\nHP [##########] 10/10   分数 0   第 0 帧\n攻击：就绪   状态：活着\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地",
+      "mutant": null
+    }
+  }
+}

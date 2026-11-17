@@ -1,0 +1,187 @@
+{
+  "seed": 6,
+  "initialHash": "0bcfad38fddbfa66",
+  "mutant": null,
+  "agentClaims": {
+    "finishSummary": null,
+    "notes": [],
+    "hypotheses": [
+      {
+        "id": "H1",
+        "text": "Movement auto-collects pickups when stepping onto them (no pickup command needed).",
+        "status": "confirmed",
+        "statusWhy": "First move at frame 1 collected a '+' that was on [7,0]; pickupCount dropped from 4 to 3 without using pickup."
+      },
+      {
+        "id": "H2",
+        "text": "Enemies can evade attacks by moving out of adjacency range during the player's attack animation frame. Cornering enemies may prevent escape.",
+        "status": "proposed",
+        "statusWhy": ""
+      }
+    ],
+    "goals": []
+  },
+  "notary": {
+    "mutant": null,
+    "diverged": false,
+    "firstStep": null,
+    "firstFields": [],
+    "masked": false,
+    "divergedFrames": 0,
+    "minimized": null
+  },
+  "evidenceConsistent": true,
+  "coverage": {
+    "ticks": 22,
+    "cellsVisited": 10,
+    "cellsTotal": 64,
+    "hpSeen": [
+      10
+    ],
+    "hpZeroReached": false,
+    "hpBelowZeroReached": false,
+    "hpAboveMaxReached": false,
+    "died": false,
+    "adjacentEnemyReached": true,
+    "touchedByEnemy": false,
+    "stoodOnPickup": false,
+    "pickupAtFullHp": false,
+    "pickupsTaken": 0,
+    "kills": 2,
+    "attacksWhileCooldown": 0,
+    "wallAttempts": 0,
+    "boundaryAttempts": 0
+  },
+  "predictionStats": {
+    "checked": 23,
+    "staticChecks": 1,
+    "given": 22,
+    "missing": 1,
+    "fields": 136,
+    "ok": 120,
+    "violated": 16,
+    "unverifiable": 0,
+    "surpriseGiven": 17,
+    "surpriseUnexpected": 1,
+    "surpriseMalformed": 0,
+    "violatedButNotSurprised": 8
+  },
+  "hypothesisChecks": [
+    {
+      "id": "H1",
+      "checks": 0,
+      "supported": 0,
+      "contradicted": 0,
+      "unverifiable": 0
+    },
+    {
+      "id": "H2",
+      "checks": 14,
+      "supported": 12,
+      "contradicted": 2,
+      "unverifiable": 0
+    }
+  ],
+  "hypothesisStats": {
+    "proposed": 1,
+    "confirmed": 1,
+    "retired": 0,
+    "revised": 0,
+    "plainNotes": 0,
+    "attributed": 4,
+    "unattributed": 19,
+    "unknownTarget": 0,
+    "malformed": 0,
+    "notChecked": 0,
+    "fieldAbsent": 0,
+    "contradictedNotRetired": 1,
+    "confirmedNoChecks": 1
+  },
+  "goalChecks": [],
+  "goalStats": null,
+  "fullWorldActions": [
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    }
+  ]
+}

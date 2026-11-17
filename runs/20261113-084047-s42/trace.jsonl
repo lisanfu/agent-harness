@@ -1,0 +1,1 @@
+{"index":1,"at":"2026-11-13T00:40:47.687Z","decision":{"thought":"脚本耗尽，收尾","call":{"name":"finish","args":{"summary":"mock 脚本耗尽"}}},"result":{"ok":true,"output":"已收尾：mock 脚本耗尽"},"stateHash":"8b1708f197273e11","contextChars":665,"brainMs":1,"toolMs":1}

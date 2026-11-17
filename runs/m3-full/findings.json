@@ -1,0 +1,6513 @@
+{
+  "at": "2026-11-12T23:30:22.528Z",
+  "params": {
+    "seeds": 8,
+    "salts": 3,
+    "len": 80,
+    "ddPerMutant": 2,
+    "ddMaxTests": 400,
+    "longLen": 400,
+    "longSalts": 12,
+    "curveSeeds": 6,
+    "curveSalts": 2
+  },
+  "verdict": {
+    "determinismBaseline": true,
+    "undetectedAtShortLen": [],
+    "rescuedByMoreExploration": [],
+    "trulyEquivalent": [],
+    "detectionRateOverall": 0.7118055555555556,
+    "singleMutantDetection": [
+      {
+        "id": "M01",
+        "rate": 1
+      },
+      {
+        "id": "M02",
+        "rate": 1
+      },
+      {
+        "id": "M03",
+        "rate": 0.75
+      },
+      {
+        "id": "M04",
+        "rate": 0.875
+      },
+      {
+        "id": "M05",
+        "rate": 1
+      },
+      {
+        "id": "M06",
+        "rate": 0.25
+      },
+      {
+        "id": "M07",
+        "rate": 0.041666666666666664
+      },
+      {
+        "id": "M08",
+        "rate": 0.875
+      },
+      {
+        "id": "M09",
+        "rate": 0.125
+      }
+    ],
+    "maskedTotal": 15,
+    "missedByFinalStateOnly": 15,
+    "ddminStillDiverges": 1,
+    "ddminOneMinimalRate": 1,
+    "ddminCompression": 0.8994565217391305,
+    "ddminBudgetExhausted": 0,
+    "hashSensitivity": true,
+    "structuralInvariance": true,
+    "hardToReachAt80": [
+      "M06",
+      "M07",
+      "M09"
+    ],
+    "coverageCurve": [
+      {
+        "id": "M01",
+        "rates": [
+          {
+            "len": 10,
+            "rate": 0.9166666666666666
+          },
+          {
+            "len": 20,
+            "rate": 1
+          },
+          {
+            "len": 40,
+            "rate": 1
+          },
+          {
+            "len": 80,
+            "rate": 1
+          },
+          {
+            "len": 160,
+            "rate": 1
+          },
+          {
+            "len": 320,
+            "rate": 1
+          }
+        ]
+      },
+      {
+        "id": "M02",
+        "rates": [
+          {
+            "len": 10,
+            "rate": 1
+          },
+          {
+            "len": 20,
+            "rate": 1
+          },
+          {
+            "len": 40,
+            "rate": 1
+          },
+          {
+            "len": 80,
+            "rate": 1
+          },
+          {
+            "len": 160,
+            "rate": 1
+          },
+          {
+            "len": 320,
+            "rate": 1
+          }
+        ]
+      },
+      {
+        "id": "M03",
+        "rates": [
+          {
+            "len": 10,
+            "rate": 0.08333333333333333
+          },
+          {
+            "len": 20,
+            "rate": 0.5
+          },
+          {
+            "len": 40,
+            "rate": 0.75
+          },
+          {
+            "len": 80,
+            "rate": 0.8333333333333334
+          },
+          {
+            "len": 160,
+            "rate": 1
+          },
+          {
+            "len": 320,
+            "rate": 1
+          }
+        ]
+      },
+      {
+        "id": "M04",
+        "rates": [
+          {
+            "len": 10,
+            "rate": 0.25
+          },
+          {
+            "len": 20,
+            "rate": 0.5833333333333334
+          },
+          {
+            "len": 40,
+            "rate": 0.8333333333333334
+          },
+          {
+            "len": 80,
+            "rate": 0.8333333333333334
+          },
+          {
+            "len": 160,
+            "rate": 0.9166666666666666
+          },
+          {
+            "len": 320,
+            "rate": 0.9166666666666666
+          }
+        ]
+      },
+      {
+        "id": "M05",
+        "rates": [
+          {
+            "len": 10,
+            "rate": 1
+          },
+          {
+            "len": 20,
+            "rate": 1
+          },
+          {
+            "len": 40,
+            "rate": 1
+          },
+          {
+            "len": 80,
+            "rate": 1
+          },
+          {
+            "len": 160,
+            "rate": 1
+          },
+          {
+            "len": 320,
+            "rate": 1
+          }
+        ]
+      },
+      {
+        "id": "M06",
+        "rates": [
+          {
+            "len": 10,
+            "rate": 0
+          },
+          {
+            "len": 20,
+            "rate": 0
+          },
+          {
+            "len": 40,
+            "rate": 0.08333333333333333
+          },
+          {
+            "len": 80,
+            "rate": 0.16666666666666666
+          },
+          {
+            "len": 160,
+            "rate": 0.25
+          },
+          {
+            "len": 320,
+            "rate": 0.5
+          }
+        ]
+      },
+      {
+        "id": "M07",
+        "rates": [
+          {
+            "len": 10,
+            "rate": 0
+          },
+          {
+            "len": 20,
+            "rate": 0
+          },
+          {
+            "len": 40,
+            "rate": 0.08333333333333333
+          },
+          {
+            "len": 80,
+            "rate": 0.08333333333333333
+          },
+          {
+            "len": 160,
+            "rate": 0.08333333333333333
+          },
+          {
+            "len": 320,
+            "rate": 0.16666666666666666
+          }
+        ]
+      },
+      {
+        "id": "M08",
+        "rates": [
+          {
+            "len": 10,
+            "rate": 0.25
+          },
+          {
+            "len": 20,
+            "rate": 0.5833333333333334
+          },
+          {
+            "len": 40,
+            "rate": 0.8333333333333334
+          },
+          {
+            "len": 80,
+            "rate": 0.8333333333333334
+          },
+          {
+            "len": 160,
+            "rate": 0.9166666666666666
+          },
+          {
+            "len": 320,
+            "rate": 0.9166666666666666
+          }
+        ]
+      },
+      {
+        "id": "M09",
+        "rates": [
+          {
+            "len": 10,
+            "rate": 0.08333333333333333
+          },
+          {
+            "len": 20,
+            "rate": 0.08333333333333333
+          },
+          {
+            "len": 40,
+            "rate": 0.08333333333333333
+          },
+          {
+            "len": 80,
+            "rate": 0.16666666666666666
+          },
+          {
+            "len": 160,
+            "rate": 0.25
+          },
+          {
+            "len": 320,
+            "rate": 0.3333333333333333
+          }
+        ]
+      },
+      {
+        "id": "D01",
+        "rates": [
+          {
+            "len": 10,
+            "rate": 0.08333333333333333
+          },
+          {
+            "len": 20,
+            "rate": 0.5
+          },
+          {
+            "len": 40,
+            "rate": 0.75
+          },
+          {
+            "len": 80,
+            "rate": 0.8333333333333334
+          },
+          {
+            "len": 160,
+            "rate": 1
+          },
+          {
+            "len": 320,
+            "rate": 1
+          }
+        ]
+      },
+      {
+        "id": "D02",
+        "rates": [
+          {
+            "len": 10,
+            "rate": 0.25
+          },
+          {
+            "len": 20,
+            "rate": 0.5833333333333334
+          },
+          {
+            "len": 40,
+            "rate": 0.8333333333333334
+          },
+          {
+            "len": 80,
+            "rate": 0.8333333333333334
+          },
+          {
+            "len": 160,
+            "rate": 0.9166666666666666
+          },
+          {
+            "len": 320,
+            "rate": 0.9166666666666666
+          }
+        ]
+      },
+      {
+        "id": "D03",
+        "rates": [
+          {
+            "len": 10,
+            "rate": 1
+          },
+          {
+            "len": 20,
+            "rate": 1
+          },
+          {
+            "len": 40,
+            "rate": 1
+          },
+          {
+            "len": 80,
+            "rate": 1
+          },
+          {
+            "len": 160,
+            "rate": 1
+          },
+          {
+            "len": 320,
+            "rate": 1
+          }
+        ]
+      }
+    ],
+    "avgSubsystemBreadth": 1.25
+  },
+  "e1": {
+    "total": 24,
+    "inconsistent": 0,
+    "failures": [],
+    "pass": true
+  },
+  "perMutant": [
+    {
+      "id": "M01",
+      "label": "墙不再挡路（可穿墙）",
+      "removed": [
+        "wallBlocks"
+      ],
+      "total": 24,
+      "diverged": 24,
+      "detectionRate": 1,
+      "equivalent": false,
+      "firstStep": {
+        "min": 1,
+        "max": 10,
+        "mean": 3,
+        "median": 2
+      },
+      "masked": 0,
+      "finalOnlyDetects": 24,
+      "missedByFinalOnly": 0
+    },
+    {
+      "id": "M02",
+      "label": "敌人不再巡逻（静止）",
+      "removed": [
+        "enemyPatrol"
+      ],
+      "total": 24,
+      "diverged": 24,
+      "detectionRate": 1,
+      "equivalent": false,
+      "firstStep": {
+        "min": 1,
+        "max": 1,
+        "mean": 1,
+        "median": 1
+      },
+      "masked": 0,
+      "finalOnlyDetects": 24,
+      "missedByFinalOnly": 0
+    },
+    {
+      "id": "M03",
+      "label": "接触不再扣血",
+      "removed": [
+        "contactDamage"
+      ],
+      "total": 24,
+      "diverged": 18,
+      "detectionRate": 0.75,
+      "equivalent": false,
+      "firstStep": {
+        "min": 7,
+        "max": 77,
+        "mean": 28,
+        "median": 16
+      },
+      "masked": 1,
+      "finalOnlyDetects": 17,
+      "missedByFinalOnly": 1
+    },
+    {
+      "id": "M04",
+      "label": "攻击不再杀死敌人",
+      "removed": [
+        "attackKills"
+      ],
+      "total": 24,
+      "diverged": 21,
+      "detectionRate": 0.875,
+      "equivalent": false,
+      "firstStep": {
+        "min": 6,
+        "max": 73,
+        "mean": 32,
+        "median": 32
+      },
+      "masked": 0,
+      "finalOnlyDetects": 21,
+      "missedByFinalOnly": 0
+    },
+    {
+      "id": "M05",
+      "label": "攻击没有冷却",
+      "removed": [
+        "attackCooldown"
+      ],
+      "total": 24,
+      "diverged": 24,
+      "detectionRate": 1,
+      "equivalent": false,
+      "firstStep": {
+        "min": 1,
+        "max": 15,
+        "mean": 5,
+        "median": 3
+      },
+      "masked": 13,
+      "finalOnlyDetects": 11,
+      "missedByFinalOnly": 13
+    },
+    {
+      "id": "M06",
+      "label": "拾取不再回血",
+      "removed": [
+        "pickupHeals"
+      ],
+      "total": 24,
+      "diverged": 6,
+      "detectionRate": 0.25,
+      "equivalent": false,
+      "firstStep": {
+        "min": 12,
+        "max": 77,
+        "mean": 44,
+        "median": 37
+      },
+      "masked": 0,
+      "finalOnlyDetects": 6,
+      "missedByFinalOnly": 0
+    },
+    {
+      "id": "M07",
+      "label": "血量归零不再死亡",
+      "removed": [
+        "deathAtZeroHp"
+      ],
+      "total": 24,
+      "diverged": 1,
+      "detectionRate": 0.041666666666666664,
+      "equivalent": false,
+      "firstStep": {
+        "min": 22,
+        "max": 22,
+        "mean": 22,
+        "median": 22
+      },
+      "masked": 0,
+      "finalOnlyDetects": 1,
+      "missedByFinalOnly": 0
+    },
+    {
+      "id": "M08",
+      "label": "击杀不再计分",
+      "removed": [
+        "scoreOnKill"
+      ],
+      "total": 24,
+      "diverged": 21,
+      "detectionRate": 0.875,
+      "equivalent": false,
+      "firstStep": {
+        "min": 6,
+        "max": 73,
+        "mean": 32,
+        "median": 32
+      },
+      "masked": 0,
+      "finalOnlyDetects": 21,
+      "missedByFinalOnly": 0
+    },
+    {
+      "id": "M09",
+      "label": "血量不再夹取（可超上限/负）",
+      "removed": [
+        "hpClamp"
+      ],
+      "total": 24,
+      "diverged": 3,
+      "detectionRate": 0.125,
+      "equivalent": false,
+      "firstStep": {
+        "min": 47,
+        "max": 73,
+        "mean": 60,
+        "median": 61
+      },
+      "masked": 0,
+      "finalOnlyDetects": 3,
+      "missedByFinalOnly": 0
+    },
+    {
+      "id": "D01",
+      "label": "不扣血且不死",
+      "removed": [
+        "contactDamage",
+        "deathAtZeroHp"
+      ],
+      "total": 24,
+      "diverged": 18,
+      "detectionRate": 0.75,
+      "equivalent": false,
+      "firstStep": {
+        "min": 7,
+        "max": 77,
+        "mean": 28,
+        "median": 16
+      },
+      "masked": 1,
+      "finalOnlyDetects": 17,
+      "missedByFinalOnly": 1
+    },
+    {
+      "id": "D02",
+      "label": "不击杀且不计分",
+      "removed": [
+        "attackKills",
+        "scoreOnKill"
+      ],
+      "total": 24,
+      "diverged": 21,
+      "detectionRate": 0.875,
+      "equivalent": false,
+      "firstStep": {
+        "min": 6,
+        "max": 73,
+        "mean": 32,
+        "median": 32
+      },
+      "masked": 0,
+      "finalOnlyDetects": 21,
+      "missedByFinalOnly": 0
+    },
+    {
+      "id": "D03",
+      "label": "敌人静止且不扣血",
+      "removed": [
+        "enemyPatrol",
+        "contactDamage"
+      ],
+      "total": 24,
+      "diverged": 24,
+      "detectionRate": 1,
+      "equivalent": false,
+      "firstStep": {
+        "min": 1,
+        "max": 1,
+        "mean": 1,
+        "median": 1
+      },
+      "masked": 0,
+      "finalOnlyDetects": 24,
+      "missedByFinalOnly": 0
+    }
+  ],
+  "e6": {
+    "structuralViolations": [],
+    "breadth": {
+      "M01": {
+        "subsystems": [
+          "enemies",
+          "player"
+        ],
+        "avgFields": 2,
+        "cases": 24
+      },
+      "M02": {
+        "subsystems": [
+          "enemies"
+        ],
+        "avgFields": 3,
+        "cases": 24
+      },
+      "M03": {
+        "subsystems": [
+          "player"
+        ],
+        "avgFields": 1,
+        "cases": 18
+      },
+      "M04": {
+        "subsystems": [
+          "enemies",
+          "player"
+        ],
+        "avgFields": 4,
+        "cases": 21
+      },
+      "M05": {
+        "subsystems": [
+          "player"
+        ],
+        "avgFields": 1,
+        "cases": 24
+      },
+      "M06": {
+        "subsystems": [
+          "player"
+        ],
+        "avgFields": 1,
+        "cases": 6
+      },
+      "M07": {
+        "subsystems": [
+          "player"
+        ],
+        "avgFields": 1,
+        "cases": 1
+      },
+      "M08": {
+        "subsystems": [
+          "player"
+        ],
+        "avgFields": 1,
+        "cases": 21
+      },
+      "M09": {
+        "subsystems": [
+          "player"
+        ],
+        "avgFields": 1,
+        "cases": 3
+      },
+      "D01": {
+        "subsystems": [
+          "player"
+        ],
+        "avgFields": 1,
+        "cases": 18
+      },
+      "D02": {
+        "subsystems": [
+          "enemies",
+          "player"
+        ],
+        "avgFields": 4,
+        "cases": 21
+      },
+      "D03": {
+        "subsystems": [
+          "enemies"
+        ],
+        "avgFields": 3,
+        "cases": 24
+      }
+    },
+    "pass": true
+  },
+  "e2b": [],
+  "e2c": [
+    {
+      "id": "M01",
+      "removed": [
+        "wallBlocks"
+      ],
+      "curve": [
+        {
+          "length": 10,
+          "diverged": 11,
+          "total": 12,
+          "rate": 0.9166666666666666,
+          "firstStep": {
+            "min": 1,
+            "max": 5,
+            "mean": 2,
+            "median": 2
+          }
+        },
+        {
+          "length": 20,
+          "diverged": 12,
+          "total": 12,
+          "rate": 1,
+          "firstStep": {
+            "min": 1,
+            "max": 14,
+            "mean": 3,
+            "median": 3
+          }
+        },
+        {
+          "length": 40,
+          "diverged": 12,
+          "total": 12,
+          "rate": 1,
+          "firstStep": {
+            "min": 1,
+            "max": 14,
+            "mean": 3,
+            "median": 3
+          }
+        },
+        {
+          "length": 80,
+          "diverged": 12,
+          "total": 12,
+          "rate": 1,
+          "firstStep": {
+            "min": 1,
+            "max": 14,
+            "mean": 3,
+            "median": 3
+          }
+        },
+        {
+          "length": 160,
+          "diverged": 12,
+          "total": 12,
+          "rate": 1,
+          "firstStep": {
+            "min": 1,
+            "max": 14,
+            "mean": 3,
+            "median": 3
+          }
+        },
+        {
+          "length": 320,
+          "diverged": 12,
+          "total": 12,
+          "rate": 1,
+          "firstStep": {
+            "min": 1,
+            "max": 14,
+            "mean": 3,
+            "median": 3
+          }
+        }
+      ]
+    },
+    {
+      "id": "M02",
+      "removed": [
+        "enemyPatrol"
+      ],
+      "curve": [
+        {
+          "length": 10,
+          "diverged": 12,
+          "total": 12,
+          "rate": 1,
+          "firstStep": {
+            "min": 1,
+            "max": 1,
+            "mean": 1,
+            "median": 1
+          }
+        },
+        {
+          "length": 20,
+          "diverged": 12,
+          "total": 12,
+          "rate": 1,
+          "firstStep": {
+            "min": 1,
+            "max": 1,
+            "mean": 1,
+            "median": 1
+          }
+        },
+        {
+          "length": 40,
+          "diverged": 12,
+          "total": 12,
+          "rate": 1,
+          "firstStep": {
+            "min": 1,
+            "max": 1,
+            "mean": 1,
+            "median": 1
+          }
+        },
+        {
+          "length": 80,
+          "diverged": 12,
+          "total": 12,
+          "rate": 1,
+          "firstStep": {
+            "min": 1,
+            "max": 1,
+            "mean": 1,
+            "median": 1
+          }
+        },
+        {
+          "length": 160,
+          "diverged": 12,
+          "total": 12,
+          "rate": 1,
+          "firstStep": {
+            "min": 1,
+            "max": 1,
+            "mean": 1,
+            "median": 1
+          }
+        },
+        {
+          "length": 320,
+          "diverged": 12,
+          "total": 12,
+          "rate": 1,
+          "firstStep": {
+            "min": 1,
+            "max": 1,
+            "mean": 1,
+            "median": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "M03",
+      "removed": [
+        "contactDamage"
+      ],
+      "curve": [
+        {
+          "length": 10,
+          "diverged": 1,
+          "total": 12,
+          "rate": 0.08333333333333333,
+          "firstStep": {
+            "min": 7,
+            "max": 7,
+            "mean": 7,
+            "median": 7
+          }
+        },
+        {
+          "length": 20,
+          "diverged": 6,
+          "total": 12,
+          "rate": 0.5,
+          "firstStep": {
+            "min": 7,
+            "max": 17,
+            "mean": 13,
+            "median": 13
+          }
+        },
+        {
+          "length": 40,
+          "diverged": 9,
+          "total": 12,
+          "rate": 0.75,
+          "firstStep": {
+            "min": 7,
+            "max": 32,
+            "mean": 18,
+            "median": 15
+          }
+        },
+        {
+          "length": 80,
+          "diverged": 10,
+          "total": 12,
+          "rate": 0.8333333333333334,
+          "firstStep": {
+            "min": 7,
+            "max": 54,
+            "mean": 22,
+            "median": 17
+          }
+        },
+        {
+          "length": 160,
+          "diverged": 12,
+          "total": 12,
+          "rate": 1,
+          "firstStep": {
+            "min": 7,
+            "max": 158,
+            "mean": 43,
+            "median": 28
+          }
+        },
+        {
+          "length": 320,
+          "diverged": 12,
+          "total": 12,
+          "rate": 1,
+          "firstStep": {
+            "min": 7,
+            "max": 158,
+            "mean": 43,
+            "median": 28
+          }
+        }
+      ]
+    },
+    {
+      "id": "M04",
+      "removed": [
+        "attackKills"
+      ],
+      "curve": [
+        {
+          "length": 10,
+          "diverged": 3,
+          "total": 12,
+          "rate": 0.25,
+          "firstStep": {
+            "min": 7,
+            "max": 10,
+            "mean": 9,
+            "median": 9
+          }
+        },
+        {
+          "length": 20,
+          "diverged": 7,
+          "total": 12,
+          "rate": 0.5833333333333334,
+          "firstStep": {
+            "min": 7,
+            "max": 16,
+            "mean": 11,
+            "median": 12
+          }
+        },
+        {
+          "length": 40,
+          "diverged": 10,
+          "total": 12,
+          "rate": 0.8333333333333334,
+          "firstStep": {
+            "min": 7,
+            "max": 35,
+            "mean": 18,
+            "median": 14
+          }
+        },
+        {
+          "length": 80,
+          "diverged": 10,
+          "total": 12,
+          "rate": 0.8333333333333334,
+          "firstStep": {
+            "min": 7,
+            "max": 35,
+            "mean": 18,
+            "median": 14
+          }
+        },
+        {
+          "length": 160,
+          "diverged": 11,
+          "total": 12,
+          "rate": 0.9166666666666666,
+          "firstStep": {
+            "min": 7,
+            "max": 159,
+            "mean": 31,
+            "median": 14
+          }
+        },
+        {
+          "length": 320,
+          "diverged": 11,
+          "total": 12,
+          "rate": 0.9166666666666666,
+          "firstStep": {
+            "min": 7,
+            "max": 159,
+            "mean": 31,
+            "median": 14
+          }
+        }
+      ]
+    },
+    {
+      "id": "M05",
+      "removed": [
+        "attackCooldown"
+      ],
+      "curve": [
+        {
+          "length": 10,
+          "diverged": 12,
+          "total": 12,
+          "rate": 1,
+          "firstStep": {
+            "min": 1,
+            "max": 10,
+            "mean": 5,
+            "median": 4
+          }
+        },
+        {
+          "length": 20,
+          "diverged": 12,
+          "total": 12,
+          "rate": 1,
+          "firstStep": {
+            "min": 1,
+            "max": 10,
+            "mean": 5,
+            "median": 4
+          }
+        },
+        {
+          "length": 40,
+          "diverged": 12,
+          "total": 12,
+          "rate": 1,
+          "firstStep": {
+            "min": 1,
+            "max": 10,
+            "mean": 5,
+            "median": 4
+          }
+        },
+        {
+          "length": 80,
+          "diverged": 12,
+          "total": 12,
+          "rate": 1,
+          "firstStep": {
+            "min": 1,
+            "max": 10,
+            "mean": 5,
+            "median": 4
+          }
+        },
+        {
+          "length": 160,
+          "diverged": 12,
+          "total": 12,
+          "rate": 1,
+          "firstStep": {
+            "min": 1,
+            "max": 10,
+            "mean": 5,
+            "median": 4
+          }
+        },
+        {
+          "length": 320,
+          "diverged": 12,
+          "total": 12,
+          "rate": 1,
+          "firstStep": {
+            "min": 1,
+            "max": 10,
+            "mean": 5,
+            "median": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "M06",
+      "removed": [
+        "pickupHeals"
+      ],
+      "curve": [
+        {
+          "length": 10,
+          "diverged": 0,
+          "total": 12,
+          "rate": 0,
+          "firstStep": null
+        },
+        {
+          "length": 20,
+          "diverged": 0,
+          "total": 12,
+          "rate": 0,
+          "firstStep": null
+        },
+        {
+          "length": 40,
+          "diverged": 1,
+          "total": 12,
+          "rate": 0.08333333333333333,
+          "firstStep": {
+            "min": 36,
+            "max": 36,
+            "mean": 36,
+            "median": 36
+          }
+        },
+        {
+          "length": 80,
+          "diverged": 2,
+          "total": 12,
+          "rate": 0.16666666666666666,
+          "firstStep": {
+            "min": 36,
+            "max": 60,
+            "mean": 48,
+            "median": 60
+          }
+        },
+        {
+          "length": 160,
+          "diverged": 3,
+          "total": 12,
+          "rate": 0.25,
+          "firstStep": {
+            "min": 36,
+            "max": 87,
+            "mean": 61,
+            "median": 60
+          }
+        },
+        {
+          "length": 320,
+          "diverged": 6,
+          "total": 12,
+          "rate": 0.5,
+          "firstStep": {
+            "min": 36,
+            "max": 292,
+            "mean": 159,
+            "median": 207
+          }
+        }
+      ]
+    },
+    {
+      "id": "M07",
+      "removed": [
+        "deathAtZeroHp"
+      ],
+      "curve": [
+        {
+          "length": 10,
+          "diverged": 0,
+          "total": 12,
+          "rate": 0,
+          "firstStep": null
+        },
+        {
+          "length": 20,
+          "diverged": 0,
+          "total": 12,
+          "rate": 0,
+          "firstStep": null
+        },
+        {
+          "length": 40,
+          "diverged": 1,
+          "total": 12,
+          "rate": 0.08333333333333333,
+          "firstStep": {
+            "min": 31,
+            "max": 31,
+            "mean": 31,
+            "median": 31
+          }
+        },
+        {
+          "length": 80,
+          "diverged": 1,
+          "total": 12,
+          "rate": 0.08333333333333333,
+          "firstStep": {
+            "min": 31,
+            "max": 31,
+            "mean": 31,
+            "median": 31
+          }
+        },
+        {
+          "length": 160,
+          "diverged": 1,
+          "total": 12,
+          "rate": 0.08333333333333333,
+          "firstStep": {
+            "min": 31,
+            "max": 31,
+            "mean": 31,
+            "median": 31
+          }
+        },
+        {
+          "length": 320,
+          "diverged": 2,
+          "total": 12,
+          "rate": 0.16666666666666666,
+          "firstStep": {
+            "min": 31,
+            "max": 214,
+            "mean": 123,
+            "median": 214
+          }
+        }
+      ]
+    },
+    {
+      "id": "M08",
+      "removed": [
+        "scoreOnKill"
+      ],
+      "curve": [
+        {
+          "length": 10,
+          "diverged": 3,
+          "total": 12,
+          "rate": 0.25,
+          "firstStep": {
+            "min": 7,
+            "max": 10,
+            "mean": 9,
+            "median": 9
+          }
+        },
+        {
+          "length": 20,
+          "diverged": 7,
+          "total": 12,
+          "rate": 0.5833333333333334,
+          "firstStep": {
+            "min": 7,
+            "max": 16,
+            "mean": 11,
+            "median": 12
+          }
+        },
+        {
+          "length": 40,
+          "diverged": 10,
+          "total": 12,
+          "rate": 0.8333333333333334,
+          "firstStep": {
+            "min": 7,
+            "max": 35,
+            "mean": 18,
+            "median": 14
+          }
+        },
+        {
+          "length": 80,
+          "diverged": 10,
+          "total": 12,
+          "rate": 0.8333333333333334,
+          "firstStep": {
+            "min": 7,
+            "max": 35,
+            "mean": 18,
+            "median": 14
+          }
+        },
+        {
+          "length": 160,
+          "diverged": 11,
+          "total": 12,
+          "rate": 0.9166666666666666,
+          "firstStep": {
+            "min": 7,
+            "max": 159,
+            "mean": 31,
+            "median": 14
+          }
+        },
+        {
+          "length": 320,
+          "diverged": 11,
+          "total": 12,
+          "rate": 0.9166666666666666,
+          "firstStep": {
+            "min": 7,
+            "max": 159,
+            "mean": 31,
+            "median": 14
+          }
+        }
+      ]
+    },
+    {
+      "id": "M09",
+      "removed": [
+        "hpClamp"
+      ],
+      "curve": [
+        {
+          "length": 10,
+          "diverged": 1,
+          "total": 12,
+          "rate": 0.08333333333333333,
+          "firstStep": {
+            "min": 5,
+            "max": 5,
+            "mean": 5,
+            "median": 5
+          }
+        },
+        {
+          "length": 20,
+          "diverged": 1,
+          "total": 12,
+          "rate": 0.08333333333333333,
+          "firstStep": {
+            "min": 5,
+            "max": 5,
+            "mean": 5,
+            "median": 5
+          }
+        },
+        {
+          "length": 40,
+          "diverged": 1,
+          "total": 12,
+          "rate": 0.08333333333333333,
+          "firstStep": {
+            "min": 5,
+            "max": 5,
+            "mean": 5,
+            "median": 5
+          }
+        },
+        {
+          "length": 80,
+          "diverged": 2,
+          "total": 12,
+          "rate": 0.16666666666666666,
+          "firstStep": {
+            "min": 5,
+            "max": 60,
+            "mean": 33,
+            "median": 60
+          }
+        },
+        {
+          "length": 160,
+          "diverged": 3,
+          "total": 12,
+          "rate": 0.25,
+          "firstStep": {
+            "min": 5,
+            "max": 87,
+            "mean": 51,
+            "median": 60
+          }
+        },
+        {
+          "length": 320,
+          "diverged": 4,
+          "total": 12,
+          "rate": 0.3333333333333333,
+          "firstStep": {
+            "min": 5,
+            "max": 272,
+            "mean": 106,
+            "median": 87
+          }
+        }
+      ]
+    },
+    {
+      "id": "D01",
+      "removed": [
+        "contactDamage",
+        "deathAtZeroHp"
+      ],
+      "curve": [
+        {
+          "length": 10,
+          "diverged": 1,
+          "total": 12,
+          "rate": 0.08333333333333333,
+          "firstStep": {
+            "min": 7,
+            "max": 7,
+            "mean": 7,
+            "median": 7
+          }
+        },
+        {
+          "length": 20,
+          "diverged": 6,
+          "total": 12,
+          "rate": 0.5,
+          "firstStep": {
+            "min": 7,
+            "max": 17,
+            "mean": 13,
+            "median": 13
+          }
+        },
+        {
+          "length": 40,
+          "diverged": 9,
+          "total": 12,
+          "rate": 0.75,
+          "firstStep": {
+            "min": 7,
+            "max": 32,
+            "mean": 18,
+            "median": 15
+          }
+        },
+        {
+          "length": 80,
+          "diverged": 10,
+          "total": 12,
+          "rate": 0.8333333333333334,
+          "firstStep": {
+            "min": 7,
+            "max": 54,
+            "mean": 22,
+            "median": 17
+          }
+        },
+        {
+          "length": 160,
+          "diverged": 12,
+          "total": 12,
+          "rate": 1,
+          "firstStep": {
+            "min": 7,
+            "max": 158,
+            "mean": 43,
+            "median": 28
+          }
+        },
+        {
+          "length": 320,
+          "diverged": 12,
+          "total": 12,
+          "rate": 1,
+          "firstStep": {
+            "min": 7,
+            "max": 158,
+            "mean": 43,
+            "median": 28
+          }
+        }
+      ]
+    },
+    {
+      "id": "D02",
+      "removed": [
+        "attackKills",
+        "scoreOnKill"
+      ],
+      "curve": [
+        {
+          "length": 10,
+          "diverged": 3,
+          "total": 12,
+          "rate": 0.25,
+          "firstStep": {
+            "min": 7,
+            "max": 10,
+            "mean": 9,
+            "median": 9
+          }
+        },
+        {
+          "length": 20,
+          "diverged": 7,
+          "total": 12,
+          "rate": 0.5833333333333334,
+          "firstStep": {
+            "min": 7,
+            "max": 16,
+            "mean": 11,
+            "median": 12
+          }
+        },
+        {
+          "length": 40,
+          "diverged": 10,
+          "total": 12,
+          "rate": 0.8333333333333334,
+          "firstStep": {
+            "min": 7,
+            "max": 35,
+            "mean": 18,
+            "median": 14
+          }
+        },
+        {
+          "length": 80,
+          "diverged": 10,
+          "total": 12,
+          "rate": 0.8333333333333334,
+          "firstStep": {
+            "min": 7,
+            "max": 35,
+            "mean": 18,
+            "median": 14
+          }
+        },
+        {
+          "length": 160,
+          "diverged": 11,
+          "total": 12,
+          "rate": 0.9166666666666666,
+          "firstStep": {
+            "min": 7,
+            "max": 159,
+            "mean": 31,
+            "median": 14
+          }
+        },
+        {
+          "length": 320,
+          "diverged": 11,
+          "total": 12,
+          "rate": 0.9166666666666666,
+          "firstStep": {
+            "min": 7,
+            "max": 159,
+            "mean": 31,
+            "median": 14
+          }
+        }
+      ]
+    },
+    {
+      "id": "D03",
+      "removed": [
+        "enemyPatrol",
+        "contactDamage"
+      ],
+      "curve": [
+        {
+          "length": 10,
+          "diverged": 12,
+          "total": 12,
+          "rate": 1,
+          "firstStep": {
+            "min": 1,
+            "max": 1,
+            "mean": 1,
+            "median": 1
+          }
+        },
+        {
+          "length": 20,
+          "diverged": 12,
+          "total": 12,
+          "rate": 1,
+          "firstStep": {
+            "min": 1,
+            "max": 1,
+            "mean": 1,
+            "median": 1
+          }
+        },
+        {
+          "length": 40,
+          "diverged": 12,
+          "total": 12,
+          "rate": 1,
+          "firstStep": {
+            "min": 1,
+            "max": 1,
+            "mean": 1,
+            "median": 1
+          }
+        },
+        {
+          "length": 80,
+          "diverged": 12,
+          "total": 12,
+          "rate": 1,
+          "firstStep": {
+            "min": 1,
+            "max": 1,
+            "mean": 1,
+            "median": 1
+          }
+        },
+        {
+          "length": 160,
+          "diverged": 12,
+          "total": 12,
+          "rate": 1,
+          "firstStep": {
+            "min": 1,
+            "max": 1,
+            "mean": 1,
+            "median": 1
+          }
+        },
+        {
+          "length": 320,
+          "diverged": 12,
+          "total": 12,
+          "rate": 1,
+          "firstStep": {
+            "min": 1,
+            "max": 1,
+            "mean": 1,
+            "median": 1
+          }
+        }
+      ]
+    }
+  ],
+  "e4": [
+    {
+      "mutant": "M01",
+      "seed": 1000,
+      "salt": 0,
+      "original": 80,
+      "minimized": 3,
+      "tests": 19,
+      "oneMinimal": true,
+      "budgetExhausted": false,
+      "stillDiverges": true,
+      "minimizedActions": [
+        {
+          "kind": "move",
+          "dir": 1
+        },
+        {
+          "kind": "wait"
+        },
+        {
+          "kind": "pickup"
+        }
+      ]
+    },
+    {
+      "mutant": "M01",
+      "seed": 1000,
+      "salt": 1,
+      "original": 80,
+      "minimized": 3,
+      "tests": 19,
+      "oneMinimal": true,
+      "budgetExhausted": false,
+      "stillDiverges": true,
+      "minimizedActions": [
+        {
+          "kind": "move",
+          "dir": 1
+        },
+        {
+          "kind": "pickup"
+        },
+        {
+          "kind": "attack"
+        }
+      ]
+    },
+    {
+      "mutant": "M02",
+      "seed": 1000,
+      "salt": 0,
+      "original": 80,
+      "minimized": 1,
+      "tests": 9,
+      "oneMinimal": true,
+      "budgetExhausted": false,
+      "stillDiverges": true,
+      "minimizedActions": [
+        {
+          "kind": "move",
+          "dir": 1
+        }
+      ]
+    },
+    {
+      "mutant": "M02",
+      "seed": 1000,
+      "salt": 1,
+      "original": 80,
+      "minimized": 1,
+      "tests": 9,
+      "oneMinimal": true,
+      "budgetExhausted": false,
+      "stillDiverges": true,
+      "minimizedActions": [
+        {
+          "kind": "move",
+          "dir": 1
+        }
+      ]
+    },
+    {
+      "mutant": "M03",
+      "seed": 1000,
+      "salt": 0,
+      "original": 80,
+      "minimized": 13,
+      "tests": 93,
+      "oneMinimal": true,
+      "budgetExhausted": false,
+      "stillDiverges": true,
+      "minimizedActions": [
+        {
+          "kind": "move",
+          "dir": 3
+        },
+        {
+          "kind": "move",
+          "dir": 3
+        },
+        {
+          "kind": "attack"
+        },
+        {
+          "kind": "attack"
+        },
+        {
+          "kind": "move",
+          "dir": 1
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "wait"
+        },
+        {
+          "kind": "attack"
+        },
+        {
+          "kind": "move",
+          "dir": 3
+        },
+        {
+          "kind": "move",
+          "dir": 3
+        }
+      ]
+    },
+    {
+      "mutant": "M03",
+      "seed": 1000,
+      "salt": 2,
+      "original": 80,
+      "minimized": 11,
+      "tests": 105,
+      "oneMinimal": true,
+      "budgetExhausted": false,
+      "stillDiverges": true,
+      "minimizedActions": [
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "attack"
+        },
+        {
+          "kind": "move",
+          "dir": 3
+        },
+        {
+          "kind": "move",
+          "dir": 1
+        },
+        {
+          "kind": "move",
+          "dir": 3
+        },
+        {
+          "kind": "move",
+          "dir": 2
+        },
+        {
+          "kind": "pickup"
+        },
+        {
+          "kind": "move",
+          "dir": 2
+        },
+        {
+          "kind": "attack"
+        },
+        {
+          "kind": "wait"
+        }
+      ]
+    },
+    {
+      "mutant": "M04",
+      "seed": 1000,
+      "salt": 0,
+      "original": 80,
+      "minimized": 13,
+      "tests": 126,
+      "oneMinimal": true,
+      "budgetExhausted": false,
+      "stillDiverges": true,
+      "minimizedActions": [
+        {
+          "kind": "attack"
+        },
+        {
+          "kind": "move",
+          "dir": 1
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "attack"
+        },
+        {
+          "kind": "move",
+          "dir": 3
+        },
+        {
+          "kind": "move",
+          "dir": 3
+        },
+        {
+          "kind": "pickup"
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "wait"
+        },
+        {
+          "kind": "attack"
+        }
+      ]
+    },
+    {
+      "mutant": "M04",
+      "seed": 1000,
+      "salt": 1,
+      "original": 80,
+      "minimized": 10,
+      "tests": 136,
+      "oneMinimal": true,
+      "budgetExhausted": false,
+      "stillDiverges": true,
+      "minimizedActions": [
+        {
+          "kind": "pickup"
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "move",
+          "dir": 2
+        },
+        {
+          "kind": "pickup"
+        },
+        {
+          "kind": "move",
+          "dir": 2
+        },
+        {
+          "kind": "attack"
+        },
+        {
+          "kind": "pickup"
+        },
+        {
+          "kind": "wait"
+        },
+        {
+          "kind": "move",
+          "dir": 2
+        },
+        {
+          "kind": "attack"
+        }
+      ]
+    },
+    {
+      "mutant": "M05",
+      "seed": 1000,
+      "salt": 0,
+      "original": 80,
+      "minimized": 1,
+      "tests": 10,
+      "oneMinimal": true,
+      "budgetExhausted": false,
+      "stillDiverges": true,
+      "minimizedActions": [
+        {
+          "kind": "attack"
+        }
+      ]
+    },
+    {
+      "mutant": "M05",
+      "seed": 1000,
+      "salt": 1,
+      "original": 80,
+      "minimized": 1,
+      "tests": 9,
+      "oneMinimal": true,
+      "budgetExhausted": false,
+      "stillDiverges": true,
+      "minimizedActions": [
+        {
+          "kind": "attack"
+        }
+      ]
+    },
+    {
+      "mutant": "M06",
+      "seed": 1000,
+      "salt": 0,
+      "original": 80,
+      "minimized": 17,
+      "tests": 196,
+      "oneMinimal": true,
+      "budgetExhausted": false,
+      "stillDiverges": true,
+      "minimizedActions": [
+        {
+          "kind": "attack"
+        },
+        {
+          "kind": "attack"
+        },
+        {
+          "kind": "move",
+          "dir": 1
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "move",
+          "dir": 2
+        },
+        {
+          "kind": "move",
+          "dir": 2
+        },
+        {
+          "kind": "move",
+          "dir": 2
+        },
+        {
+          "kind": "pickup"
+        },
+        {
+          "kind": "attack"
+        },
+        {
+          "kind": "move",
+          "dir": 1
+        },
+        {
+          "kind": "attack"
+        },
+        {
+          "kind": "pickup"
+        },
+        {
+          "kind": "move",
+          "dir": 1
+        },
+        {
+          "kind": "move",
+          "dir": 2
+        },
+        {
+          "kind": "pickup"
+        }
+      ]
+    },
+    {
+      "mutant": "M06",
+      "seed": 24757,
+      "salt": 0,
+      "original": 80,
+      "minimized": 10,
+      "tests": 110,
+      "oneMinimal": true,
+      "budgetExhausted": false,
+      "stillDiverges": true,
+      "minimizedActions": [
+        {
+          "kind": "attack"
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "wait"
+        },
+        {
+          "kind": "pickup"
+        },
+        {
+          "kind": "wait"
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "wait"
+        },
+        {
+          "kind": "move",
+          "dir": 2
+        },
+        {
+          "kind": "attack"
+        },
+        {
+          "kind": "pickup"
+        }
+      ]
+    },
+    {
+      "mutant": "M07",
+      "seed": 32676,
+      "salt": 1,
+      "original": 80,
+      "minimized": 18,
+      "tests": 191,
+      "oneMinimal": true,
+      "budgetExhausted": false,
+      "stillDiverges": true,
+      "minimizedActions": [
+        {
+          "kind": "attack"
+        },
+        {
+          "kind": "attack"
+        },
+        {
+          "kind": "move",
+          "dir": 2
+        },
+        {
+          "kind": "move",
+          "dir": 1
+        },
+        {
+          "kind": "attack"
+        },
+        {
+          "kind": "wait"
+        },
+        {
+          "kind": "move",
+          "dir": 1
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "pickup"
+        },
+        {
+          "kind": "pickup"
+        },
+        {
+          "kind": "move",
+          "dir": 3
+        },
+        {
+          "kind": "wait"
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "pickup"
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "pickup"
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "pickup"
+        }
+      ]
+    },
+    {
+      "mutant": "M08",
+      "seed": 1000,
+      "salt": 0,
+      "original": 80,
+      "minimized": 13,
+      "tests": 126,
+      "oneMinimal": true,
+      "budgetExhausted": false,
+      "stillDiverges": true,
+      "minimizedActions": [
+        {
+          "kind": "attack"
+        },
+        {
+          "kind": "move",
+          "dir": 1
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "attack"
+        },
+        {
+          "kind": "move",
+          "dir": 3
+        },
+        {
+          "kind": "move",
+          "dir": 3
+        },
+        {
+          "kind": "pickup"
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "wait"
+        },
+        {
+          "kind": "attack"
+        }
+      ]
+    },
+    {
+      "mutant": "M08",
+      "seed": 1000,
+      "salt": 1,
+      "original": 80,
+      "minimized": 10,
+      "tests": 136,
+      "oneMinimal": true,
+      "budgetExhausted": false,
+      "stillDiverges": true,
+      "minimizedActions": [
+        {
+          "kind": "pickup"
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "move",
+          "dir": 2
+        },
+        {
+          "kind": "pickup"
+        },
+        {
+          "kind": "move",
+          "dir": 2
+        },
+        {
+          "kind": "attack"
+        },
+        {
+          "kind": "pickup"
+        },
+        {
+          "kind": "wait"
+        },
+        {
+          "kind": "move",
+          "dir": 2
+        },
+        {
+          "kind": "attack"
+        }
+      ]
+    },
+    {
+      "mutant": "M09",
+      "seed": 1000,
+      "salt": 0,
+      "original": 80,
+      "minimized": 7,
+      "tests": 128,
+      "oneMinimal": true,
+      "budgetExhausted": false,
+      "stillDiverges": true,
+      "minimizedActions": [
+        {
+          "kind": "move",
+          "dir": 2
+        },
+        {
+          "kind": "move",
+          "dir": 2
+        },
+        {
+          "kind": "move",
+          "dir": 2
+        },
+        {
+          "kind": "move",
+          "dir": 2
+        },
+        {
+          "kind": "move",
+          "dir": 1
+        },
+        {
+          "kind": "move",
+          "dir": 1
+        },
+        {
+          "kind": "pickup"
+        }
+      ]
+    },
+    {
+      "mutant": "M09",
+      "seed": 48514,
+      "salt": 1,
+      "original": 80,
+      "minimized": 4,
+      "tests": 99,
+      "oneMinimal": true,
+      "budgetExhausted": false,
+      "stillDiverges": true,
+      "minimizedActions": [
+        {
+          "kind": "move",
+          "dir": 2
+        },
+        {
+          "kind": "move",
+          "dir": 1
+        },
+        {
+          "kind": "move",
+          "dir": 1
+        },
+        {
+          "kind": "pickup"
+        }
+      ]
+    },
+    {
+      "mutant": "D01",
+      "seed": 1000,
+      "salt": 0,
+      "original": 80,
+      "minimized": 13,
+      "tests": 93,
+      "oneMinimal": true,
+      "budgetExhausted": false,
+      "stillDiverges": true,
+      "minimizedActions": [
+        {
+          "kind": "move",
+          "dir": 3
+        },
+        {
+          "kind": "move",
+          "dir": 3
+        },
+        {
+          "kind": "attack"
+        },
+        {
+          "kind": "attack"
+        },
+        {
+          "kind": "move",
+          "dir": 1
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "wait"
+        },
+        {
+          "kind": "attack"
+        },
+        {
+          "kind": "move",
+          "dir": 3
+        },
+        {
+          "kind": "move",
+          "dir": 3
+        }
+      ]
+    },
+    {
+      "mutant": "D01",
+      "seed": 1000,
+      "salt": 2,
+      "original": 80,
+      "minimized": 11,
+      "tests": 105,
+      "oneMinimal": true,
+      "budgetExhausted": false,
+      "stillDiverges": true,
+      "minimizedActions": [
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "attack"
+        },
+        {
+          "kind": "move",
+          "dir": 3
+        },
+        {
+          "kind": "move",
+          "dir": 1
+        },
+        {
+          "kind": "move",
+          "dir": 3
+        },
+        {
+          "kind": "move",
+          "dir": 2
+        },
+        {
+          "kind": "pickup"
+        },
+        {
+          "kind": "move",
+          "dir": 2
+        },
+        {
+          "kind": "attack"
+        },
+        {
+          "kind": "wait"
+        }
+      ]
+    },
+    {
+      "mutant": "D02",
+      "seed": 1000,
+      "salt": 0,
+      "original": 80,
+      "minimized": 13,
+      "tests": 126,
+      "oneMinimal": true,
+      "budgetExhausted": false,
+      "stillDiverges": true,
+      "minimizedActions": [
+        {
+          "kind": "attack"
+        },
+        {
+          "kind": "move",
+          "dir": 1
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "attack"
+        },
+        {
+          "kind": "move",
+          "dir": 3
+        },
+        {
+          "kind": "move",
+          "dir": 3
+        },
+        {
+          "kind": "pickup"
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "wait"
+        },
+        {
+          "kind": "attack"
+        }
+      ]
+    },
+    {
+      "mutant": "D02",
+      "seed": 1000,
+      "salt": 1,
+      "original": 80,
+      "minimized": 10,
+      "tests": 136,
+      "oneMinimal": true,
+      "budgetExhausted": false,
+      "stillDiverges": true,
+      "minimizedActions": [
+        {
+          "kind": "pickup"
+        },
+        {
+          "kind": "move",
+          "dir": 0
+        },
+        {
+          "kind": "move",
+          "dir": 2
+        },
+        {
+          "kind": "pickup"
+        },
+        {
+          "kind": "move",
+          "dir": 2
+        },
+        {
+          "kind": "attack"
+        },
+        {
+          "kind": "pickup"
+        },
+        {
+          "kind": "wait"
+        },
+        {
+          "kind": "move",
+          "dir": 2
+        },
+        {
+          "kind": "attack"
+        }
+      ]
+    },
+    {
+      "mutant": "D03",
+      "seed": 1000,
+      "salt": 0,
+      "original": 80,
+      "minimized": 1,
+      "tests": 9,
+      "oneMinimal": true,
+      "budgetExhausted": false,
+      "stillDiverges": true,
+      "minimizedActions": [
+        {
+          "kind": "move",
+          "dir": 1
+        }
+      ]
+    },
+    {
+      "mutant": "D03",
+      "seed": 1000,
+      "salt": 1,
+      "original": 80,
+      "minimized": 1,
+      "tests": 9,
+      "oneMinimal": true,
+      "budgetExhausted": false,
+      "stillDiverges": true,
+      "minimizedActions": [
+        {
+          "kind": "move",
+          "dir": 1
+        }
+      ]
+    }
+  ],
+  "e7": {
+    "sameSeedSameActs": false,
+    "diffSeedDiffers": true,
+    "diffActsDiffer": true,
+    "pass": true
+  },
+  "cases": [
+    {
+      "mutant": "M01",
+      "seed": 1000,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 3,
+      "firstFields": [
+        "enemies[1].dir",
+        "enemies[1].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 78
+    },
+    {
+      "mutant": "M01",
+      "seed": 1000,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 3,
+      "firstFields": [
+        "enemies[1].dir",
+        "enemies[1].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 78
+    },
+    {
+      "mutant": "M01",
+      "seed": 1000,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 3,
+      "firstFields": [
+        "enemies[1].dir",
+        "enemies[1].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 78
+    },
+    {
+      "mutant": "M01",
+      "seed": 8919,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 2,
+      "firstFields": [
+        "enemies[1].dir",
+        "enemies[1].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 79
+    },
+    {
+      "mutant": "M01",
+      "seed": 8919,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "player.x"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M01",
+      "seed": 8919,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 2,
+      "firstFields": [
+        "enemies[1].dir",
+        "enemies[1].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 79
+    },
+    {
+      "mutant": "M01",
+      "seed": 16838,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[2].dir",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M01",
+      "seed": 16838,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[2].dir",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M01",
+      "seed": 16838,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[2].dir",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M01",
+      "seed": 24757,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 3,
+      "firstFields": [
+        "enemies[2].dir",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 78
+    },
+    {
+      "mutant": "M01",
+      "seed": 24757,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 3,
+      "firstFields": [
+        "enemies[2].dir",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 78
+    },
+    {
+      "mutant": "M01",
+      "seed": 24757,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 3,
+      "firstFields": [
+        "enemies[2].dir",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 78
+    },
+    {
+      "mutant": "M01",
+      "seed": 32676,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[2].dir",
+        "enemies[2].x"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M01",
+      "seed": 32676,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[2].dir",
+        "enemies[2].x"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M01",
+      "seed": 32676,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[2].dir",
+        "enemies[2].x"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M01",
+      "seed": 40595,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 6,
+      "firstFields": [
+        "player.y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 70
+    },
+    {
+      "mutant": "M01",
+      "seed": 40595,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 2,
+      "firstFields": [
+        "player.y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 79
+    },
+    {
+      "mutant": "M01",
+      "seed": 40595,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 10,
+      "firstFields": [
+        "player.y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 71
+    },
+    {
+      "mutant": "M01",
+      "seed": 48514,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].dir",
+        "enemies[0].x"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M01",
+      "seed": 48514,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].dir",
+        "enemies[0].x"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M01",
+      "seed": 48514,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].dir",
+        "enemies[0].x"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M01",
+      "seed": 56433,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 4,
+      "firstFields": [
+        "enemies[1].dir",
+        "enemies[1].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 77
+    },
+    {
+      "mutant": "M01",
+      "seed": 56433,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 4,
+      "firstFields": [
+        "enemies[1].dir",
+        "enemies[1].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 77
+    },
+    {
+      "mutant": "M01",
+      "seed": 56433,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 4,
+      "firstFields": [
+        "enemies[1].dir",
+        "enemies[1].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 77
+    },
+    {
+      "mutant": "M02",
+      "seed": 1000,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].y",
+        "enemies[1].dir",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M02",
+      "seed": 1000,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].y",
+        "enemies[1].dir",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M02",
+      "seed": 1000,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].y",
+        "enemies[1].dir",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M02",
+      "seed": 8919,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].x",
+        "enemies[1].y",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M02",
+      "seed": 8919,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].x",
+        "enemies[1].y",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M02",
+      "seed": 8919,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].x",
+        "enemies[1].y",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M02",
+      "seed": 16838,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].x",
+        "enemies[1].x",
+        "enemies[2].dir"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M02",
+      "seed": 16838,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].x",
+        "enemies[1].x",
+        "enemies[2].dir"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M02",
+      "seed": 16838,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].x",
+        "enemies[1].x",
+        "enemies[2].dir"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M02",
+      "seed": 24757,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[1].y",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M02",
+      "seed": 24757,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[1].y",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M02",
+      "seed": 24757,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[1].y",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M02",
+      "seed": 32676,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].y",
+        "enemies[1].dir",
+        "enemies[2].dir"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M02",
+      "seed": 32676,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].y",
+        "enemies[1].dir",
+        "enemies[2].dir"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M02",
+      "seed": 32676,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].y",
+        "enemies[1].dir",
+        "enemies[2].dir"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M02",
+      "seed": 40595,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].y",
+        "enemies[1].x",
+        "enemies[2].x"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M02",
+      "seed": 40595,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].y",
+        "enemies[1].x",
+        "enemies[2].x"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M02",
+      "seed": 40595,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].y",
+        "enemies[1].x",
+        "enemies[2].x"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M02",
+      "seed": 48514,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].dir",
+        "enemies[1].x",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M02",
+      "seed": 48514,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].dir",
+        "enemies[1].x",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M02",
+      "seed": 48514,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].dir",
+        "enemies[1].x",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M02",
+      "seed": 56433,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].y",
+        "enemies[1].y",
+        "enemies[2].x"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M02",
+      "seed": 56433,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].y",
+        "enemies[1].y",
+        "enemies[2].x"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M02",
+      "seed": 56433,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].y",
+        "enemies[1].y",
+        "enemies[2].x"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "M03",
+      "seed": 1000,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 63,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": true,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 10
+    },
+    {
+      "mutant": "M03",
+      "seed": 1000,
+      "salt": 1,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M03",
+      "seed": 1000,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 26,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 55
+    },
+    {
+      "mutant": "M03",
+      "seed": 8919,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 9,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 72
+    },
+    {
+      "mutant": "M03",
+      "seed": 8919,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 7,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 74
+    },
+    {
+      "mutant": "M03",
+      "seed": 8919,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 11,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 70
+    },
+    {
+      "mutant": "M03",
+      "seed": 16838,
+      "salt": 0,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M03",
+      "seed": 16838,
+      "salt": 1,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M03",
+      "seed": 16838,
+      "salt": 2,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M03",
+      "seed": 24757,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 15,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 66
+    },
+    {
+      "mutant": "M03",
+      "seed": 24757,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 13,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 68
+    },
+    {
+      "mutant": "M03",
+      "seed": 24757,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 10,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 71
+    },
+    {
+      "mutant": "M03",
+      "seed": 32676,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 49,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 32
+    },
+    {
+      "mutant": "M03",
+      "seed": 32676,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 9,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 72
+    },
+    {
+      "mutant": "M03",
+      "seed": 32676,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 30,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 51
+    },
+    {
+      "mutant": "M03",
+      "seed": 40595,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 11,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 70
+    },
+    {
+      "mutant": "M03",
+      "seed": 40595,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 16,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 65
+    },
+    {
+      "mutant": "M03",
+      "seed": 40595,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 11,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 70
+    },
+    {
+      "mutant": "M03",
+      "seed": 48514,
+      "salt": 0,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M03",
+      "seed": 48514,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 77,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 4
+    },
+    {
+      "mutant": "M03",
+      "seed": 48514,
+      "salt": 2,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M03",
+      "seed": 56433,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 77,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 4
+    },
+    {
+      "mutant": "M03",
+      "seed": 56433,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 39,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 42
+    },
+    {
+      "mutant": "M03",
+      "seed": 56433,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 37,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 44
+    },
+    {
+      "mutant": "M04",
+      "seed": 1000,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 65,
+      "firstFields": [
+        "enemies[0].alive",
+        "enemies[0].hp",
+        "enemies[0].y",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 16
+    },
+    {
+      "mutant": "M04",
+      "seed": 1000,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 13,
+      "firstFields": [
+        "enemies[2].alive",
+        "enemies[2].hp",
+        "enemies[2].y",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 68
+    },
+    {
+      "mutant": "M04",
+      "seed": 1000,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 13,
+      "firstFields": [
+        "enemies[2].alive",
+        "enemies[2].hp",
+        "enemies[2].y",
+        "player.hp",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 68
+    },
+    {
+      "mutant": "M04",
+      "seed": 8919,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 17,
+      "firstFields": [
+        "enemies[1].alive",
+        "enemies[1].hp",
+        "enemies[1].y",
+        "player.hp",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 64
+    },
+    {
+      "mutant": "M04",
+      "seed": 8919,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 13,
+      "firstFields": [
+        "enemies[1].alive",
+        "enemies[1].dir",
+        "enemies[1].hp",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 68
+    },
+    {
+      "mutant": "M04",
+      "seed": 8919,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 13,
+      "firstFields": [
+        "enemies[1].alive",
+        "enemies[1].dir",
+        "enemies[1].hp",
+        "player.hp",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 68
+    },
+    {
+      "mutant": "M04",
+      "seed": 16838,
+      "salt": 0,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M04",
+      "seed": 16838,
+      "salt": 1,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M04",
+      "seed": 16838,
+      "salt": 2,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M04",
+      "seed": 24757,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 11,
+      "firstFields": [
+        "enemies[0].alive",
+        "enemies[0].dir",
+        "enemies[0].hp",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 70
+    },
+    {
+      "mutant": "M04",
+      "seed": 24757,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 12,
+      "firstFields": [
+        "enemies[1].alive",
+        "enemies[1].hp",
+        "enemies[1].y",
+        "player.hp",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 69
+    },
+    {
+      "mutant": "M04",
+      "seed": 24757,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 15,
+      "firstFields": [
+        "enemies[0].alive",
+        "enemies[0].hp",
+        "enemies[0].y",
+        "enemies[1].alive",
+        "enemies[1].hp",
+        "enemies[1].x",
+        "player.hp",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 66
+    },
+    {
+      "mutant": "M04",
+      "seed": 32676,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 61,
+      "firstFields": [
+        "enemies[1].alive",
+        "enemies[1].hp",
+        "enemies[1].x",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 20
+    },
+    {
+      "mutant": "M04",
+      "seed": 32676,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 11,
+      "firstFields": [
+        "enemies[0].alive",
+        "enemies[0].hp",
+        "enemies[0].x",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 70
+    },
+    {
+      "mutant": "M04",
+      "seed": 32676,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 34,
+      "firstFields": [
+        "enemies[0].alive",
+        "enemies[0].dir",
+        "enemies[0].hp",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 47
+    },
+    {
+      "mutant": "M04",
+      "seed": 40595,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 32,
+      "firstFields": [
+        "enemies[2].alive",
+        "enemies[2].dir",
+        "enemies[2].hp",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 49
+    },
+    {
+      "mutant": "M04",
+      "seed": 40595,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 32,
+      "firstFields": [
+        "enemies[2].alive",
+        "enemies[2].dir",
+        "enemies[2].hp",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 49
+    },
+    {
+      "mutant": "M04",
+      "seed": 40595,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 59,
+      "firstFields": [
+        "enemies[2].alive",
+        "enemies[2].hp",
+        "enemies[2].x",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 22
+    },
+    {
+      "mutant": "M04",
+      "seed": 48514,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 58,
+      "firstFields": [
+        "enemies[2].alive",
+        "enemies[2].hp",
+        "enemies[2].x",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 23
+    },
+    {
+      "mutant": "M04",
+      "seed": 48514,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 48,
+      "firstFields": [
+        "enemies[2].alive",
+        "enemies[2].dir",
+        "enemies[2].hp",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 33
+    },
+    {
+      "mutant": "M04",
+      "seed": 48514,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 6,
+      "firstFields": [
+        "enemies[0].alive",
+        "enemies[0].hp",
+        "enemies[0].y",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 75
+    },
+    {
+      "mutant": "M04",
+      "seed": 56433,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 73,
+      "firstFields": [
+        "enemies[2].alive",
+        "enemies[2].hp",
+        "enemies[2].x",
+        "player.hp",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 8
+    },
+    {
+      "mutant": "M04",
+      "seed": 56433,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 40,
+      "firstFields": [
+        "enemies[0].alive",
+        "enemies[0].hp",
+        "enemies[0].x",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 41
+    },
+    {
+      "mutant": "M04",
+      "seed": 56433,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 39,
+      "firstFields": [
+        "enemies[0].alive",
+        "enemies[0].hp",
+        "enemies[0].x",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 42
+    },
+    {
+      "mutant": "M05",
+      "seed": 1000,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 6,
+      "firstFields": [
+        "player.cooldown"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 62
+    },
+    {
+      "mutant": "M05",
+      "seed": 1000,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 3,
+      "firstFields": [
+        "player.cooldown"
+      ],
+      "masked": true,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 20
+    },
+    {
+      "mutant": "M05",
+      "seed": 1000,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "player.cooldown"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 74
+    },
+    {
+      "mutant": "M05",
+      "seed": 8919,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 2,
+      "firstFields": [
+        "player.cooldown"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 24
+    },
+    {
+      "mutant": "M05",
+      "seed": 8919,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 13,
+      "firstFields": [
+        "player.cooldown"
+      ],
+      "masked": true,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 26
+    },
+    {
+      "mutant": "M05",
+      "seed": 8919,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 6,
+      "firstFields": [
+        "player.cooldown"
+      ],
+      "masked": true,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 26
+    },
+    {
+      "mutant": "M05",
+      "seed": 16838,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 10,
+      "firstFields": [
+        "player.cooldown"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 23
+    },
+    {
+      "mutant": "M05",
+      "seed": 16838,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 7,
+      "firstFields": [
+        "player.cooldown"
+      ],
+      "masked": true,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 24
+    },
+    {
+      "mutant": "M05",
+      "seed": 16838,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 5,
+      "firstFields": [
+        "player.cooldown"
+      ],
+      "masked": true,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 20
+    },
+    {
+      "mutant": "M05",
+      "seed": 24757,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 2,
+      "firstFields": [
+        "player.cooldown"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 72
+    },
+    {
+      "mutant": "M05",
+      "seed": 24757,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "player.cooldown"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 40
+    },
+    {
+      "mutant": "M05",
+      "seed": 24757,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 15,
+      "firstFields": [
+        "player.cooldown"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 21
+    },
+    {
+      "mutant": "M05",
+      "seed": 32676,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "player.cooldown"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 69
+    },
+    {
+      "mutant": "M05",
+      "seed": 32676,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 2,
+      "firstFields": [
+        "player.cooldown"
+      ],
+      "masked": true,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 4
+    },
+    {
+      "mutant": "M05",
+      "seed": 32676,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 4,
+      "firstFields": [
+        "player.cooldown"
+      ],
+      "masked": true,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 26
+    },
+    {
+      "mutant": "M05",
+      "seed": 40595,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "player.cooldown"
+      ],
+      "masked": true,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 20
+    },
+    {
+      "mutant": "M05",
+      "seed": 40595,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "player.cooldown"
+      ],
+      "masked": true,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 26
+    },
+    {
+      "mutant": "M05",
+      "seed": 40595,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "player.cooldown"
+      ],
+      "masked": true,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 18
+    },
+    {
+      "mutant": "M05",
+      "seed": 48514,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 2,
+      "firstFields": [
+        "player.cooldown"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 53
+    },
+    {
+      "mutant": "M05",
+      "seed": 48514,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "player.cooldown"
+      ],
+      "masked": true,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 24
+    },
+    {
+      "mutant": "M05",
+      "seed": 48514,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 6,
+      "firstFields": [
+        "player.cooldown"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 49
+    },
+    {
+      "mutant": "M05",
+      "seed": 56433,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 12,
+      "firstFields": [
+        "player.cooldown"
+      ],
+      "masked": true,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 20
+    },
+    {
+      "mutant": "M05",
+      "seed": 56433,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 2,
+      "firstFields": [
+        "player.cooldown"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 29
+    },
+    {
+      "mutant": "M05",
+      "seed": 56433,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 9,
+      "firstFields": [
+        "player.cooldown"
+      ],
+      "masked": true,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 26
+    },
+    {
+      "mutant": "M06",
+      "seed": 1000,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 73,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 8
+    },
+    {
+      "mutant": "M06",
+      "seed": 1000,
+      "salt": 1,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M06",
+      "seed": 1000,
+      "salt": 2,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M06",
+      "seed": 8919,
+      "salt": 0,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M06",
+      "seed": 8919,
+      "salt": 1,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M06",
+      "seed": 8919,
+      "salt": 2,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M06",
+      "seed": 16838,
+      "salt": 0,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M06",
+      "seed": 16838,
+      "salt": 1,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M06",
+      "seed": 16838,
+      "salt": 2,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M06",
+      "seed": 24757,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 29,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 52
+    },
+    {
+      "mutant": "M06",
+      "seed": 24757,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 37,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 44
+    },
+    {
+      "mutant": "M06",
+      "seed": 24757,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 12,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 69
+    },
+    {
+      "mutant": "M06",
+      "seed": 32676,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 77,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 4
+    },
+    {
+      "mutant": "M06",
+      "seed": 32676,
+      "salt": 1,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M06",
+      "seed": 32676,
+      "salt": 2,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M06",
+      "seed": 40595,
+      "salt": 0,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M06",
+      "seed": 40595,
+      "salt": 1,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M06",
+      "seed": 40595,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 36,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 45
+    },
+    {
+      "mutant": "M06",
+      "seed": 48514,
+      "salt": 0,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M06",
+      "seed": 48514,
+      "salt": 1,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M06",
+      "seed": 48514,
+      "salt": 2,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M06",
+      "seed": 56433,
+      "salt": 0,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M06",
+      "seed": 56433,
+      "salt": 1,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M06",
+      "seed": 56433,
+      "salt": 2,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M07",
+      "seed": 1000,
+      "salt": 0,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M07",
+      "seed": 1000,
+      "salt": 1,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M07",
+      "seed": 1000,
+      "salt": 2,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M07",
+      "seed": 8919,
+      "salt": 0,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M07",
+      "seed": 8919,
+      "salt": 1,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M07",
+      "seed": 8919,
+      "salt": 2,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M07",
+      "seed": 16838,
+      "salt": 0,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M07",
+      "seed": 16838,
+      "salt": 1,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M07",
+      "seed": 16838,
+      "salt": 2,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M07",
+      "seed": 24757,
+      "salt": 0,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M07",
+      "seed": 24757,
+      "salt": 1,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M07",
+      "seed": 24757,
+      "salt": 2,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M07",
+      "seed": 32676,
+      "salt": 0,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M07",
+      "seed": 32676,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 22,
+      "firstFields": [
+        "player.alive"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 59
+    },
+    {
+      "mutant": "M07",
+      "seed": 32676,
+      "salt": 2,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M07",
+      "seed": 40595,
+      "salt": 0,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M07",
+      "seed": 40595,
+      "salt": 1,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M07",
+      "seed": 40595,
+      "salt": 2,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M07",
+      "seed": 48514,
+      "salt": 0,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M07",
+      "seed": 48514,
+      "salt": 1,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M07",
+      "seed": 48514,
+      "salt": 2,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M07",
+      "seed": 56433,
+      "salt": 0,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M07",
+      "seed": 56433,
+      "salt": 1,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M07",
+      "seed": 56433,
+      "salt": 2,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M08",
+      "seed": 1000,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 65,
+      "firstFields": [
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 16
+    },
+    {
+      "mutant": "M08",
+      "seed": 1000,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 13,
+      "firstFields": [
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 68
+    },
+    {
+      "mutant": "M08",
+      "seed": 1000,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 13,
+      "firstFields": [
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 68
+    },
+    {
+      "mutant": "M08",
+      "seed": 8919,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 17,
+      "firstFields": [
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 64
+    },
+    {
+      "mutant": "M08",
+      "seed": 8919,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 13,
+      "firstFields": [
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 68
+    },
+    {
+      "mutant": "M08",
+      "seed": 8919,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 13,
+      "firstFields": [
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 68
+    },
+    {
+      "mutant": "M08",
+      "seed": 16838,
+      "salt": 0,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M08",
+      "seed": 16838,
+      "salt": 1,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M08",
+      "seed": 16838,
+      "salt": 2,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M08",
+      "seed": 24757,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 11,
+      "firstFields": [
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 70
+    },
+    {
+      "mutant": "M08",
+      "seed": 24757,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 12,
+      "firstFields": [
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 69
+    },
+    {
+      "mutant": "M08",
+      "seed": 24757,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 15,
+      "firstFields": [
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 66
+    },
+    {
+      "mutant": "M08",
+      "seed": 32676,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 61,
+      "firstFields": [
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 20
+    },
+    {
+      "mutant": "M08",
+      "seed": 32676,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 11,
+      "firstFields": [
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 70
+    },
+    {
+      "mutant": "M08",
+      "seed": 32676,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 34,
+      "firstFields": [
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 47
+    },
+    {
+      "mutant": "M08",
+      "seed": 40595,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 32,
+      "firstFields": [
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 49
+    },
+    {
+      "mutant": "M08",
+      "seed": 40595,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 32,
+      "firstFields": [
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 49
+    },
+    {
+      "mutant": "M08",
+      "seed": 40595,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 59,
+      "firstFields": [
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 22
+    },
+    {
+      "mutant": "M08",
+      "seed": 48514,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 58,
+      "firstFields": [
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 23
+    },
+    {
+      "mutant": "M08",
+      "seed": 48514,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 48,
+      "firstFields": [
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 33
+    },
+    {
+      "mutant": "M08",
+      "seed": 48514,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 6,
+      "firstFields": [
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 75
+    },
+    {
+      "mutant": "M08",
+      "seed": 56433,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 73,
+      "firstFields": [
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 8
+    },
+    {
+      "mutant": "M08",
+      "seed": 56433,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 40,
+      "firstFields": [
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 41
+    },
+    {
+      "mutant": "M08",
+      "seed": 56433,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 39,
+      "firstFields": [
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 42
+    },
+    {
+      "mutant": "M09",
+      "seed": 1000,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 73,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 8
+    },
+    {
+      "mutant": "M09",
+      "seed": 1000,
+      "salt": 1,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M09",
+      "seed": 1000,
+      "salt": 2,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M09",
+      "seed": 8919,
+      "salt": 0,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M09",
+      "seed": 8919,
+      "salt": 1,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M09",
+      "seed": 8919,
+      "salt": 2,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M09",
+      "seed": 16838,
+      "salt": 0,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M09",
+      "seed": 16838,
+      "salt": 1,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M09",
+      "seed": 16838,
+      "salt": 2,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M09",
+      "seed": 24757,
+      "salt": 0,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M09",
+      "seed": 24757,
+      "salt": 1,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M09",
+      "seed": 24757,
+      "salt": 2,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M09",
+      "seed": 32676,
+      "salt": 0,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M09",
+      "seed": 32676,
+      "salt": 1,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M09",
+      "seed": 32676,
+      "salt": 2,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M09",
+      "seed": 40595,
+      "salt": 0,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M09",
+      "seed": 40595,
+      "salt": 1,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M09",
+      "seed": 40595,
+      "salt": 2,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M09",
+      "seed": 48514,
+      "salt": 0,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M09",
+      "seed": 48514,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 61,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 20
+    },
+    {
+      "mutant": "M09",
+      "seed": 48514,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 47,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 34
+    },
+    {
+      "mutant": "M09",
+      "seed": 56433,
+      "salt": 0,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M09",
+      "seed": 56433,
+      "salt": 1,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "M09",
+      "seed": 56433,
+      "salt": 2,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "D01",
+      "seed": 1000,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 63,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": true,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 10
+    },
+    {
+      "mutant": "D01",
+      "seed": 1000,
+      "salt": 1,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "D01",
+      "seed": 1000,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 26,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 55
+    },
+    {
+      "mutant": "D01",
+      "seed": 8919,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 9,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 72
+    },
+    {
+      "mutant": "D01",
+      "seed": 8919,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 7,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 74
+    },
+    {
+      "mutant": "D01",
+      "seed": 8919,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 11,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 70
+    },
+    {
+      "mutant": "D01",
+      "seed": 16838,
+      "salt": 0,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "D01",
+      "seed": 16838,
+      "salt": 1,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "D01",
+      "seed": 16838,
+      "salt": 2,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "D01",
+      "seed": 24757,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 15,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 66
+    },
+    {
+      "mutant": "D01",
+      "seed": 24757,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 13,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 68
+    },
+    {
+      "mutant": "D01",
+      "seed": 24757,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 10,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 71
+    },
+    {
+      "mutant": "D01",
+      "seed": 32676,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 49,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 32
+    },
+    {
+      "mutant": "D01",
+      "seed": 32676,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 9,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 72
+    },
+    {
+      "mutant": "D01",
+      "seed": 32676,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 30,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 51
+    },
+    {
+      "mutant": "D01",
+      "seed": 40595,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 11,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 70
+    },
+    {
+      "mutant": "D01",
+      "seed": 40595,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 16,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 65
+    },
+    {
+      "mutant": "D01",
+      "seed": 40595,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 11,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 70
+    },
+    {
+      "mutant": "D01",
+      "seed": 48514,
+      "salt": 0,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "D01",
+      "seed": 48514,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 77,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 4
+    },
+    {
+      "mutant": "D01",
+      "seed": 48514,
+      "salt": 2,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "D01",
+      "seed": 56433,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 77,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 4
+    },
+    {
+      "mutant": "D01",
+      "seed": 56433,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 39,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 42
+    },
+    {
+      "mutant": "D01",
+      "seed": 56433,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 37,
+      "firstFields": [
+        "player.hp"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 44
+    },
+    {
+      "mutant": "D02",
+      "seed": 1000,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 65,
+      "firstFields": [
+        "enemies[0].alive",
+        "enemies[0].hp",
+        "enemies[0].y",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 16
+    },
+    {
+      "mutant": "D02",
+      "seed": 1000,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 13,
+      "firstFields": [
+        "enemies[2].alive",
+        "enemies[2].hp",
+        "enemies[2].y",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 68
+    },
+    {
+      "mutant": "D02",
+      "seed": 1000,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 13,
+      "firstFields": [
+        "enemies[2].alive",
+        "enemies[2].hp",
+        "enemies[2].y",
+        "player.hp",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 68
+    },
+    {
+      "mutant": "D02",
+      "seed": 8919,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 17,
+      "firstFields": [
+        "enemies[1].alive",
+        "enemies[1].hp",
+        "enemies[1].y",
+        "player.hp",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 64
+    },
+    {
+      "mutant": "D02",
+      "seed": 8919,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 13,
+      "firstFields": [
+        "enemies[1].alive",
+        "enemies[1].dir",
+        "enemies[1].hp",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 68
+    },
+    {
+      "mutant": "D02",
+      "seed": 8919,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 13,
+      "firstFields": [
+        "enemies[1].alive",
+        "enemies[1].dir",
+        "enemies[1].hp",
+        "player.hp",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 68
+    },
+    {
+      "mutant": "D02",
+      "seed": 16838,
+      "salt": 0,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "D02",
+      "seed": 16838,
+      "salt": 1,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "D02",
+      "seed": 16838,
+      "salt": 2,
+      "diverged": false,
+      "firstStep": null,
+      "firstFields": [],
+      "masked": false,
+      "finalOnlyDetects": false,
+      "divergedFrameCount": 0
+    },
+    {
+      "mutant": "D02",
+      "seed": 24757,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 11,
+      "firstFields": [
+        "enemies[0].alive",
+        "enemies[0].dir",
+        "enemies[0].hp",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 70
+    },
+    {
+      "mutant": "D02",
+      "seed": 24757,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 12,
+      "firstFields": [
+        "enemies[1].alive",
+        "enemies[1].hp",
+        "enemies[1].y",
+        "player.hp",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 69
+    },
+    {
+      "mutant": "D02",
+      "seed": 24757,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 15,
+      "firstFields": [
+        "enemies[0].alive",
+        "enemies[0].hp",
+        "enemies[0].y",
+        "enemies[1].alive",
+        "enemies[1].hp",
+        "enemies[1].x",
+        "player.hp",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 66
+    },
+    {
+      "mutant": "D02",
+      "seed": 32676,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 61,
+      "firstFields": [
+        "enemies[1].alive",
+        "enemies[1].hp",
+        "enemies[1].x",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 20
+    },
+    {
+      "mutant": "D02",
+      "seed": 32676,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 11,
+      "firstFields": [
+        "enemies[0].alive",
+        "enemies[0].hp",
+        "enemies[0].x",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 70
+    },
+    {
+      "mutant": "D02",
+      "seed": 32676,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 34,
+      "firstFields": [
+        "enemies[0].alive",
+        "enemies[0].dir",
+        "enemies[0].hp",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 47
+    },
+    {
+      "mutant": "D02",
+      "seed": 40595,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 32,
+      "firstFields": [
+        "enemies[2].alive",
+        "enemies[2].dir",
+        "enemies[2].hp",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 49
+    },
+    {
+      "mutant": "D02",
+      "seed": 40595,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 32,
+      "firstFields": [
+        "enemies[2].alive",
+        "enemies[2].dir",
+        "enemies[2].hp",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 49
+    },
+    {
+      "mutant": "D02",
+      "seed": 40595,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 59,
+      "firstFields": [
+        "enemies[2].alive",
+        "enemies[2].hp",
+        "enemies[2].x",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 22
+    },
+    {
+      "mutant": "D02",
+      "seed": 48514,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 58,
+      "firstFields": [
+        "enemies[2].alive",
+        "enemies[2].hp",
+        "enemies[2].x",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 23
+    },
+    {
+      "mutant": "D02",
+      "seed": 48514,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 48,
+      "firstFields": [
+        "enemies[2].alive",
+        "enemies[2].dir",
+        "enemies[2].hp",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 33
+    },
+    {
+      "mutant": "D02",
+      "seed": 48514,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 6,
+      "firstFields": [
+        "enemies[0].alive",
+        "enemies[0].hp",
+        "enemies[0].y",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 75
+    },
+    {
+      "mutant": "D02",
+      "seed": 56433,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 73,
+      "firstFields": [
+        "enemies[2].alive",
+        "enemies[2].hp",
+        "enemies[2].x",
+        "player.hp",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 8
+    },
+    {
+      "mutant": "D02",
+      "seed": 56433,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 40,
+      "firstFields": [
+        "enemies[0].alive",
+        "enemies[0].hp",
+        "enemies[0].x",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 41
+    },
+    {
+      "mutant": "D02",
+      "seed": 56433,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 39,
+      "firstFields": [
+        "enemies[0].alive",
+        "enemies[0].hp",
+        "enemies[0].x",
+        "player.score"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 42
+    },
+    {
+      "mutant": "D03",
+      "seed": 1000,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].y",
+        "enemies[1].dir",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "D03",
+      "seed": 1000,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].y",
+        "enemies[1].dir",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "D03",
+      "seed": 1000,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].y",
+        "enemies[1].dir",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "D03",
+      "seed": 8919,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].x",
+        "enemies[1].y",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "D03",
+      "seed": 8919,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].x",
+        "enemies[1].y",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "D03",
+      "seed": 8919,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].x",
+        "enemies[1].y",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "D03",
+      "seed": 16838,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].x",
+        "enemies[1].x",
+        "enemies[2].dir"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "D03",
+      "seed": 16838,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].x",
+        "enemies[1].x",
+        "enemies[2].dir"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "D03",
+      "seed": 16838,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].x",
+        "enemies[1].x",
+        "enemies[2].dir"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "D03",
+      "seed": 24757,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[1].y",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "D03",
+      "seed": 24757,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[1].y",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "D03",
+      "seed": 24757,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[1].y",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "D03",
+      "seed": 32676,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].y",
+        "enemies[1].dir",
+        "enemies[2].dir"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "D03",
+      "seed": 32676,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].y",
+        "enemies[1].dir",
+        "enemies[2].dir"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "D03",
+      "seed": 32676,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].y",
+        "enemies[1].dir",
+        "enemies[2].dir"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "D03",
+      "seed": 40595,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].y",
+        "enemies[1].x",
+        "enemies[2].x"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "D03",
+      "seed": 40595,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].y",
+        "enemies[1].x",
+        "enemies[2].x"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "D03",
+      "seed": 40595,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].y",
+        "enemies[1].x",
+        "enemies[2].x"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "D03",
+      "seed": 48514,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].dir",
+        "enemies[1].x",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "D03",
+      "seed": 48514,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].dir",
+        "enemies[1].x",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "D03",
+      "seed": 48514,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].dir",
+        "enemies[1].x",
+        "enemies[2].y"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "D03",
+      "seed": 56433,
+      "salt": 0,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].y",
+        "enemies[1].y",
+        "enemies[2].x"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "D03",
+      "seed": 56433,
+      "salt": 1,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].y",
+        "enemies[1].y",
+        "enemies[2].x"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    },
+    {
+      "mutant": "D03",
+      "seed": 56433,
+      "salt": 2,
+      "diverged": true,
+      "firstStep": 1,
+      "firstFields": [
+        "enemies[0].y",
+        "enemies[1].y",
+        "enemies[2].x"
+      ],
+      "masked": false,
+      "finalOnlyDetects": true,
+      "divergedFrameCount": 80
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "ticks": 26,
+  "cellsVisited": 15,
+  "cellsTotal": 64,
+  "hpSeen": [
+    10
+  ],
+  "hpZeroReached": false,
+  "hpBelowZeroReached": false,
+  "hpAboveMaxReached": false,
+  "died": false,
+  "adjacentEnemyReached": true,
+  "touchedByEnemy": false,
+  "stoodOnPickup": false,
+  "pickupAtFullHp": false,
+  "pickupsTaken": 0,
+  "kills": 1,
+  "attacksWhileCooldown": 0,
+  "wallAttempts": 2,
+  "boundaryAttempts": 0
+}

@@ -1,0 +1,77 @@
+{
+  "seed": 6,
+  "initialHash": "0bcfad38fddbfa66",
+  "mutant": "M02",
+  "agentClaims": {
+    "finishSummary": null,
+    "notes": [
+      "攻击可消灭相邻四格敌人，每杀敌+1分；攻击有冷却时间。地图共3个敌人(E)，分布在(0,7)、(3,7)。"
+    ]
+  },
+  "notary": {
+    "mutant": "M02",
+    "diverged": true,
+    "firstStep": 1,
+    "firstFields": [
+      "enemies[1].x",
+      "enemies[2].y"
+    ],
+    "masked": false,
+    "divergedFrames": 5,
+    "minimized": {
+      "actions": [
+        {
+          "kind": "attack"
+        }
+      ],
+      "originalLength": 5,
+      "tests": 5,
+      "oneMinimal": true,
+      "budgetExhausted": false,
+      "reverified": true
+    }
+  },
+  "evidenceConsistent": true,
+  "coverage": {
+    "ticks": 5,
+    "cellsVisited": 5,
+    "cellsTotal": 64,
+    "hpSeen": [
+      10
+    ],
+    "hpZeroReached": false,
+    "hpBelowZeroReached": false,
+    "hpAboveMaxReached": false,
+    "died": false,
+    "adjacentEnemyReached": true,
+    "touchedByEnemy": false,
+    "stoodOnPickup": false,
+    "pickupAtFullHp": false,
+    "pickupsTaken": 0,
+    "kills": 1,
+    "attacksWhileCooldown": 0,
+    "wallAttempts": 0,
+    "boundaryAttempts": 0
+  },
+  "fullWorldActions": [
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    }
+  ]
+}

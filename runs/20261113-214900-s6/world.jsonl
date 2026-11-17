@@ -1,0 +1,10 @@
+{"tick":0,"action":null,"hash":"0bcfad38fddbfa66","events":[]}
+{"tick":1,"action":{"kind":"wait"},"hash":"4463a7b52f2b595b","events":["你原地等待。"]}
+{"tick":2,"action":{"kind":"wait"},"hash":"796a1de4e774ed87","events":["你原地等待。"]}
+{"tick":3,"action":{"kind":"wait"},"hash":"b9b9f049f90ebe36","events":["你原地等待。"]}
+{"tick":4,"action":{"kind":"attack"},"hash":"f4be240c84e2f149","events":["你挥击，但身边没有敌人。"]}
+{"tick":5,"action":{"kind":"wait"},"hash":"d167901bd8de0fde","events":["你原地等待。"]}
+{"tick":6,"action":{"kind":"wait"},"hash":"93a2bb9da8aa6617","events":["你原地等待。"]}
+{"tick":7,"action":{"kind":"wait"},"hash":"66ae522f860d670e","events":["你原地等待。","有敌人贴到了你身上。"]}
+{"tick":8,"action":{"kind":"wait"},"hash":"9f37f5de9554c131","events":["你原地等待。","有敌人贴到了你身上。"]}
+{"tick":9,"action":{"kind":"wait"},"hash":"a21e7caec0790638","events":["你原地等待。"]}

@@ -1,0 +1,6 @@
+{"tick":0,"action":null,"hash":"0bcfad38fddbfa66","events":[]}
+{"tick":1,"action":{"kind":"attack"},"hash":"e07d6b24f2c4db86","events":["你朝身边的敌人挥击。"]}
+{"tick":2,"action":{"kind":"wait"},"hash":"07b042c3f276b6a6","events":["你原地等待。"]}
+{"tick":3,"action":{"kind":"move","dir":1},"hash":"6cadfcacfa3baeee","events":["你朝右走了一格。"]}
+{"tick":4,"action":{"kind":"move","dir":1},"hash":"230573b7516eb6e7","events":["你朝右走了一格。"]}
+{"tick":5,"action":{"kind":"attack"},"hash":"10f8c88feeb65295","events":["你朝身边的敌人挥击。"]}

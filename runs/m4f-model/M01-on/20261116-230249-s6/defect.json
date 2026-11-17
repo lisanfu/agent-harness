@@ -1,0 +1,170 @@
+{
+  "seed": 6,
+  "initialHash": "0bcfad38fddbfa66",
+  "mutant": "M01",
+  "agentClaims": {
+    "finishSummary": null,
+    "notes": [],
+    "hypotheses": [
+      {
+        "id": "H1",
+        "text": "攻击具有后坐力：挥击时玩家会被推退一格（远离目标方向）",
+        "status": "confirmed",
+        "statusWhy": "实验验证：朝右攻击，玩家在击中敌人后退到左侧格子"
+      }
+    ],
+    "goals": []
+  },
+  "notary": {
+    "mutant": "M01",
+    "diverged": true,
+    "firstStep": 6,
+    "firstFields": [
+      "player.x"
+    ],
+    "masked": false,
+    "divergedFrames": 3,
+    "minimized": {
+      "actions": [
+        {
+          "kind": "move",
+          "dir": 1
+        },
+        {
+          "kind": "move",
+          "dir": 2
+        },
+        {
+          "kind": "move",
+          "dir": 2
+        },
+        {
+          "kind": "move",
+          "dir": 2
+        },
+        {
+          "kind": "move",
+          "dir": 1
+        }
+      ],
+      "originalLength": 8,
+      "tests": 40,
+      "oneMinimal": true,
+      "budgetExhausted": false,
+      "reverified": true
+    }
+  },
+  "evidenceConsistent": true,
+  "coverage": {
+    "ticks": 8,
+    "cellsVisited": 8,
+    "cellsTotal": 64,
+    "hpSeen": [
+      10
+    ],
+    "hpZeroReached": false,
+    "hpBelowZeroReached": false,
+    "hpAboveMaxReached": false,
+    "died": false,
+    "adjacentEnemyReached": true,
+    "attackedWhileAdjacent": true,
+    "touchedByEnemy": false,
+    "stoodOnPickup": false,
+    "pickupAtFullHp": false,
+    "pickupsTaken": 0,
+    "kills": 1,
+    "attacksWhileCooldown": 0,
+    "wallAttempts": 1,
+    "boundaryAttempts": 0
+  },
+  "predictionStats": {
+    "checked": 9,
+    "staticChecks": 1,
+    "given": 8,
+    "missing": 1,
+    "fields": 25,
+    "ok": 24,
+    "violated": 1,
+    "unverifiable": 0,
+    "surpriseGiven": 0,
+    "surpriseUnexpected": 0,
+    "surpriseMalformed": 0,
+    "violatedButNotSurprised": 0
+  },
+  "hypothesisChecks": [
+    {
+      "id": "H1",
+      "checks": 0,
+      "supported": 0,
+      "contradicted": 0,
+      "unverifiable": 0
+    }
+  ],
+  "hypothesisStats": {
+    "proposed": 0,
+    "confirmed": 1,
+    "retired": 0,
+    "revised": 0,
+    "plainNotes": 0,
+    "attributed": 0,
+    "unattributed": 9,
+    "unknownTarget": 0,
+    "malformed": 0,
+    "notChecked": 0,
+    "fieldAbsent": 0,
+    "contradictedNotRetired": 0,
+    "confirmedNoChecks": 1
+  },
+  "goalChecks": [],
+  "goalStats": {
+    "open": 0,
+    "achieved": 0,
+    "abandoned": 0,
+    "declared": 0,
+    "revised": 0,
+    "conditionRevised": 0,
+    "rejected": 0,
+    "conditionMalformed": 0,
+    "withCondition": 0,
+    "checks": 0,
+    "met": 0,
+    "unmet": 0,
+    "unverifiable": 0,
+    "metNotClosed": 0,
+    "closedNeverMet": 0,
+    "uncheckable": 0
+  },
+  "fullWorldActions": [
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    }
+  ]
+}

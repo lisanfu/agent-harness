@@ -1,0 +1,173 @@
+{
+  "seed": 6,
+  "initialHash": "0bcfad38fddbfa66",
+  "mutant": "D02",
+  "agentClaims": {
+    "finishSummary": null,
+    "notes": [],
+    "hypotheses": [],
+    "goals": []
+  },
+  "notary": {
+    "mutant": "D02",
+    "diverged": true,
+    "firstStep": 2,
+    "firstFields": [
+      "enemies[0].alive",
+      "enemies[0].hp",
+      "enemies[0].y",
+      "player.score"
+    ],
+    "masked": false,
+    "divergedFrames": 17,
+    "minimized": {
+      "actions": [
+        {
+          "kind": "attack"
+        }
+      ],
+      "originalLength": 18,
+      "tests": 8,
+      "oneMinimal": true,
+      "budgetExhausted": false,
+      "reverified": true
+    }
+  },
+  "evidenceConsistent": true,
+  "coverage": {
+    "ticks": 18,
+    "cellsVisited": 6,
+    "cellsTotal": 64,
+    "hpSeen": [
+      6,
+      8,
+      10
+    ],
+    "hpZeroReached": false,
+    "hpBelowZeroReached": false,
+    "hpAboveMaxReached": false,
+    "died": false,
+    "adjacentEnemyReached": true,
+    "attackedWhileAdjacent": true,
+    "touchedByEnemy": true,
+    "stoodOnPickup": false,
+    "pickupAtFullHp": false,
+    "pickupsTaken": 0,
+    "kills": 0,
+    "attacksWhileCooldown": 0,
+    "wallAttempts": 0,
+    "boundaryAttempts": 0
+  },
+  "predictionStats": {
+    "checked": 19,
+    "staticChecks": 1,
+    "given": 19,
+    "missing": 0,
+    "fields": 115,
+    "ok": 93,
+    "violated": 22,
+    "unverifiable": 0,
+    "surpriseGiven": 3,
+    "surpriseUnexpected": 2,
+    "surpriseMalformed": 0,
+    "violatedButNotSurprised": 1
+  },
+  "hypothesisChecks": [],
+  "hypothesisStats": {
+    "proposed": 0,
+    "confirmed": 0,
+    "retired": 0,
+    "revised": 0,
+    "plainNotes": 0,
+    "attributed": 0,
+    "unattributed": 19,
+    "unknownTarget": 0,
+    "malformed": 0,
+    "notChecked": 0,
+    "fieldAbsent": 0,
+    "contradictedNotRetired": 0,
+    "confirmedNoChecks": 0
+  },
+  "goalChecks": [],
+  "goalStats": {
+    "open": 0,
+    "achieved": 0,
+    "abandoned": 0,
+    "declared": 0,
+    "revised": 0,
+    "conditionRevised": 0,
+    "rejected": 0,
+    "conditionMalformed": 0,
+    "withCondition": 0,
+    "checks": 0,
+    "met": 0,
+    "unmet": 0,
+    "unverifiable": 0,
+    "metNotClosed": 0,
+    "closedNeverMet": 0,
+    "uncheckable": 0
+  },
+  "fullWorldActions": [
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "wait"
+    },
+    {
+      "kind": "wait"
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "wait"
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "wait"
+    },
+    {
+      "kind": "wait"
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "pickup"
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "attack"
+    }
+  ]
+}

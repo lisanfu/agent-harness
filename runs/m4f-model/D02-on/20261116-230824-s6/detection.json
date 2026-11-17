@@ -1,0 +1,104 @@
+{
+  "judgementVersion": "m4f-1+lex-m4f-1",
+  "mutant": "D02",
+  "removed": [
+    "attackKills",
+    "scoreOnKill"
+  ],
+  "seed": 6,
+  "actions": 18,
+  "visible": {
+    "diverged": true,
+    "firstStep": 2,
+    "frames": 17,
+    "sample": [
+      "ref: |........|",
+      "mut: |.E......|",
+      "ref: HP [##########] 10/10   分数 1   第 2 帧",
+      "mut: HP [##########] 10/10   分数 0   第 2 帧"
+    ]
+  },
+  "preconditions": [
+    {
+      "cap": "attackKills",
+      "side": "ref",
+      "needs": "attackedWhileAdjacent（贴身时出手过）",
+      "reached": true
+    },
+    {
+      "cap": "scoreOnKill",
+      "side": "ref",
+      "needs": "kills>0（打死过敌人）",
+      "reached": true
+    }
+  ],
+  "playerPremise": true,
+  "internal": {
+    "diverged": true,
+    "firstStep": 2
+  },
+  "claim": {
+    "reported": false,
+    "vague": false,
+    "caps": [],
+    "quotes": []
+  },
+  "verdict": "未上报",
+  "detectable": true,
+  "detected": false,
+  "exactlyAttributed": false,
+  "falsePositive": false,
+  "invisibleThoughDiverged": false,
+  "whyNot": "未上报",
+  "coverage": {
+    "ref": {
+      "ticks": 18,
+      "cellsVisited": 6,
+      "cellsTotal": 64,
+      "hpSeen": [
+        6,
+        8,
+        10
+      ],
+      "hpZeroReached": false,
+      "hpBelowZeroReached": false,
+      "hpAboveMaxReached": false,
+      "died": false,
+      "adjacentEnemyReached": true,
+      "attackedWhileAdjacent": true,
+      "touchedByEnemy": true,
+      "stoodOnPickup": false,
+      "pickupAtFullHp": false,
+      "pickupsTaken": 0,
+      "kills": 2,
+      "attacksWhileCooldown": 0,
+      "wallAttempts": 0,
+      "boundaryAttempts": 0
+    },
+    "mutant": {
+      "ticks": 18,
+      "cellsVisited": 6,
+      "cellsTotal": 64,
+      "hpSeen": [
+        6,
+        8,
+        10
+      ],
+      "hpZeroReached": false,
+      "hpBelowZeroReached": false,
+      "hpAboveMaxReached": false,
+      "died": false,
+      "adjacentEnemyReached": true,
+      "attackedWhileAdjacent": true,
+      "touchedByEnemy": true,
+      "stoodOnPickup": false,
+      "pickupAtFullHp": false,
+      "pickupsTaken": 0,
+      "kills": 0,
+      "attacksWhileCooldown": 0,
+      "wallAttempts": 0,
+      "boundaryAttempts": 0
+    }
+  },
+  "replayMatchesLiveSession": true
+}

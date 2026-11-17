@@ -1,0 +1,132 @@
+{
+  "seed": 6,
+  "initialHash": "0bcfad38fddbfa66",
+  "mutant": null,
+  "agentClaims": {
+    "finishSummary": "夹具走完 12 条路径",
+    "notes": [
+      "我先看看",
+      "再记一笔"
+    ],
+    "hypotheses": [
+      {
+        "id": "H1",
+        "text": "敌人数只减不增",
+        "status": "retired",
+        "statusWhy": "画面里只减不增，我先前数错了"
+      },
+      {
+        "id": "H2",
+        "text": "攻击能一次清掉相邻多个敌人",
+        "status": "proposed",
+        "statusWhy": ""
+      }
+    ]
+  },
+  "notary": {
+    "mutant": null,
+    "diverged": false,
+    "firstStep": null,
+    "firstFields": [],
+    "masked": false,
+    "divergedFrames": 0,
+    "minimized": null
+  },
+  "evidenceConsistent": true,
+  "coverage": {
+    "ticks": 9,
+    "cellsVisited": 1,
+    "cellsTotal": 64,
+    "hpSeen": [
+      6,
+      8,
+      10
+    ],
+    "hpZeroReached": false,
+    "hpBelowZeroReached": false,
+    "hpAboveMaxReached": false,
+    "died": false,
+    "adjacentEnemyReached": true,
+    "touchedByEnemy": true,
+    "stoodOnPickup": false,
+    "pickupAtFullHp": false,
+    "pickupsTaken": 0,
+    "kills": 0,
+    "attacksWhileCooldown": 0,
+    "wallAttempts": 0,
+    "boundaryAttempts": 0
+  },
+  "predictionStats": {
+    "checked": 9,
+    "staticChecks": 0,
+    "given": 9,
+    "missing": 0,
+    "fields": 11,
+    "ok": 6,
+    "violated": 4,
+    "unverifiable": 1,
+    "surpriseGiven": 0,
+    "surpriseUnexpected": 0,
+    "surpriseMalformed": 0,
+    "violatedButNotSurprised": 0
+  },
+  "hypothesisChecks": [
+    {
+      "id": "H1",
+      "checks": 4,
+      "supported": 2,
+      "contradicted": 2,
+      "unverifiable": 0
+    },
+    {
+      "id": "H2",
+      "checks": 2,
+      "supported": 0,
+      "contradicted": 1,
+      "unverifiable": 1
+    }
+  ],
+  "hypothesisStats": {
+    "proposed": 1,
+    "confirmed": 0,
+    "retired": 1,
+    "revised": 1,
+    "plainNotes": 2,
+    "attributed": 5,
+    "unattributed": 1,
+    "unknownTarget": 1,
+    "malformed": 1,
+    "notChecked": 1,
+    "fieldAbsent": 1,
+    "contradictedNotRetired": 1
+  },
+  "fullWorldActions": [
+    {
+      "kind": "wait"
+    },
+    {
+      "kind": "wait"
+    },
+    {
+      "kind": "wait"
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "wait"
+    },
+    {
+      "kind": "wait"
+    },
+    {
+      "kind": "wait"
+    },
+    {
+      "kind": "wait"
+    },
+    {
+      "kind": "wait"
+    }
+  ]
+}

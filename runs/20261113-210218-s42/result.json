@@ -1,0 +1,40 @@
+{
+  "runId": "20261113-210218-s42",
+  "runDir": "/home/fuyuan/Documents/workspace/agent-harness/runs/20261113-210218-s42",
+  "stopReason": "finished",
+  "steps": [
+    {
+      "index": 1,
+      "at": "2026-11-13T13:02:18.250Z",
+      "decision": {
+        "thought": "脚本耗尽，收尾",
+        "call": {
+          "name": "finish",
+          "args": {
+            "summary": "mock 脚本耗尽"
+          }
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "已收尾：mock 脚本耗尽"
+      },
+      "stateHash": "8b1708f197273e11",
+      "contextChars": 665,
+      "brainMs": 1,
+      "toolMs": 0
+    }
+  ],
+  "notes": [],
+  "finishSummary": "mock 脚本耗尽",
+  "actionSequence": [
+    {
+      "name": "finish",
+      "args": {
+        "summary": "mock 脚本耗尽"
+      }
+    }
+  ],
+  "durationMs": 11,
+  "brainRetries": 0
+}

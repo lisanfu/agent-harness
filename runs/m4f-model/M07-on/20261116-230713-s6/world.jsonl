@@ -1,0 +1,10 @@
+{"tick":0,"action":null,"hash":"0bcfad38fddbfa66","events":[]}
+{"tick":1,"action":{"kind":"move","dir":1},"hash":"8f6ec2a30aeb4080","events":["你朝右走了一格。"]}
+{"tick":2,"action":{"kind":"move","dir":2},"hash":"1a3143708e3b3335","events":["你朝下走了一格。"]}
+{"tick":3,"action":{"kind":"attack"},"hash":"42ada643cbeb905b","events":["你朝身边的敌人挥击。"]}
+{"tick":4,"action":{"kind":"move","dir":2},"hash":"d28e8adf50cb8b46","events":["你朝下走了一格。"]}
+{"tick":5,"action":{"kind":"move","dir":3},"hash":"4a39e6fd3dfd03f6","events":["你朝左走了一格。"]}
+{"tick":6,"action":{"kind":"move","dir":2},"hash":"370b072062d31188","events":["你朝下走了一格。"]}
+{"tick":7,"action":{"kind":"move","dir":0},"hash":"03e5fa15d9455828","events":["你朝上走了一格。"]}
+{"tick":8,"action":{"kind":"move","dir":1},"hash":"d531746e363fc899","events":["你朝右走了一格。"]}
+{"tick":9,"action":{"kind":"move","dir":2},"hash":"9e69619e127c1c37","events":["你朝下走了一格。"]}

@@ -1,0 +1,12 @@
+{"tick":0,"action":null,"hash":"0bcfad38fddbfa66","events":[]}
+{"tick":1,"action":{"kind":"attack"},"hash":"e07d6b24f2c4db86","events":["你朝身边的敌人挥击。"]}
+{"tick":2,"action":{"kind":"move","dir":1},"hash":"ee51958c7b54cf89","events":["你朝右走了一格。"]}
+{"tick":3,"action":{"kind":"wait"},"hash":"6cadfcacfa3baeee","events":["你原地等待。"]}
+{"tick":4,"action":{"kind":"move","dir":2},"hash":"318eee4628b675ed","events":["你朝下走了一格。"]}
+{"tick":5,"action":{"kind":"move","dir":2},"hash":"e7d66befb3d10548","events":["你朝下走了一格。"]}
+{"tick":6,"action":{"kind":"move","dir":1},"hash":"c1663f1a64756e6e","events":["你朝右走了一格。"]}
+{"tick":7,"action":{"kind":"move","dir":2},"hash":"8e48db8178589e7c","events":["你朝下撞上了障碍，没能移动。"]}
+{"tick":8,"action":{"kind":"move","dir":1},"hash":"59d1157d545369f1","events":["你朝右走了一格。"]}
+{"tick":9,"action":{"kind":"move","dir":2},"hash":"43280556048da586","events":["你朝下撞上了障碍，没能移动。"]}
+{"tick":10,"action":{"kind":"move","dir":3},"hash":"7890534df560e2fb","events":["你朝左走了一格。"]}
+{"tick":11,"action":{"kind":"move","dir":2},"hash":"5eae44d102abd8a0","events":["你朝下撞上了障碍，没能移动。"]}

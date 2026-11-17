@@ -1,0 +1,998 @@
+{
+  "runId": "20261113-204204-s6",
+  "runDir": "/home/fuyuan/Documents/workspace/agent-harness/runs/20261113-204204-s6",
+  "stopReason": "brain_failed",
+  "steps": [
+    {
+      "index": 1,
+      "at": "2026-11-13T12:42:11.156Z",
+      "decision": {
+        "thought": "开局第一帧，先看看当前画面了解地图、血量、分数和敌人情况。",
+        "call": {
+          "name": "look",
+          "args": {}
+        },
+        "predict": {
+          "hpDelta": 0,
+          "scoreDelta": 0,
+          "playerAt": [
+            1,
+            1
+          ],
+          "enemyCount": 2,
+          "pickupCount": 1,
+          "alive": true,
+          "attackReady": true
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|@E.....E|\n|........|\n|........|\n|..##..#E|\n|........|\n|.+.#....|\n|#.+...#+|\n|.....#..|\n+--------+\nHP [##########] 10/10   分数 0   第 0 帧\n攻击：就绪   状态：活着\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "0bcfad38fddbfa66",
+      "contextChars": 1393,
+      "brainMs": 6636,
+      "toolMs": 1
+    },
+    {
+      "index": 2,
+      "at": "2026-11-13T12:42:14.075Z",
+      "decision": {
+        "thought": "我在(1,1)，最近敌人在右侧(2,1)。先向右移动靠近它，观察敌人反应与攻击距离。",
+        "call": {
+          "name": "move",
+          "args": {
+            "dir": "right"
+          }
+        },
+        "predict": {
+          "hpDelta": 0,
+          "scoreDelta": 0,
+          "playerAt": [
+            2,
+            1
+          ],
+          "enemyCount": 2,
+          "pickupCount": 1,
+          "alive": true,
+          "attackReady": true
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|.@....E.|\n|.E......|\n|.......E|\n|..##..#.|\n|........|\n|.+.#....|\n|#.+...#+|\n|.....#..|\n+--------+\nHP [##########] 10/10   分数 0   第 1 帧\n攻击：就绪   状态：活着\n刚才发生：\n  - 你朝右走了一格。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "8f6ec2a30aeb4080",
+      "contextChars": 1807,
+      "brainMs": 2907,
+      "toolMs": 4,
+      "prediction": {
+        "given": true,
+        "predicted": {
+          "hpDelta": 0,
+          "scoreDelta": 0,
+          "playerAt": [
+            2,
+            1
+          ],
+          "enemyCount": 2,
+          "pickupCount": 1,
+          "alive": true,
+          "attackReady": true
+        },
+        "diffs": [
+          {
+            "field": "hpDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          },
+          {
+            "field": "scoreDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          },
+          {
+            "field": "playerAt",
+            "predicted": [
+              2,
+              1
+            ],
+            "actual": [
+              1,
+              0
+            ],
+            "status": "violated"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 2,
+            "actual": 3,
+            "status": "violated"
+          },
+          {
+            "field": "pickupCount",
+            "predicted": 1,
+            "actual": 3,
+            "status": "violated"
+          },
+          {
+            "field": "alive",
+            "predicted": true,
+            "actual": true,
+            "status": "ok"
+          },
+          {
+            "field": "attackReady",
+            "predicted": true,
+            "actual": true,
+            "status": "ok"
+          }
+        ],
+        "violated": 3,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 3,
+      "at": "2026-11-13T12:42:27.384Z",
+      "decision": {
+        "thought": "移动方向与坐标解读有误：实际向右走了格子列增加，玩家真实坐标是[1,0]而非[2,1]。同时屏幕上有3个敌人、3个可拾取物。下一步尝试攻击紧邻下方的敌人，验证攻击机制并观察分数/血量变化。",
+        "call": {
+          "name": "attack",
+          "args": {}
+        },
+        "predict": {
+          "hpDelta": 0,
+          "scoreDelta": 1,
+          "playerAt": [
+            1,
+            0
+          ],
+          "enemyCount": 2,
+          "pickupCount": 3,
+          "alive": true,
+          "attackReady": false
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|.@...E..|\n|.......E|\n|........|\n|..##..#.|\n|........|\n|.+.#....|\n|#.+...#+|\n|.....#..|\n+--------+\nHP [##########] 10/10   分数 0   第 2 帧\n攻击：冷却中   状态：活着\n刚才发生：\n  - 你朝身边的敌人挥击。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "b29b54afae3c089e",
+      "contextChars": 2601,
+      "brainMs": 13302,
+      "toolMs": 2,
+      "prediction": {
+        "given": true,
+        "predicted": {
+          "hpDelta": 0,
+          "scoreDelta": 1,
+          "playerAt": [
+            1,
+            0
+          ],
+          "enemyCount": 2,
+          "pickupCount": 3,
+          "alive": true,
+          "attackReady": false
+        },
+        "diffs": [
+          {
+            "field": "hpDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          },
+          {
+            "field": "scoreDelta",
+            "predicted": 1,
+            "actual": 0,
+            "status": "violated"
+          },
+          {
+            "field": "playerAt",
+            "predicted": [
+              1,
+              0
+            ],
+            "actual": [
+              1,
+              0
+            ],
+            "status": "ok"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 2,
+            "actual": 2,
+            "status": "ok"
+          },
+          {
+            "field": "pickupCount",
+            "predicted": 3,
+            "actual": 3,
+            "status": "ok"
+          },
+          {
+            "field": "alive",
+            "predicted": true,
+            "actual": true,
+            "status": "ok"
+          },
+          {
+            "field": "attackReady",
+            "predicted": false,
+            "actual": false,
+            "status": "ok"
+          }
+        ],
+        "violated": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 4,
+      "at": "2026-11-13T12:42:29.902Z",
+      "decision": {
+        "thought": "攻击确实消除了一个相邻敌人(enemyCount由3→2)，但分数未变动(scoreDelta实际0而非1)。说明攻击击杀不直接加分，可能得分与拾取相关。下次准备等待攻击冷却结束，再测试拾取机制。",
+        "call": {
+          "name": "wait",
+          "args": {}
+        },
+        "predict": {
+          "hpDelta": 0,
+          "scoreDelta": 0,
+          "playerAt": [
+            1,
+            0
+          ],
+          "enemyCount": 2,
+          "pickupCount": 3,
+          "alive": true,
+          "attackReady": true
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|.@..E..E|\n|........|\n|........|\n|..##..#.|\n|........|\n|.+.#....|\n|#.+...#+|\n|.....#..|\n+--------+\nHP [##########] 10/10   分数 0   第 3 帧\n攻击：冷却中   状态：活着\n刚才发生：\n  - 你原地等待。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "002cfaccb90dc2bd",
+      "contextChars": 3434,
+      "brainMs": 2515,
+      "toolMs": 1,
+      "prediction": {
+        "given": true,
+        "predicted": {
+          "hpDelta": 0,
+          "scoreDelta": 0,
+          "playerAt": [
+            1,
+            0
+          ],
+          "enemyCount": 2,
+          "pickupCount": 3,
+          "alive": true,
+          "attackReady": true
+        },
+        "diffs": [
+          {
+            "field": "hpDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          },
+          {
+            "field": "scoreDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          },
+          {
+            "field": "playerAt",
+            "predicted": [
+              1,
+              0
+            ],
+            "actual": [
+              1,
+              0
+            ],
+            "status": "ok"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 2,
+            "actual": 2,
+            "status": "ok"
+          },
+          {
+            "field": "pickupCount",
+            "predicted": 3,
+            "actual": 3,
+            "status": "ok"
+          },
+          {
+            "field": "alive",
+            "predicted": true,
+            "actual": true,
+            "status": "ok"
+          },
+          {
+            "field": "attackReady",
+            "predicted": true,
+            "actual": false,
+            "status": "violated"
+          }
+        ],
+        "violated": 1,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 5,
+      "at": "2026-11-13T12:42:36.590Z",
+      "decision": {
+        "thought": "wait后攻击仍为冷却中，说明冷却时长大于1帧。同时观察到屏幕右侧出现两个新敌人，玩家坐标未变。准备继续等待让攻击冷却结束。",
+        "call": {
+          "name": "wait",
+          "args": {}
+        },
+        "predict": {
+          "hpDelta": 0,
+          "scoreDelta": 0,
+          "playerAt": [
+            1,
+            0
+          ],
+          "enemyCount": 2,
+          "pickupCount": 3,
+          "alive": true,
+          "attackReady": true
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|.@.E...E|\n|........|\n|........|\n|..##..#.|\n|........|\n|.+.#....|\n|#.+...#+|\n|.....#..|\n+--------+\nHP [##########] 10/10   分数 0   第 4 帧\n攻击：就绪   状态：活着\n刚才发生：\n  - 你原地等待。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "8b27b4170491453f",
+      "contextChars": 4263,
+      "brainMs": 6685,
+      "toolMs": 1,
+      "prediction": {
+        "given": true,
+        "predicted": {
+          "hpDelta": 0,
+          "scoreDelta": 0,
+          "playerAt": [
+            1,
+            0
+          ],
+          "enemyCount": 2,
+          "pickupCount": 3,
+          "alive": true,
+          "attackReady": true
+        },
+        "diffs": [
+          {
+            "field": "hpDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          },
+          {
+            "field": "scoreDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          },
+          {
+            "field": "playerAt",
+            "predicted": [
+              1,
+              0
+            ],
+            "actual": [
+              1,
+              0
+            ],
+            "status": "ok"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 2,
+            "actual": 2,
+            "status": "ok"
+          },
+          {
+            "field": "pickupCount",
+            "predicted": 3,
+            "actual": 3,
+            "status": "ok"
+          },
+          {
+            "field": "alive",
+            "predicted": true,
+            "actual": true,
+            "status": "ok"
+          },
+          {
+            "field": "attackReady",
+            "predicted": true,
+            "actual": true,
+            "status": "ok"
+          }
+        ],
+        "violated": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 6,
+      "at": "2026-11-13T12:42:39.350Z",
+      "decision": {
+        "thought": "攻击冷却已完成，预测全部相符。现在尝试移动并拾取附近的可拾取物(+在[1,1])，验证拾取机制是否加分。",
+        "call": {
+          "name": "move",
+          "args": {
+            "dir": "down"
+          }
+        },
+        "predict": {
+          "hpDelta": 0,
+          "scoreDelta": 0,
+          "playerAt": [
+            1,
+            1
+          ],
+          "enemyCount": 2,
+          "pickupCount": 3,
+          "alive": true,
+          "attackReady": true
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|..E....E|\n|.@......|\n|........|\n|..##..#.|\n|........|\n|.+.#....|\n|#.+...#+|\n|.....#..|\n+--------+\nHP [##########] 10/10   分数 0   第 5 帧\n攻击：就绪   状态：活着\n刚才发生：\n  - 你朝下走了一格。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "f2085e0f2fa5a73e",
+      "contextChars": 5050,
+      "brainMs": 2756,
+      "toolMs": 1,
+      "prediction": {
+        "given": true,
+        "predicted": {
+          "hpDelta": 0,
+          "scoreDelta": 0,
+          "playerAt": [
+            1,
+            1
+          ],
+          "enemyCount": 2,
+          "pickupCount": 3,
+          "alive": true,
+          "attackReady": true
+        },
+        "diffs": [
+          {
+            "field": "hpDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          },
+          {
+            "field": "scoreDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          },
+          {
+            "field": "playerAt",
+            "predicted": [
+              1,
+              1
+            ],
+            "actual": [
+              1,
+              1
+            ],
+            "status": "ok"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 2,
+            "actual": 2,
+            "status": "ok"
+          },
+          {
+            "field": "pickupCount",
+            "predicted": 3,
+            "actual": 3,
+            "status": "ok"
+          },
+          {
+            "field": "alive",
+            "predicted": true,
+            "actual": true,
+            "status": "ok"
+          },
+          {
+            "field": "attackReady",
+            "predicted": true,
+            "actual": true,
+            "status": "ok"
+          }
+        ],
+        "violated": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 7,
+      "at": "2026-11-13T12:42:41.345Z",
+      "decision": {
+        "thought": "预测相符，移动到[1,1]后脚下的可拾取物仍然计数3，可能我需要主动调用pickup才能拾取。现在尝试拾取脚下物品，看分数是否变化。",
+        "call": {
+          "name": "pickup",
+          "args": {}
+        },
+        "predict": {
+          "hpDelta": 0,
+          "scoreDelta": 5,
+          "playerAt": [
+            1,
+            1
+          ],
+          "enemyCount": 2,
+          "pickupCount": 2,
+          "alive": true,
+          "attackReady": true
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|.E....E.|\n|.@......|\n|........|\n|..##..#.|\n|........|\n|.+.#....|\n|#.+...#+|\n|.....#..|\n+--------+\nHP [##########] 10/10   分数 0   第 6 帧\n攻击：就绪   状态：活着\n刚才发生：\n  - 你脚下没有可拾取的东西。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "83d18f143a918093",
+      "contextChars": 5841,
+      "brainMs": 1990,
+      "toolMs": 2,
+      "prediction": {
+        "given": true,
+        "predicted": {
+          "hpDelta": 0,
+          "scoreDelta": 5,
+          "playerAt": [
+            1,
+            1
+          ],
+          "enemyCount": 2,
+          "pickupCount": 2,
+          "alive": true,
+          "attackReady": true
+        },
+        "diffs": [
+          {
+            "field": "hpDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          },
+          {
+            "field": "scoreDelta",
+            "predicted": 5,
+            "actual": 0,
+            "status": "violated"
+          },
+          {
+            "field": "playerAt",
+            "predicted": [
+              1,
+              1
+            ],
+            "actual": [
+              1,
+              1
+            ],
+            "status": "ok"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 2,
+            "actual": 2,
+            "status": "ok"
+          },
+          {
+            "field": "pickupCount",
+            "predicted": 2,
+            "actual": 3,
+            "status": "violated"
+          },
+          {
+            "field": "alive",
+            "predicted": true,
+            "actual": true,
+            "status": "ok"
+          },
+          {
+            "field": "attackReady",
+            "predicted": true,
+            "actual": true,
+            "status": "ok"
+          }
+        ],
+        "violated": 2,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 8,
+      "at": "2026-11-13T12:42:49.005Z",
+      "decision": {
+        "thought": "pickup失败说明我当前格子没有物品。地图上还有三个可拾取物位于下方，需要移动过去再拾取。下一步继续向下靠近最近的+(1,5)。",
+        "call": {
+          "name": "move",
+          "args": {
+            "dir": "down"
+          }
+        },
+        "predict": {
+          "hpDelta": 0,
+          "scoreDelta": 0,
+          "playerAt": [
+            1,
+            2
+          ],
+          "enemyCount": 2,
+          "pickupCount": 3,
+          "alive": true,
+          "attackReady": true
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|E....E..|\n|........|\n|.@......|\n|..##..#.|\n|........|\n|.+.#....|\n|#.+...#+|\n|.....#..|\n+--------+\nHP [##########] 10/10   分数 0   第 7 帧\n攻击：就绪   状态：活着\n刚才发生：\n  - 你朝下走了一格。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "171553a28bbd7fb5",
+      "contextChars": 6648,
+      "brainMs": 7657,
+      "toolMs": 1,
+      "prediction": {
+        "given": true,
+        "predicted": {
+          "hpDelta": 0,
+          "scoreDelta": 0,
+          "playerAt": [
+            1,
+            2
+          ],
+          "enemyCount": 2,
+          "pickupCount": 3,
+          "alive": true,
+          "attackReady": true
+        },
+        "diffs": [
+          {
+            "field": "hpDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          },
+          {
+            "field": "scoreDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          },
+          {
+            "field": "playerAt",
+            "predicted": [
+              1,
+              2
+            ],
+            "actual": [
+              1,
+              2
+            ],
+            "status": "ok"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 2,
+            "actual": 2,
+            "status": "ok"
+          },
+          {
+            "field": "pickupCount",
+            "predicted": 3,
+            "actual": 3,
+            "status": "ok"
+          },
+          {
+            "field": "alive",
+            "predicted": true,
+            "actual": true,
+            "status": "ok"
+          },
+          {
+            "field": "attackReady",
+            "predicted": true,
+            "actual": true,
+            "status": "ok"
+          }
+        ],
+        "violated": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 9,
+      "at": "2026-11-13T12:42:51.180Z",
+      "decision": {
+        "thought": "移动到[1,2]后脚下仍无物品，可拾取物仍在(1,5)、(3,5)、(7,6)。继续向下靠近第一个+。",
+        "call": {
+          "name": "move",
+          "args": {
+            "dir": "down"
+          }
+        },
+        "predict": {
+          "hpDelta": 0,
+          "scoreDelta": 0,
+          "playerAt": [
+            1,
+            3
+          ],
+          "enemyCount": 2,
+          "pickupCount": 3,
+          "alive": true,
+          "attackReady": true
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|E...E...|\n|........|\n|........|\n|.@##..#.|\n|........|\n|.+.#....|\n|#.+...#+|\n|.....#..|\n+--------+\nHP [##########] 10/10   分数 0   第 8 帧\n攻击：就绪   状态：活着\n刚才发生：\n  - 你朝下走了一格。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "b6c2ae0896daf1fc",
+      "contextChars": 7452,
+      "brainMs": 2171,
+      "toolMs": 1,
+      "prediction": {
+        "given": true,
+        "predicted": {
+          "hpDelta": 0,
+          "scoreDelta": 0,
+          "playerAt": [
+            1,
+            3
+          ],
+          "enemyCount": 2,
+          "pickupCount": 3,
+          "alive": true,
+          "attackReady": true
+        },
+        "diffs": [
+          {
+            "field": "hpDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          },
+          {
+            "field": "scoreDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          },
+          {
+            "field": "playerAt",
+            "predicted": [
+              1,
+              3
+            ],
+            "actual": [
+              1,
+              3
+            ],
+            "status": "ok"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 2,
+            "actual": 2,
+            "status": "ok"
+          },
+          {
+            "field": "pickupCount",
+            "predicted": 3,
+            "actual": 3,
+            "status": "ok"
+          },
+          {
+            "field": "alive",
+            "predicted": true,
+            "actual": true,
+            "status": "ok"
+          },
+          {
+            "field": "attackReady",
+            "predicted": true,
+            "actual": true,
+            "status": "ok"
+          }
+        ],
+        "violated": 0,
+        "unverifiable": 0
+      }
+    },
+    {
+      "index": 10,
+      "at": "2026-11-13T12:42:54.751Z",
+      "decision": {
+        "thought": "当前位于[1,3]，下方(1,4)是空地，再下一格(1,5)是+.继续向下推进接近可拾取物。",
+        "call": {
+          "name": "move",
+          "args": {
+            "dir": "down"
+          }
+        },
+        "predict": {
+          "hpDelta": 0,
+          "scoreDelta": 0,
+          "playerAt": [
+            1,
+            4
+          ],
+          "enemyCount": 2,
+          "pickupCount": 3,
+          "alive": true,
+          "attackReady": true
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "+--------+\n|...E....|\n|E.......|\n|........|\n|..##..#.|\n|.@......|\n|.+.#....|\n|#.+...#+|\n|.....#..|\n+--------+\nHP [##########] 10/10   分数 0   第 9 帧\n攻击：就绪   状态：活着\n刚才发生：\n  - 你朝下走了一格。\n图例：@=你 E=敌人 +=可拾取 #=墙 .=空地"
+      },
+      "stateHash": "e2c1285f0758459e",
+      "contextChars": 8242,
+      "brainMs": 3567,
+      "toolMs": 1,
+      "prediction": {
+        "given": true,
+        "predicted": {
+          "hpDelta": 0,
+          "scoreDelta": 0,
+          "playerAt": [
+            1,
+            4
+          ],
+          "enemyCount": 2,
+          "pickupCount": 3,
+          "alive": true,
+          "attackReady": true
+        },
+        "diffs": [
+          {
+            "field": "hpDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          },
+          {
+            "field": "scoreDelta",
+            "predicted": 0,
+            "actual": 0,
+            "status": "ok"
+          },
+          {
+            "field": "playerAt",
+            "predicted": [
+              1,
+              4
+            ],
+            "actual": [
+              1,
+              4
+            ],
+            "status": "ok"
+          },
+          {
+            "field": "enemyCount",
+            "predicted": 2,
+            "actual": 2,
+            "status": "ok"
+          },
+          {
+            "field": "pickupCount",
+            "predicted": 3,
+            "actual": 3,
+            "status": "ok"
+          },
+          {
+            "field": "alive",
+            "predicted": true,
+            "actual": true,
+            "status": "ok"
+          },
+          {
+            "field": "attackReady",
+            "predicted": true,
+            "actual": true,
+            "status": "ok"
+          }
+        ],
+        "violated": 0,
+        "unverifiable": 0
+      }
+    }
+  ],
+  "notes": [],
+  "actionSequence": [
+    {
+      "name": "look",
+      "args": {}
+    },
+    {
+      "name": "move",
+      "args": {
+        "dir": "right"
+      }
+    },
+    {
+      "name": "attack",
+      "args": {}
+    },
+    {
+      "name": "wait",
+      "args": {}
+    },
+    {
+      "name": "wait",
+      "args": {}
+    },
+    {
+      "name": "move",
+      "args": {
+        "dir": "down"
+      }
+    },
+    {
+      "name": "pickup",
+      "args": {}
+    },
+    {
+      "name": "move",
+      "args": {
+        "dir": "down"
+      }
+    },
+    {
+      "name": "move",
+      "args": {
+        "dir": "down"
+      }
+    },
+    {
+      "name": "move",
+      "args": {
+        "dir": "down"
+      }
+    }
+  ],
+  "durationMs": 70042,
+  "brainRetries": 3,
+  "predictionStats": {
+    "checked": 9,
+    "given": 9,
+    "missing": 0,
+    "fields": 63,
+    "ok": 56,
+    "violated": 7,
+    "unverifiable": 0,
+    "surpriseGiven": 0,
+    "surpriseUnexpected": 0,
+    "surpriseMalformed": 0,
+    "violatedButNotSurprised": 0
+  }
+}

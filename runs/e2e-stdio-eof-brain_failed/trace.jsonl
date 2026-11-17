@@ -1,0 +1,1 @@
+{"kind":"brain_error","at":"2026-11-12T14:40:13.293Z","payload":{"step":1,"attempt":0,"error":{"code":"E_BRAIN_PROTOCOL","message":"宿主输入已关闭（stdin EOF），无法继续决策"}}}

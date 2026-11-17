@@ -1,0 +1,100 @@
+{
+  "seed": 6,
+  "initialHash": "0bcfad38fddbfa66",
+  "mutant": "M08",
+  "agentClaims": {
+    "finishSummary": null,
+    "notes": []
+  },
+  "notary": {
+    "mutant": "M08",
+    "diverged": true,
+    "firstStep": 2,
+    "firstFields": [
+      "player.score"
+    ],
+    "masked": false,
+    "divergedFrames": 8,
+    "minimized": {
+      "actions": [
+        {
+          "kind": "attack"
+        }
+      ],
+      "originalLength": 9,
+      "tests": 7,
+      "oneMinimal": true,
+      "budgetExhausted": false,
+      "reverified": true
+    }
+  },
+  "evidenceConsistent": true,
+  "coverage": {
+    "ticks": 9,
+    "cellsVisited": 6,
+    "cellsTotal": 64,
+    "hpSeen": [
+      10
+    ],
+    "hpZeroReached": false,
+    "hpBelowZeroReached": false,
+    "hpAboveMaxReached": false,
+    "died": false,
+    "adjacentEnemyReached": true,
+    "touchedByEnemy": false,
+    "stoodOnPickup": false,
+    "pickupAtFullHp": false,
+    "pickupsTaken": 0,
+    "kills": 1,
+    "attacksWhileCooldown": 0,
+    "wallAttempts": 0,
+    "boundaryAttempts": 0
+  },
+  "predictionStats": {
+    "checked": 9,
+    "given": 9,
+    "missing": 0,
+    "fields": 63,
+    "ok": 56,
+    "violated": 7,
+    "unverifiable": 0,
+    "surpriseGiven": 0,
+    "surpriseUnexpected": 0,
+    "surpriseMalformed": 0,
+    "violatedButNotSurprised": 0
+  },
+  "fullWorldActions": [
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "wait"
+    },
+    {
+      "kind": "wait"
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "pickup"
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    }
+  ]
+}

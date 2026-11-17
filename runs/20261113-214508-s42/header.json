@@ -1,0 +1,27 @@
+{
+  "runId": "20261113-214508-s42",
+  "at": "2026-11-13T13:45:08.148Z",
+  "seed": 42,
+  "brainId": "mock:TEST-DOUBLE",
+  "task": "机械冒烟：只验接线，mock 不是大脑",
+  "sandbox": "/home/fuyuan/Documents/workspace/agent-harness/sandbox",
+  "config": {
+    "task": "机械冒烟：只验接线，mock 不是大脑",
+    "sandbox": "/home/fuyuan/Documents/workspace/agent-harness/sandbox",
+    "seed": 42,
+    "maxSteps": 6,
+    "maxWallMs": 300000,
+    "maxContextChars": 12000,
+    "keepRecent": 8,
+    "maxParseRetry": 2,
+    "repeatLimit": 3,
+    "outDir": "/home/fuyuan/Documents/workspace/agent-harness/runs"
+  },
+  "initialState": {
+    "notes": [],
+    "hypotheses": [],
+    "sandboxEntries": [
+      "f hello.txt"
+    ]
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "runId": "20261113-230348-s6",
+  "runDir": "/home/fuyuan/Documents/workspace/agent-harness/runs/20261113-230348-s6",
+  "stopReason": "finished",
+  "steps": [
+    {
+      "index": 1,
+      "at": "2026-11-13T15:03:48.404Z",
+      "decision": {
+        "thought": "脚本耗尽，收尾",
+        "call": {
+          "name": "finish",
+          "args": {
+            "summary": "mock 脚本耗尽"
+          }
+        }
+      },
+      "result": {
+        "ok": true,
+        "output": "已收尾：mock 脚本耗尽"
+      },
+      "stateHash": "0bcfad38fddbfa66",
+      "contextChars": 2963,
+      "brainMs": 0,
+      "toolMs": 1
+    }
+  ],
+  "notes": [],
+  "hypotheses": [],
+  "goals": [],
+  "finishSummary": "mock 脚本耗尽",
+  "actionSequence": [
+    {
+      "name": "finish",
+      "args": {
+        "summary": "mock 脚本耗尽"
+      }
+    }
+  ],
+  "durationMs": 11,
+  "brainRetries": 0,
+  "predictionStats": {
+    "checked": 0,
+    "staticChecks": 0,
+    "given": 0,
+    "missing": 0,
+    "fields": 0,
+    "ok": 0,
+    "violated": 0,
+    "unverifiable": 0,
+    "surpriseGiven": 0,
+    "surpriseUnexpected": 0,
+    "surpriseMalformed": 0,
+    "violatedButNotSurprised": 0
+  },
+  "hypothesisStats": {
+    "proposed": 0,
+    "confirmed": 0,
+    "retired": 0,
+    "revised": 0,
+    "plainNotes": 0,
+    "attributed": 0,
+    "unattributed": 0,
+    "unknownTarget": 0,
+    "malformed": 0,
+    "notChecked": 0,
+    "fieldAbsent": 0,
+    "contradictedNotRetired": 0,
+    "confirmedNoChecks": 0
+  },
+  "goalStats": {
+    "open": 0,
+    "achieved": 0,
+    "abandoned": 0,
+    "declared": 0,
+    "revised": 0,
+    "conditionRevised": 0,
+    "rejected": 0,
+    "conditionMalformed": 0,
+    "withCondition": 0,
+    "checks": 0,
+    "met": 0,
+    "unmet": 0,
+    "unverifiable": 0,
+    "metNotClosed": 0,
+    "closedNeverMet": 0,
+    "uncheckable": 0
+  }
+}

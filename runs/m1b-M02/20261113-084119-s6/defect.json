@@ -1,0 +1,167 @@
+{
+  "seed": 6,
+  "initialHash": "0bcfad38fddbfa66",
+  "mutant": "M02",
+  "agentClaims": {
+    "finishSummary": null,
+    "notes": [
+      "攻击可击败紧邻敌人，得1分且不受伤。敌人每回合后改变位置。",
+      "地图存在软边界或无边界，右侧可无限行走而不撞墙。"
+    ]
+  },
+  "notary": {
+    "mutant": "M02",
+    "diverged": true,
+    "firstStep": 1,
+    "firstFields": [
+      "enemies[0].y",
+      "enemies[1].x",
+      "enemies[2].y"
+    ],
+    "masked": false,
+    "divergedFrames": 28,
+    "minimized": {
+      "actions": [
+        {
+          "kind": "move",
+          "dir": 2
+        }
+      ],
+      "originalLength": 28,
+      "tests": 7,
+      "oneMinimal": true,
+      "budgetExhausted": false,
+      "reverified": true
+    }
+  },
+  "evidenceConsistent": true,
+  "coverage": {
+    "ticks": 28,
+    "cellsVisited": 19,
+    "cellsTotal": 64,
+    "hpSeen": [
+      8,
+      10
+    ],
+    "hpZeroReached": false,
+    "hpBelowZeroReached": false,
+    "hpAboveMaxReached": false,
+    "died": false,
+    "adjacentEnemyReached": true,
+    "touchedByEnemy": true,
+    "stoodOnPickup": false,
+    "pickupAtFullHp": false,
+    "pickupsTaken": 0,
+    "kills": 2,
+    "attacksWhileCooldown": 0,
+    "wallAttempts": 2,
+    "boundaryAttempts": 0
+  },
+  "fullWorldActions": [
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "wait"
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 1
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "attack"
+    },
+    {
+      "kind": "pickup"
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "pickup"
+    },
+    {
+      "kind": "move",
+      "dir": 2
+    },
+    {
+      "kind": "move",
+      "dir": 3
+    },
+    {
+      "kind": "pickup"
+    },
+    {
+      "kind": "move",
+      "dir": 0
+    }
+  ]
+}
