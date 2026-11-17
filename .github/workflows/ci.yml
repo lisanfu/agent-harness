@@ -1,0 +1,78 @@
+name: verify
+
+# 为什么这个 CI 值得存在：仓库卖的是"你能自己重算"。
+# 那么"重算得出来"就必须是**每次 push 都验一遍**的判据，而不是 README 里的一句承诺。
+# 零依赖 ⇒ 没有 install 步骤，也没有 lockfile 漂移面；跑的就是 npm test + 复核矩阵。
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  measurements:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # 原生类型擦除（不装 ts-node/tsx）要求 Node ≥ 22.18。
+      # 版本不够时报的是"未知扩展名 .ts"，跟真实原因隔了三层栈——先自己出声。
+      - name: 检查 Node 版本够跑类型擦除
+        run: |
+          node -e '
+            const [maj, min] = process.versions.node.split(".").map(Number);
+            if (maj < 22 || (maj === 22 && min < 18)) {
+              console.error(`需要 Node ≥ 22.18，当前 ${process.versions.node}`);
+              process.exit(1);
+            }
+            console.log(`Node ${process.versions.node} ✅（类型擦除可用，零依赖）`);
+          '
+
+      # 零依赖是设计约束，不是巧合。哪天有人偷偷加了 dependencies，这里当场拦住。
+      - name: 零依赖约束
+        run: |
+          node -e '
+            const p = require("./package.json");
+            const bad = { ...(p.dependencies || {}), ...(p.devDependencies || {}) };
+            const k = Object.keys(bad);
+            if (k.length) { console.error(`本仓库必须零依赖，却发现了：${k.join(", ")}`); process.exit(1); }
+            console.log("package.json 无任何依赖 ✅");
+          '
+          test ! -d node_modules || { echo "仓库里不该有 node_modules"; exit 1; }
+
+      - name: 单元 + 集成测试
+        run: npm test
+
+      - name: 机械冒烟（只验接线）
+        run: npm run smoke
+
+      - name: 复核矩阵 · 自给自足那批（夹具 → 审计 → 篡改自检）
+        run: |
+          npm run verify:board
+          npm run verify:board:selftest
+          npm run verify:goal
+          npm run verify:goal:selftest
+          npm run verify:random
+          npm run verify:detect
+          npm run verify:detect:selftest
+
+      # 这批读 runs/ 里的真实证据——证据目录已随仓库发布，所以评审在 CI 里
+      # 重算出来的数，必须与 FINDINGS 报告里引用的是同一个。
+      - name: 复核矩阵 · 依赖已发布证据那批
+        run: |
+          npm run verify:m4
+          npm run verify:detect:reference
+
+      - name: 判据指纹没被人动过
+        run: |
+          node --input-type=module -e "
+            import { FROZEN_SHA256, lexiconSha } from './src/world/lexicon.ts';
+            if (lexiconSha() !== FROZEN_SHA256) {
+              console.error('词表已偏离冻结指纹：判据在跑后被改过，本轮数字全部作废');
+              process.exit(1);
+            }
+            console.log('词表还是跑前冻结那一张（' + FROZEN_SHA256.slice(0, 12) + '…）✅');
+          "
