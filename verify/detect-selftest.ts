@@ -13,11 +13,15 @@
  *   R3 全部证据都没有 detection.json    → 必须当**零样本**报错，不许"没东西可验＝通过"
  *   R4 大脑自己说的话里带禁词           → 零泄漏判据不许命中（它扫的是**送给**大脑的文本，不是它说的文本）
  *   R5 一次失败的工具调用（没有屏幕）    → 屏幕重建跳过那一帧，不许算成不一致
+ *   R6 旧证据没有 provenance 键         → 事后规则不追判（#19），但必须按 brainId 如实归类为夹具
+ *
+ * 注入 14 是 A1 那条口径缺陷的守门用例：夹具把 provenance 改成 'real' 冒充真证据——
+ * 那是"误报率"分母上唯一可行的造假路子（一改成，0/4 当场变 1/5），必须当场抓住。
  *
  * 用法: node verify/detect-selftest.ts
  */
 import { execFileSync } from 'node:child_process';
-import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 
@@ -50,6 +54,25 @@ function cloneSet(tag: string, mutate: (dirs: string[]) => void): string[] {
 function mkdemp(tag: string): string {
   const p = mkdtempSync(join(tmpdir(), `detect-selftest-${tag}-`));
   return p;
+}
+
+/**
+ * 上限表从哪来。
+ *
+ * 原先这里直接 `readFileSync(cwd/runs/m4f-ceiling/ceiling_cases.jsonl)`，
+ * 于是**干净克隆上整条自检崩在 ENOENT**（Node 裸栈，连"哪条判据没跑成"都没说）。
+ * 现在两条路：仓库里已有预登记表就复用它（口径与真跑完全一致）；
+ * 没有就自己现生成一小份（`--reps 2 --budgets 25`，几十秒），并**出声说明它是现生成的**。
+ * 静默跳过这一例是不允许的——那等于给自检开了一条免检通道（#17）。
+ */
+function ceilingSource(): { file: string; generated: boolean } {
+  const shipped = resolve(HERE, '..', 'runs/m4f-ceiling/ceiling_cases.jsonl');
+  if (existsSync(shipped)) return { file: shipped, generated: false };
+  const dir = mkdemp('ceiling-gen');
+  console.log('[上限表] runs/m4f-ceiling 不在（随机臂没跑过）→ 现生成一小份预登记（--reps 2 --budgets 25），只用于本自检');
+  execFileSync(process.execPath, [resolve(HERE, '..', 'src/m4f.ts'), '--policy', 'random', '--reps', '2', '--budgets', '25', '--out', dir],
+    { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+  return { file: join(dir, 'ceiling_cases.jsonl'), generated: true };
 }
 
 /** 找一局满足条件的（判决器口径），返回副本根目录里对应的那一份 */
@@ -222,7 +245,7 @@ cases.push({
   const root = mkdemp('ceiling');
   const dir = join(root, 'ceil');
   mkdirSync(dir, { recursive: true });
-  const lines = readFileSync(join(process.cwd(), 'runs/m4f-ceiling/ceiling_cases.jsonl'), 'utf8').split('\n').filter(Boolean);
+  const lines = readFileSync(ceilingSource().file, 'utf8').split('\n').filter(Boolean);
   const out = lines.map((l) => {
     const r = JSON.parse(l);
     if (r.visible === false) { r.visible = true; r.firstVisibleStep = 2; return JSON.stringify(r); }
@@ -297,6 +320,35 @@ cases.push({
     const r = rows.find((x) => x.decision && x.result?.ok === true && String(x.result.output).includes('+--------'));
     r.result = { ok: false, output: '方向 "sideways" 不认识。只能用 up / right / down / left 这四个词。' };
     dump(d, rows);
+  }),
+});
+
+// ── 注入 14（M4-f A1）：夹具局把来源声明改成 'real'，冒充真证据 ──
+// 这是"误报率"分母上唯一可行的造假路子：删掉 provenance 或改成 real，
+// 那枚故意埋的"仪器过火"就混进仪器精度，0/4 当场变 1/5。
+// 所以这里要求审计**同时**做到两件事：出声判错，并且仍按真实来源把它剔除。
+cases.push({
+  name: '夹具冒充真证据（provenance 被改成 real）',
+  keyword: '[来源]',
+  dirs: cloneSet('fake-real', (ds) => {
+    const d = ds[idx('control_false_positive')]!;
+    const h = read(d, 'header.json');
+    h.provenance = 'real';
+    write(d, 'header.json', h);
+  }),
+});
+
+// ── 反向对照 R6：抹掉 provenance 键（模拟本轮之前的旧证据）→ 必须放行 ──
+// #19 的教训：事后规则不追判旧证据。这个字段是本轮才加的，旧局没有它不是造假。
+// 但放行不等于放过——审计必须按 brainId/task 把它归成夹具，那行"归类为 fixture"就是证据。
+controls.push({
+  name: 'R6 旧证据没有 provenance 键 → 不追判，但按 brainId 如实归类为夹具',
+  keyword: '归类为 fixture',
+  dirs: cloneSet('r6', (ds) => {
+    const d = ds[idx('control_false_positive')]!;
+    const h = read(d, 'header.json');
+    delete h.provenance;
+    write(d, 'header.json', h);
   }),
 });
 

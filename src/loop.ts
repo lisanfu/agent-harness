@@ -167,6 +167,9 @@ export async function runHarness(opts: RunOptions): Promise<RunResult> {
     // 判据的主人始终是循环层（它才知道接缝给没给），世界层不用重复声明一遍。
     // 判决口径戳：世界层算好了递过来，循环层只抄写、不解释（判据见 types.ts 的 JudgementStamp）
     ...(opts.judgement ? { judgement: opts.judgement } : {}),
+    // 证据来源：谁产生的这批证据。循环层只抄 config 里的声明，不自己判——
+    // 它连"夹具"是什么都不知道。缺省不写，校验侧按 'real' 处理（旧证据本来就没有这个键）。
+    ...(config.provenance ? { provenance: config.provenance } : {}),
     seams: { predict: opts.prediction !== undefined, goal: opts.goal !== undefined },
     initialState,
   });

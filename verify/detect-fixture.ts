@@ -197,6 +197,10 @@ for (const c of CASES) {
     // 连走四个同方向很正常。护栏一触发这局就被截短，L1/L2 落到哪一格就不是我搜出来的那个了。
     // 所以夹具把上限抬到剧本长度以上——不是绕过判据，是不让护栏改剧本。
     repeatLimit: body.length + 10,
+    // 来源声明：这批局是**裁判侧夹具**，不是 agent 能力证据。
+    // 尤其那两局 mutant=null 的参考版——其中一局故意埋了"仪器过火"来证明审计有牙，
+    // 不声明来源，它就会混进"误报率"的分母，把自检项打印成 1/2 = 50.0% 的仪器精度。
+    provenance: 'fixture',
     outDir: join(outRoot, c.name),
   };
   const r = await runArena({ brain: new ScriptBrain(body), seed: SEED, mutant: c.mutant, config, doMinimize: false, doGoal: false, log: (l) => log(`    ${l}`) });

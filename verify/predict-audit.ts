@@ -13,7 +13,8 @@
  *
  * 用法: node verify/predict-audit.ts <runDir> [<runDir> ...]
  */
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 // 只借 createWorld 做**裁判侧旁证**（核对 agent 那句"(3,3) 是墙"）。
 // 屏幕解析与差异核对一律自己重写，绝不 import observe.ts / predict.ts。
 import { createWorld } from '../src/world/arena.ts';
@@ -88,7 +89,17 @@ if (process.argv.slice(2).length === 0) {
   console.error('   用法: node verify/predict-audit.ts runs/<runId> [...]');
   process.exit(1);
 }
-for (const dir of process.argv.slice(2)) {
+for (const raw of process.argv.slice(2)) {
+  // 相对路径按仓库根解析（不靠 cwd），证据缺失说人话并计入不一致——
+  // 裸 ENOENT 崩栈会把"脚本没拿到证据"伪装成"证据有问题"，两者结论完全不同。
+  const dir = raw.startsWith('/') ? raw : resolve(raw);
+  const absent = ['trace.jsonl', 'header.json', 'result.json'].filter((f) => !existsSync(`${dir}/${f}`));
+  if (absent.length) {
+    console.error(`[证据缺失] ${dir} 缺 ${absent.join(' / ')} → 这一局无法审计。`);
+    console.error('   ① run 目录名写错了？列一下 runs/；② 这批证据还没跑出来？arena 局见 npm run verify:m3。');
+    grandBad++;
+    continue;
+  }
   const rows = readFileSync(`${dir}/trace.jsonl`, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
   const header = JSON.parse(readFileSync(`${dir}/header.json`, 'utf8'));
   const result = JSON.parse(readFileSync(`${dir}/result.json`, 'utf8'));

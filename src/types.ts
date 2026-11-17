@@ -601,6 +601,14 @@ export interface RunHeader {
    *    词表漂移由 lexiconSha() 与 FROZEN_SHA256 在校验侧比对。
    */
   judgement?: JudgementStamp;
+  /**
+   * 证据来源（与 HarnessConfig.provenance 同名同义，由循环层原样抄写）。
+   *
+   * 分工纪律：循环层只负责**抄**，不解释什么叫夹具——它不认识世界层的任何剧本。
+   * 校验侧据此把裁判侧夹具挡在"误报率"分母之外，并用 brainId / task 两条
+   * 独立信号交叉核对这句声明（删掉声明就冒充真证据，是免检通道）。
+   */
+  provenance?: 'real' | 'fixture';
   /** 初始状态：重放三要素之一 */
   initialState: {
     notes: string[];
@@ -681,4 +689,18 @@ export interface HarnessConfig {
   /** 连续多少次完全相同的动作判定为死循环 */
   repeatLimit: number;
   outDir: string;
+  /**
+   * 这批证据是**谁产生的**：真实大脑跑出来的，还是人写剧本的裁判侧夹具。
+   * 缺省视为 'real'（M4-f 之前的证据里没有这个键）。
+   *
+   * 为什么这个字段必须存在：`verify/detect-fixture.ts` 会造两局 `mutant=null` 的参考版局，
+   * 其中一局**故意埋了"仪器过火"**用来证明审计有牙。审计原先按 `mutant===null` 收分母，
+   * 于是把那个阳性样本算进"误报率"，当众打出 `1/2 = 50.0%`——一个夹具的自检项
+   * 长在了仪器精度指标的名字上。分母必须只收真证据，所以来源要落进证据本身。
+   *
+   * ⚠️ 它只是**声明**，不是判据：单靠删掉这个键仍能冒充真证据。
+   *    校验侧另有两条独立信号交叉核对（`brainId` 里的 FIXTURE 标记、task 文本前缀），
+   *    冒充必须同时改三处，见 `verify/detect-audit.ts` 的 provenanceOf。
+   */
+  provenance?: 'real' | 'fixture';
 }

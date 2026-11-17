@@ -8,7 +8,8 @@
  *
  * 用法: node verify/replay.ts <runDir>
  */
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
+import { join, resolve } from 'node:path';
 import { runSequence, ALL_CAPS, type Action } from '../src/world/arena.ts';
 import { findMutant } from '../src/world/mutants.ts';
 import { diffFields } from '../src/notary/diff.ts';
@@ -18,11 +19,27 @@ if (process.argv[2] === undefined) {
   console.error('用法: node verify/replay.ts <runDir>（需要 arena 局的 defect.json + world.jsonl，见 npm run verify:m4）');
   process.exit(2);
 }
-const dir = process.argv[2]!.replace(/\/+$/, '');
-const defect = JSON.parse(readFileSync(`${dir}/defect.json`, 'utf8'));
-const header = JSON.parse(readFileSync(`${dir}/header.json`, 'utf8'));
+// 相对路径按**仓库根**解析，不按 cwd：npm 脚本恰好在根目录跑，所以这条一直没暴露过，
+// 但从别处调用（CI 的 working-directory、或手工 `node verify/replay.ts runs/xxx` 站在子目录）
+// 就会读到一个根本不存在的目录，然后报"证据坏了"——那是脚本的故障，不是证据的故障。
+const HERE = resolve(new URL('.', import.meta.url).pathname);
+const raw = process.argv[2]!.replace(/\/+$/, '');
+const dir = raw.startsWith('/') ? raw : resolve(join(HERE, '..', raw));
+/** 证据缺失要说人话：缺哪个文件、为什么可能缺、下一步跑什么。裸 ENOENT 栈是把脚本自己的故障推给被验对象。 */
+function need(f: string): string {
+  const p = join(dir, f);
+  if (!existsSync(p)) {
+    console.error(`[证据缺失] 读不到 ${p}\n` +
+      `  这一局需要 ${f}。两种可能：① run 目录名写错了（列一下 runs/）；` +
+      `② 这批证据还没跑出来（arena 局用 npm run verify:m3 / --world arena 生成）。`);
+    process.exit(2);
+  }
+  return readFileSync(p, 'utf8');
+}
+const defect = JSON.parse(need('defect.json'));
+const header = JSON.parse(need('header.json'));
 const actions = defect.fullWorldActions as Action[];
-const logged = readFileSync(`${dir}/world.jsonl`, 'utf8').trim().split('\n').map((l) => JSON.parse(l));
+const logged = need('world.jsonl').trim().split('\n').map((l) => JSON.parse(l));
 
 console.log(`\n===== 独立复核 ${dir} =====`);
 console.log(`seed=${defect.seed}  mutant=${defect.mutant ?? '（对照组）'}  世界动作=${actions.length}`);

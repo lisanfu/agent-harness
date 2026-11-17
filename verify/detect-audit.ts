@@ -219,10 +219,48 @@ if (dirs.length === 0 && !flags.has('ceiling')) {
 }
 
 const JUDGE = `m4f-1+lex-${LEXICON_VERSION}`;
-interface Row { dir: string; mutant: string | null; arm: string; detectable: boolean; detected: boolean; exact: boolean; fp: boolean; verdict: V; whyNot: string | null }
+interface Row { dir: string; mutant: string | null; arm: string; src: Src; detectable: boolean; detected: boolean; exact: boolean; fp: boolean; verdict: V; whyNot: string | null }
 const rows: Row[] = [];
 /** 旧证据（没有 detection.json 的那批）由本文件独立算出的误报对照，只用于算误报率 */
-const legacy: { dir: string; fp: boolean; caps: Cap[]; quotes: number }[] = [];
+const legacy: { dir: string; fp: boolean; caps: Cap[]; quotes: number; src: Src; mutant: string | null }[] = [];
+
+/**
+ * 这批证据到底是谁产生的：真大脑 / 脚本替身（mock）/ 人写夹具。三个互斥类。
+ *
+ * 为什么必须有这一层：夹具会造两局 `mutant=null` 的参考版，其中一局**故意埋了"仪器过火"**，
+ * 用来证明审计不是 print ✅。原先误报率只按 `mutant===null` 收分母，于是那枚阳性样本
+ * 被算进仪器精度，当众打出 `1/2 = 50.0%`——**分母混进了不该进的一批证据**，
+ * 与 #18「两侧必须是同一量的两种算法」同族：两个不同的量共用了"误报率"这个名字。
+ *
+ * 本函数第一次跑就翻出更狠的一条：旧证据那 9 局里混着 4 局真大脑、2 局 mock 替身、
+ * 1 局人写夹具，**外加 2 局根本不是参考版（mutant=M08 的缺陷局）**——
+ * 缺陷局里的上报是真检出，不是误报，却一直在分母里充数。所以这里同时管两件事：
+ *   1. 来源分类（下面三条独立信号，不认 header 里那一句声明）；
+ *   2. 只有 `mutant===null` 且来源为真大脑的局，才有资格进"误报率"分母。
+ *
+ * ⚠️ 事后规则不追判旧证据（#19 的教训）：`provenance` 字段是本轮才加的，
+ *    旧局没有这个键**不算错**，按信号如实归类即可。
+ *    只有"字段已存在却声明成真证据、信号却说是夹具"才是主动冒充，那种判错。
+ */
+type Src = 'model' | 'double' | 'fixture';
+function sourceOf(header: any): { src: Src; note: string | null } {
+  const id = String(header.brainId ?? '');
+  const declared = header.provenance === 'fixture' ? 'fixture' : header.provenance === 'real' ? 'real' : undefined;
+  const sigFixture = id.includes('FIXTURE') || String(header.task ?? '').startsWith('夹具');
+  const sigDouble = !sigFixture && (id.startsWith('mock') || id.startsWith('script'));
+  const src: Src = sigFixture ? 'fixture' : sigDouble ? 'double' : 'model';
+  if (declared === 'real' && src !== 'model') {
+    bad('[来源]', `header 声明 provenance='real'，但 brainId=${id} 与 task 前缀都说是${src === 'fixture' ? '人写夹具' : '脚本替身'} —— 冒充真证据会污染误报率分母`);
+    return { src, note: '主动冒充：已判错，并按真实来源剔除' };
+  }
+  if (declared === 'fixture' && src === 'model') {
+    return { src: 'fixture', note: '声明是夹具但 brainId/task 不认（只会缩小分母，不影响已报出的精度）' };
+  }
+  if (declared === undefined && src !== 'model') {
+    return { src, note: `旧证据没有 provenance 键（本轮才加），按 brainId 归类为 ${src}；事后规则不追判` };
+  }
+  return { src, note: null };
+}
 
 console.log(`\n===== M4-f 检出判决独立审计（判决口径 ${JUDGE}） =====`);
 const drift = lexiconSha() !== FROZEN_SHA256;
@@ -262,6 +300,8 @@ function auditRun(dir: string): void {
     return;
   }
   const hasDetection = existsSync(join(dir, 'detection.json'));
+  const { src, note } = sourceOf(header);
+  if (note) console.log(`[来源] ⏭ ${note}`);
   if (!hasDetection) {
     versionSkipped++;
     gaps.push(`${dir}：没有 detection.json —— M4-f 之前的证据，判决未落盘，不参与本轮结论`);
@@ -276,7 +316,10 @@ function auditRun(dir: string): void {
     for (const n of cl0.notes ?? []) texts0.push({ where: 'note', text: n });
     for (const h of cl0.hypotheses ?? []) texts0.push({ where: 'hypothesis', text: h.text });
     const c0 = scanClaims(texts0);
-    legacy.push({ dir, fp: c0.reported || c0.vague, caps: c0.caps, quotes: c0.quotes.length });
+    legacy.push({
+      dir, fp: c0.reported || c0.vague, caps: c0.caps, quotes: c0.quotes.length,
+      src, mutant: (defect.mutant ?? null) as string | null,
+    });
     console.log(
       `[旧证据·误报对照] ${c0.reported || c0.vague ? '误报' : '无误报'}` +
       `（上报=${c0.reported} 空喊=${c0.vague}${c0.caps.length ? ` 指的=${c0.caps.join('+')}` : ''}，文本 ${texts0.length} 条）`,
@@ -413,7 +456,7 @@ function auditRun(dir: string): void {
 
   leakAudit(dir, header, trace, detection);
   rows.push({
-    dir, mutant: mutId, arm: armOf(dir, detection), detectable, detected, exact, fp,
+    dir, mutant: mutId, arm: armOf(dir, detection), src, detectable, detected, exact, fp,
     verdict, whyNot: why,
   });
 }
@@ -451,18 +494,27 @@ for (const dir of dirs) auditRun(dir);
 
 function groupKey(r: Row): string { return `${r.mutant ?? 'control'}/${r.arm}`; }
 
-console.log('\n===== 检出率汇总（只统计通过独立复核的局） =====');
-if (errors.length) {
-  console.log(`⚠️ 上面有 ${errors.length} 处不一致：这些局不进汇总表，先修判决器/世界再谈数字。`);
-} else if (rows.length === 0 && legacy.length === 0) {
-  console.log('零样本：既没有新版判决证据，也没有旧参考局可算误报率。');
-} else {
+/**
+ * 一张分组表。**真证据与夹具必须分两张打**——同一批数字不许有两种读法。
+ * 原先两张混在一张里，`M07/n/a 0/1` 这种夹具格子和模型臂格子并排出现，
+ * 谁截错一行就能把人写剧本的覆盖自检读成"某模型对 M07 的检出率 0%"。
+ *
+ * `rate=false` 时**不出百分比、不出置信区间**：夹具那一批要量的是"判决通路走没走全"，
+ * 不是任何能力指标。首版只在标题上写了"不许引用"，结果夹具表里仍然印出
+ * `M01/n/a 1/2 50.0% [9.5, 90.5]` 这样一行带置信区间的假检出率——
+ * 标题管不住截图，**格式本身才管得住**：既然这个数不该被引用，就不该长成可引用的样子。
+ */
+function table(title: string, note: string, list: Row[], rate: boolean): void {
+  console.log(`\n${title}　${note}`);
+  if (list.length === 0) { console.log('   （这一批一个都没有——没有证据就没有数字，不许用空表冒充"0%"）'); return; }
   const by = new Map<string, Row[]>();
-  for (const r of rows) {
+  for (const r of list) {
     if (!by.has(groupKey(r))) by.set(groupKey(r), []);
     by.get(groupKey(r))!.push(r);
   }
-  console.log('组                        可检(分母)  检出(分子)   检出率[Wilson95]        严格档  未检出的第一处断在哪层');
+  console.log(rate
+    ? '组                        可检(分母)  检出(分子)   检出率[Wilson95]        严格档  未检出的第一处断在哪层'
+    : '组                        可检(计数)  检出(计数)   检出率              严格档  判决落点分布（只数通路，不出百分比）');
   for (const [k, rs] of [...by.entries()].sort()) {
     const den = rs.filter((r) => r.detectable).length;
     const num = rs.filter((r) => r.detected).length;
@@ -474,22 +526,62 @@ if (errors.length) {
       if (r.mutant === null) { why.set(r.verdict, (why.get(r.verdict) ?? 0) + 1); continue; }
       if (!r.detected) why.set(r.whyNot ?? '未检出', (why.get(r.whyNot ?? '未检出') ?? 0) + 1);
     }
+    const dist = [...why.entries()].map(([w, n]) => `${w}×${n}`).join(' ') || '—';
     console.log(
       `${k.padEnd(25)} ${String(den).padStart(4)}/${String(rs.length).padStart(3)}  ` +
-      `${String(num).padStart(4)}/${den}      ${den ? `${(100 * num / den).toFixed(1)}% [${(lo * 100).toFixed(1)}, ${(hi * 100).toFixed(1)}]` : '无从谈检出率（一局都不可检）  '}` +
-      `  ${String(rs.filter((r) => r.exact).length).padStart(4)}  ${[...why.entries()].map(([w, n]) => `${w}×${n}`).join(' ') || '—'}`,
+      `${String(num).padStart(4)}/${den}      ` +
+      (rate
+        ? (den ? `${(100 * num / den).toFixed(1)}% [${(lo * 100).toFixed(1)}, ${(hi * 100).toFixed(1)}]` : '无从谈检出率（一局都不可检）  ')
+        : '（不适用）            ') +
+      `${String(rs.filter((r) => r.exact).length).padStart(4)}  ${dist}`,
     );
   }
-  const fps = rows.filter((r) => r.fp).length;
-  const refs = rows.filter((r) => r.mutant === null).length;
-  // 旧证据那批参考局一起进分母：词表的第 2 条防线点名要它们，漏掉就等于自选样本
-  const allRefs = refs + legacy.length;
-  const allFps = fps + legacy.filter((l) => l.fp).length;
-  console.log(`\n误报率（参考版那批，仪器自己的已知阴性对照）：${allFps}/${allRefs}${allRefs ? ` = ${(100 * allFps / allRefs).toFixed(1)}%` : ' — 一个参考版局都没有，无法算'}`);
-  if (legacy.length) console.log(`   其中 ${legacy.length} 局来自 M4-f 之前的证据：本审计独立判的，那批局没有 detection.json 可对照`);
+}
+
+console.log('\n===== 检出率汇总（只统计通过独立复核的局） =====');
+if (errors.length) {
+  console.log(`⚠️ 上面有 ${errors.length} 处不一致：这些局不进汇总表，先修判决器/世界再谈数字。`);
+} else if (rows.length === 0 && legacy.length === 0) {
+  console.log('零样本：既没有新版判决证据，也没有旧参考局可算误报率。');
+} else {
+  const real = rows.filter((r) => r.src === 'model');
+  const fxRows = rows.filter((r) => r.src !== 'model');
+  table('【真大脑】检出率', '只有这张表的数字可以引用', real, true);
+  table('【非真大脑：夹具与脚本替身】判决通路覆盖', '人写剧本/测试替身，只证明判据走得通；**不是 agent 能力证据，这一张表里没有可引用的百分比**', fxRows, false);
+
+  // ── 误报率：分母只收"真大脑 + 参考版世界"的局 ──
+  // 三条剔除各有各的理由，都必须出声说清楚，不许默默 continue：
+  //   · 夹具/替身的参考局：上报文本是人写的，量的是判据通路，不是仪器在真输出上的精度；
+  //   · 缺陷世界（mutant≠null）的局：那里报异常是**真检出**，放进"误报"分母是类别错误；
+  //   · 旧证据没有 detection.json：由本审计独立判，单独计数并标明。
+  const refsNew = real.filter((r) => r.mutant === null).length;
+  const fpsNew = real.filter((r) => r.mutant === null && r.fp).length;
+  const refsOld = legacy.filter((l) => l.src === 'model' && l.mutant === null).length;
+  const fpsOld = legacy.filter((l) => l.src === 'model' && l.mutant === null && l.fp).length;
+  const allRefs = refsNew + refsOld;
+  const allFps = fpsNew + fpsOld;
+  const [wlo, whi] = allRefs > 0 ? wilson(allFps, allRefs) : [NaN, NaN];
+  console.log(
+    `\n误报率（**分母＝真大脑跑的参考版局**，仪器自己的已知阴性对照）：${allFps}/${allRefs}` +
+    (allRefs
+      ? ` = ${(100 * allFps / allRefs).toFixed(1)}% [${(wlo * 100).toFixed(1)}, ${(whi * 100).toFixed(1)}]`
+      : ' — 一个真大脑的参考版局都没有，无法算'),
+  );
+  console.log(`   分母来源：${refsNew} 局有 detection.json + ${refsOld} 局 M4-f 之前的旧证据（本审计独立判，那批没有 detection.json 可对照）`);
+  const exFx = fxRows.filter((r) => r.mutant === null).length;
+  const exDouble = legacy.filter((l) => l.src === 'double').length;
+  const exOldFx = legacy.filter((l) => l.src === 'fixture').length;
+  const exDefect = legacy.filter((l) => l.mutant !== null).length;
+  if (exFx + exDouble + exOldFx + exDefect > 0) {
+    console.log(
+      `   已剔除：夹具参考局 ${exFx}（含故意埋的"仪器过火" ${fxRows.filter((r) => r.mutant === null && r.fp).length} 局）` +
+      `｜脚本替身旧局 ${exDouble}｜人写夹具旧局 ${exOldFx}｜**缺陷世界的旧局 ${exDefect}——那里报异常是真检出，不是误报**`,
+    );
+    console.log('   依据=brainId/task 两条独立信号 + header.provenance。该字段本轮才加，旧证据缺键不追判，只如实归类。');
+  }
   console.log('检出率必须与误报率成对出现：只看前者，把仪器过火读成模型能干。');
-  const on = rows.filter((r) => r.arm === 'on' && r.mutant);
-  const off = rows.filter((r) => r.arm === 'off' && r.mutant);
+  const on = real.filter((r) => r.arm === 'on' && r.mutant);
+  const off = real.filter((r) => r.arm === 'off' && r.mutant);
   if (on.length && off.length) {
     const a = on.filter((r) => r.detected).length, b = on.length - a;
     const c = off.filter((r) => r.detected).length, d = off.length - c;
