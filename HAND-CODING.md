@@ -39,7 +39,7 @@ export PATH=/home/fuyuan/.local/node-22/bin:$PATH
 
 ## 1. 总进度表（15 站，测试数只增不减）
 
-参考仓库的真实数字：`src/` 34 个文件 **6778 行**，`test/` 25 个文件 **6225 行 / 396 测试**，`verify/` 13 个文件 **3872 行**。
+参考仓库的真实数字：`src/` 34 个文件 **6803 行**，`test/` 25 个文件 **6225 行 / 396 测试**，`verify/` 13 个文件 **4048 行**。
 
 | 站 | 里程碑 | 这一站新增测试 | 累计 | 行数预算（src / test） | 半天 |
 |---|---|---|---|---|---|
@@ -221,7 +221,12 @@ export PATH=/home/fuyuan/.local/node-22/bin:$PATH
 - 上限表（`m4f.ts --policy random`）：零 key 大 n（4800 例），先量"这台仪器能看到多少分叉"，与模型无关。
 - 判据：16 绿（`detect`），`npm test` **396 全绿**；
   `verify:detect`（夹具 6/6 判决路径、上限表抽 40/4800 逐行重算 0 处不符）、
-  `verify:detect:reference`（参考版误报 **0/9=0.0%**）、`verify:detect:selftest`（注入 15 + 反向对照 4 = **19 例漏抓 0**）。
+  `verify:detect:reference`（参考版误报 **0/4=0.0% [0.0, 49.0]**，分母只收真大脑的参考版局）、`verify:detect:selftest`（注入 16 + 反向对照 5 = **21 例漏抓 0**）。
+- **S15 之后追加的 A1/A2（发布复核翻出来的，故障 #21）**：`header.provenance` 落盘 + 审计按 `brainId`/`task`
+  两条独立信号交叉核对来源；误报分母只收 `src==='model' && mutant===null`；夹具表**取消百分比与置信区间**
+  （标题管不住截图）。`verify/replay.ts`、`verify/predict-audit.ts` 改成按仓库根解析路径、证据缺失说人话并计入不一致；
+  `verify/detect-selftest.ts` 在上限表缺失时自己现生成一小份而不是崩 ENOENT。
+  **这一批的学费**：以读者身份 clone 自己的仓库跑一遍，比再写十个用例更值钱。
 - 故意破坏：把 `header.judgement` 删掉 / 版本戳改 `m4f-0` / sha 归零 → `[口径落盘]` 三处必有一处硬失败（**局末补写不算**）。
 - 坑：**#16 免检通道**（缺戳必须硬失败，不能"缺了当通过"）、**#20 引用了没 import 的 `lexiconSha`**（`node --check` 抓不到，只有真跑才崩）。
 - ⚠️ **诚实边界**：真模型臂受免费账号 429 截断，本轮**不出模型臂检出率**——只有上限表与参考版误报率可引用。别把"`detectable=true detected=false`"读成"模型笨"，那是额度没让它开口。
@@ -263,9 +268,14 @@ npm run verify:board:selftest   # 注入 15 处漏抓 0 + 反向对照 2 组
 npm run verify:goal:selftest    # 注入 24 处漏抓 0 + 反向对照 4 组
 npm run verify:random           # 随机臂 8 格表（4 世界 × 2 预算）
 npm run verify:detect           # M4-f 检出判决：夹具 6/6 判决路径 + 上限表抽 40/4800 逐行重算，0 处不符
-npm run verify:detect:reference # M4-f 参考版误报率 0/9=0.0%（真实参考轨迹阴性对照）
-npm run verify:detect:selftest  # M4-f 判决器：注入 15 处漏抓 0 + 反向对照 4 组（含口径落盘三种篡改）
+npm run verify:detect:reference # M4-f 参考版误报率 0/4=0.0% [0.0, 49.0]（分母只收真大脑的参考版局，剔除逐条出声）
+npm run verify:detect:selftest  # M4-f 判决器：注入 16 处漏抓 0 + 反向对照 5 组（含口径落盘三种篡改、夹具冒充真证据）
 ```
+
+**还有一条第 16 站的验收，是这一轮才加上的**：`git clone` 一份**别人的视角**的仓库，在上面重跑上面全部命令。
+`runs/` 已随仓库发布，所以那一次 clone 必须能重算出**同一个** `0/4` 与同一张上限表——
+在自己的工作目录里跑绿，只证明你的机器；在干净克隆上跑绿，才证明交付物。
+本轮就是在这一步翻出故障 #21（`误报率 1/2 = 50.0%` 当众印出来），CI 也已把这套矩阵挂成每次 push 都跑。
 
 全绿之后，最后一步才是真本事：把 `.env` 里的远端端点接上（**只用远端，不用本地模型**），
 自己跑一局，然后**用 `verify/` 下的脚本独立复核你自己这一局**——

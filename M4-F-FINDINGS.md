@@ -23,7 +23,7 @@
 | 上限表（预登记） | `src/m4f.ts --policy random` → `runs/m4f-ceiling/{ceiling_cases.jsonl, ceiling_summary.json}`：4800 例随机轨迹，先量"**这台仪器能看到多少分叉**"，与模型无关 |
 | 检出判决器 | `detectOne`：对**同一条动作序列**在参考版与缺陷版各重放一次，逐帧比屏幕，产出四层布尔 + 六选一判决 |
 | 口径落盘（本轮新增） | `header.json.judgement = {detector, lexicon, sha}`：判决口径在**第一步之前**写死，审计 `[口径落盘]` 三方交叉核对（header / detection / 实时词表 sha） |
-| 独立复核 | `verify/detect-audit.ts`（自重建重放 + 自判决，不 import 被测判决器）、`verify/detect-selftest.ts`（15 处注入 + 4 组反向对照 = 19 例）、`verify/detect-fixture.ts`（9 局已知判决夹具） |
+| 独立复核 | `verify/detect-audit.ts`（自重建重放 + 自判决，不 import 被测判决器）、`verify/detect-selftest.ts`（16 处注入 + 5 组反向对照 = 21 例）、`verify/detect-fixture.ts`（9 局已知判决夹具） |
 | 测试 | 全套 **396 个全绿**（M4-e 基线 380 + 本轮 `test/detect.test.ts` 16，0 静默掉数——#17 家族守卫） |
 | 命令 | `verify:detect` / `verify:detect:reference` / `verify:detect:selftest` / `verify:detect:ceiling` / `verify:detect:model`（5 条） |
 
@@ -148,13 +148,31 @@ M4-f 起草时曾把"玩家侧前提达成"当检出率的第二道分母。跑�
   `firstFailingLayer` 定序、参考版只产"无误报/误报"、零泄漏（`ARENA_TASK`/工具描述/初始屏不含禁词）。
 - **审计** `verify/detect-audit.ts`：**自带一份独立重放与判决实现**，不 import 被测 `detectOne` 的结论；
   逐帧屏幕重建、覆盖账本三方一致、上限表抽样逐行重算。夹具 9 局：`判决路径覆盖 声明 6/6｜实际 6/6`，`不一致 0 处`。
-- **篡改自检** `verify/detect-selftest.ts`：15 处注入 + 4 组反向对照 = **19 例全过**，含口径落盘三种篡改。
-- **阴性对照（参考版误报率）**：`npm run verify:detect:reference` 独立判 9 局 M4-f 之前的参考版（`removed=[]`）：
-  `0/9 = 0.0%`（脚本另带 5 局缺陷版新证据当"零样本守卫"锚——它们 `mutant≠null` 不进参考分母，只为满足 #17 的"不能只拿旧证据假通过"）。
-  夹具里的 `1/2 = 50%` 不是率，是两条手写的已知阴性探针（一条证明"该放行"、一条证明"该判误报"），不并入结论，也不与真实参考批混算（混算会得 1/11，把探针当样本是假混合）。
+- **篡改自检** `verify/detect-selftest.ts`：16 处注入 + 5 组反向对照 = **21 例全过**，含口径落盘三种篡改与"夹具冒充真证据"。
+- **阴性对照（参考版误报率）**：`npm run verify:detect:reference` 的分母**只收真大脑跑的参考版局**：
+  **`0/4 = 0.0% [Wilson 95% 0.0, 49.0]`**。四类剔除逐条出声：脚本替身旧局 2、人写夹具旧局 1、
+  **缺陷世界旧局 2（`mutant=M08`——那里报异常是真检出，不是误报）**、夹具参考局（含故意埋的过火探针）。
+  n=4 太小，这个数**只能说"没抓到误报"，不能说"误报率低于 5%"**；上界 49% 就是它的诚实形状。
 
 > 检出率必须与误报率成对：只看检出率，会把"仪器过火"读成"模型能干"。当前参考版 0 误报说明这台仪器
 > 在纯代码重放下**不无中生有**；模型臂的误报率要等额度恢复、跑满步数后在真上报文本上再量。
+
+### 7.1 发布复核翻出来的两处口径错误（故障 #21）
+
+把仓库当陌生人 clone 一份、逐个跑 16 条脚本，是本轮唯一一次"以读者身份"读自己的交付物，收获比预期大：
+
+1. **`verify:detect` 当众打出 `误报率 1/2 = 50.0%`**。分母是夹具自造的，其中一局是**故意埋的过火探针**。
+   本报告上一版还写着"不与真实参考批混算（混算会得 1/11）"——**那句话描述的是一条代码里并不存在的性质**：
+   代码按 `mutant===null` 收样本，而这个条件既不区分来源（真大脑/替身/夹具），也不区分世界类型（参考版/缺陷版）。
+   文档写了、代码没实现，是 #15 家族；而"两个不同的量共用一个名字"是 #18 的对偶，记为 **#21**。
+2. 为堵第 1 条而新加的**来源交叉核对**（`header.provenance` + `brainId`/`task` 两条独立信号），
+   第一次跑就把旧证据判出不一致：所谓"9 局参考版"其实是 4 真大脑 + 2 mock 替身 + 1 人写夹具 + **2 局缺陷版**。
+   于是 `0/9` 改口为 `0/4`。**一个防御机制的价值，一半在于它顺手查出的别的东西。**
+
+修法与判据：误报分母改为 `src==='model' && mutant===null`；夹具表**取消百分比与置信区间**——
+首版只在标题写"不许引用"，结果表里照样印出 `M01/n/a 1/2 50.0% [9.5, 90.5]`，
+**标题管不住截图，格式本身才管得住**。回归：自检注入 14（夹具把 `provenance` 改成 `real` → 必须抓住）
+＋反向对照 R6（旧证据缺 `provenance` 键 → 不追判，但必须按 `brainId` 如实归类并出声）。
 
 ---
 
@@ -166,8 +184,8 @@ export PATH=/home/fuyuan/.local/node-22/bin:$PATH   # node 不在默认 PATH，v
 npm run test                      # 396 全绿
 npm run verify:detect:ceiling     # 重算上限表 → runs/m4f-ceiling/
 npm run verify:detect             # 9 局夹具独立审计 + 上限表抽样重算（--ceiling-check 40）
-npm run verify:detect:reference   # 参考版误报率 0/9=0.0%（9 局旧参考阴性 + 5 局缺陷版新证据当零样本守卫锚，见 §7）
-npm run verify:detect:selftest    # 19 例篡改自检/反向对照
+npm run verify:detect:reference   # 参考版误报率 0/4=0.0% [0.0, 49.0]（分母只收真大脑的参考版局，剔除逐条出声，见 §7.1）
+npm run verify:detect:selftest    # 21 例篡改自检/反向对照
 npm run verify:detect:model       # 真模型臂（受账号 429 额度限制，见 §6）
 
 # 单个/一批模型臂目录直接审计：
