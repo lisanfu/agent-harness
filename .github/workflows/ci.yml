@@ -65,6 +65,9 @@ jobs:
         run: |
           npm run verify:m4
           npm run verify:detect:reference
+          # 复现包（对外交付面）：先独立重放审计 + 与入库文档逐字节比对，再验它自己有没有牙
+          npm run verify:reproduction
+          npm run verify:reproduction:selftest
 
       - name: 判据指纹没被人动过
         run: |
