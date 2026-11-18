@@ -1,0 +1,162 @@
+{
+ "recon": {
+  "recon": "m4d-5",
+  "sha": "30bb9ffb08a1b219e324daeb453a8a98ed26cf79bd3faf900037edd1160651b4",
+  "frozenAt": "2026-11-18"
+ },
+ "run": "20261113-204625-s6",
+ "brain": "openai:agnes-2.5-flash",
+ "align": {
+  "screens": 10,
+  "ticksMonotone": true,
+  "firstTick": 0,
+  "lastTick": 8,
+  "worldRows": 9
+ },
+ "usable": true,
+ "thoughtRows": 10,
+ "skippedRows": 15,
+ "claims": 2,
+ "counts": {
+  "相符": 2,
+  "矛盾": 0,
+  "约定存疑": 0,
+  "无法核对": 0
+ },
+ "byKind": {
+  "playerPos": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "movedTo": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "moveIntent": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "cellSymbol": {
+   "相符": 1,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "pickupHere": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "hp": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "hpValue": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "score": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "alive": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "attack": {
+   "相符": 1,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "enemyCount": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "pickupCount": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "gridSize": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "barePair": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  }
+ },
+ "excluded": {
+  "增量自述": 0,
+  "机制假设": 3,
+  "方位词位置": 2
+ },
+ "detail": [
+  {
+   "i": 0,
+   "kind": "attack",
+   "rule": "攻击就绪自述",
+   "quote": "攻击冷却中",
+   "value": [],
+   "positive": false,
+   "polarity": "neg",
+   "symbol": null,
+   "at": 0,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "相符",
+   "why": "自称「冷却中」，屏幕=冷却中",
+   "row": 18,
+   "tick": 6,
+   "screenSha": "df65cd8f5cd6",
+   "clause": "攻击冷却中，先向下方移动测试接近可拾取物品的路径。"
+  },
+  {
+   "i": 1,
+   "kind": "cellSymbol",
+   "rule": "某格内容断言",
+   "quote": "(3,3) 是墙",
+   "value": [
+    3,
+    3
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": "#",
+   "at": 24,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "相符",
+   "why": "(x,y) 读法下该格可见「#」",
+   "row": 20,
+   "tick": 7,
+   "screenSha": "ba48abcfe867",
+   "clause": "我刚才向下时撞到障碍，说明 (3,3) 是墙。下一步尝试向上移动接近左下方的拾取物。"
+  }
+ ]
+}

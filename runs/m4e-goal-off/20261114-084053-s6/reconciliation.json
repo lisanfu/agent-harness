@@ -1,0 +1,510 @@
+{
+ "recon": {
+  "recon": "m4d-5",
+  "sha": "30bb9ffb08a1b219e324daeb453a8a98ed26cf79bd3faf900037edd1160651b4",
+  "frozenAt": "2026-11-18"
+ },
+ "run": "m4e-goal-off/20261114-084053-s6",
+ "brain": "openai:agnes-2.5-flash",
+ "align": {
+  "screens": 24,
+  "ticksMonotone": true,
+  "firstTick": 0,
+  "lastTick": 22,
+  "worldRows": 23
+ },
+ "usable": true,
+ "thoughtRows": 25,
+ "skippedRows": 110,
+ "claims": 17,
+ "counts": {
+  "相符": 0,
+  "矛盾": 0,
+  "约定存疑": 0,
+  "无法核对": 17
+ },
+ "byKind": {
+  "playerPos": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "movedTo": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "moveIntent": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "cellSymbol": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "pickupHere": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "hp": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "hpValue": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "score": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "alive": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "attack": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "enemyCount": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "pickupCount": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "gridSize": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "barePair": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 17
+  }
+ },
+ "excluded": {
+  "增量自述": 0,
+  "机制假设": 0,
+  "方位词位置": 0
+ },
+ "detail": [
+  {
+   "i": 0,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "[7,0]",
+   "value": [
+    7,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 194,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 12,
+   "tick": 1,
+   "screenSha": "026785b613a0",
+   "clause": "losely, a '+' was at position [7,0] on the original map, and afte"
+  },
+  {
+   "i": 1,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "[4,0]",
+   "value": [
+    4,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 32,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 20,
+   "tick": 3,
+   "screenSha": "3530fe4722f4",
+   "clause": "m now adjacent to an enemy at [4,0]. Time to test combat mechanic"
+  },
+  {
+   "i": 2,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "[4,0]",
+   "value": [
+    4,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 76,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 53,
+   "tick": 8,
+   "screenSha": "d2a4f30551da",
+   "clause": "jacent diagonally to enemy at [4,0]. Need to move left to be dire"
+  },
+  {
+   "i": 3,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "[3,0]",
+   "value": [
+    3,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 34,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 58,
+   "tick": 9,
+   "screenSha": "93c46ac9a6d6",
+   "clause": "d left successfully. Enemy at [3,0] is now vertically adjacent (a"
+  },
+  {
+   "i": 4,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "[2,0]",
+   "value": [
+    2,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 9,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 63,
+   "tick": 10,
+   "screenSha": "77c89d668809",
+   "clause": "Enemy at [2,0] is now 2 cells away (not adja"
+  },
+  {
+   "i": 5,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "[3,0]",
+   "value": [
+    3,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 140,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 63,
+   "tick": 10,
+   "screenSha": "77c89d668809",
+   "clause": "se distance by moving left to [3,0] to get adjacent, then attack."
+  },
+  {
+   "i": 6,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "[1,0]",
+   "value": [
+    1,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 9,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 69,
+   "tick": 11,
+   "screenSha": "d78a27dc02cd",
+   "clause": "Enemy at [1,0] is two cells away (not yet ad"
+  },
+  {
+   "i": 7,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "[1,0]",
+   "value": [
+    1,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 34,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 74,
+   "tick": 12,
+   "screenSha": "81f3028e0be5",
+   "clause": "directly adjacent to enemy at [1,0]. Attack immediately to test m"
+  },
+  {
+   "i": 8,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "[1,0]",
+   "value": [
+    1,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 73,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 78,
+   "tick": 13,
+   "screenSha": "caf3bb8fb3ed",
+   "clause": "despite apparent proximity at [1,0]. Enemy likely moved during my"
+  },
+  {
+   "i": 9,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "[2,2]",
+   "value": [
+    2,
+    2
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 132,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 82,
+   "tick": 13,
+   "screenSha": "caf3bb8fb3ed",
+   "clause": "e down toward second enemy at [2,2] to possibly force it into a w"
+  },
+  {
+   "i": 10,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "[2,2]",
+   "value": [
+    2,
+    2
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 40,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 87,
+   "tick": 14,
+   "screenSha": "3ff31c171767",
+   "clause": "n to get adjacent to enemy at [2,2]. Testing H2: can cornering pr"
+  },
+  {
+   "i": 11,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "[2,2]",
+   "value": [
+    2,
+    2
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 7,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 92,
+   "tick": 15,
+   "screenSha": "58bf4559369b",
+   "clause": "Now at [2,2], enemy at [1,2] is horizontal"
+  },
+  {
+   "i": 12,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "[1,2]",
+   "value": [
+    1,
+    2
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 23,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 92,
+   "tick": 15,
+   "screenSha": "58bf4559369b",
+   "clause": "Now at [2,2], enemy at [1,2] is horizontally adjacent"
+  },
+  {
+   "i": 13,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "[3,0]",
+   "value": [
+    3,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 21,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 116,
+   "tick": 18,
+   "screenSha": "ee29be24d9a4",
+   "clause": "Adjacent to enemy at [3,0] near top-left corner. Attack"
+  },
+  {
+   "i": 14,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "[5,4]",
+   "value": [
+    5,
+    4
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 168,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 123,
+   "tick": 19,
+   "screenSha": "aa215ee42090",
+   "clause": "dodging. One enemy remains at [5,4]. Find and eliminate it."
+  },
+  {
+   "i": 15,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "[5,4]",
+   "value": [
+    5,
+    4
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 9,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 128,
+   "tick": 20,
+   "screenSha": "5487e5e6629d",
+   "clause": "Enemy at [5,4] needs to be cornered. Move do"
+  },
+  {
+   "i": 16,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "[5,4]",
+   "value": [
+    5,
+    4
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 9,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 133,
+   "tick": 21,
+   "screenSha": "0063d2199183",
+   "clause": "Enemy at [5,4]. Navigate toward it while pre"
+  }
+ ]
+}

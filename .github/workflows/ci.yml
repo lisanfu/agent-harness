@@ -65,6 +65,10 @@ jobs:
         run: |
           npm run verify:m4
           npm run verify:detect:reference
+          # 主客观对账（M4-d）：从已发布 trace 重算落盘（零 key、零新调用）→ 独立重算 → 篡改自检
+          npm run verify:recon
+          npm run verify:recon:audit
+          npm run verify:recon:selftest
           # 复现包（对外交付面）：先独立重放审计 + 与入库文档逐字节比对，再验它自己有没有牙
           npm run verify:reproduction
           npm run verify:reproduction:selftest

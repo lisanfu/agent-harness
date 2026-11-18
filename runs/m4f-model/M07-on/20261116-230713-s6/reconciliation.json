@@ -1,0 +1,776 @@
+{
+ "recon": {
+  "recon": "m4d-5",
+  "sha": "30bb9ffb08a1b219e324daeb453a8a98ed26cf79bd3faf900037edd1160651b4",
+  "frozenAt": "2026-11-18"
+ },
+ "run": "m4f-model/M07-on/20261116-230713-s6",
+ "brain": "openai:agnes-2.5-flash",
+ "align": {
+  "screens": 11,
+  "ticksMonotone": true,
+  "firstTick": 0,
+  "lastTick": 9,
+  "worldRows": 10
+ },
+ "usable": true,
+ "thoughtRows": 10,
+ "skippedRows": 26,
+ "claims": 29,
+ "counts": {
+  "相符": 7,
+  "矛盾": 2,
+  "约定存疑": 0,
+  "无法核对": 20
+ },
+ "byKind": {
+  "playerPos": {
+   "相符": 0,
+   "矛盾": 1,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "movedTo": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "moveIntent": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 8
+  },
+  "cellSymbol": {
+   "相符": 2,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "pickupHere": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "hp": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "hpValue": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "score": {
+   "相符": 2,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "alive": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "attack": {
+   "相符": 2,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "enemyCount": {
+   "相符": 1,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "pickupCount": {
+   "相符": 0,
+   "矛盾": 1,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "gridSize": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "barePair": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 12
+  }
+ },
+ "excluded": {
+  "增量自述": 1,
+  "机制假设": 3,
+  "方位词位置": 3
+ },
+ "detail": [
+  {
+   "i": 0,
+   "kind": "playerPos",
+   "rule": "玩家位置自述（现在时）",
+   "quote": "我在[1,1]",
+   "value": [
+    1,
+    1
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 6,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "矛盾",
+   "why": "两种读法都不符：自称 (1,1)，屏幕 @ 在 (0,0)",
+   "row": 6,
+   "tick": 0,
+   "screenSha": "77efe51c7dcc",
+   "clause": "观察到地图：我在[1,1]，有3个敌人(E)，4个可拾取物(+)，若干墙(#)。HP满"
+  },
+  {
+   "i": 1,
+   "kind": "enemyCount",
+   "rule": "敌人数量自述",
+   "quote": "有3个敌人",
+   "value": [
+    3
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 14,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "相符",
+   "why": "自称 3，屏幕可见 E=3",
+   "row": 6,
+   "tick": 0,
+   "screenSha": "77efe51c7dcc",
+   "clause": "观察到地图：我在[1,1]，有3个敌人(E)，4个可拾取物(+)，若干墙(#)。HP满10/10，"
+  },
+  {
+   "i": 2,
+   "kind": "pickupCount",
+   "rule": "可拾取物数量自述",
+   "quote": "4个可拾取物",
+   "value": [
+    4
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 23,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "矛盾",
+   "why": "自称 4，屏幕可见 +=3",
+   "row": 6,
+   "tick": 0,
+   "screenSha": "77efe51c7dcc",
+   "clause": "观察到地图：我在[1,1]，有3个敌人(E)，4个可拾取物(+)，若干墙(#)。HP满10/10，攻击就绪。计划向右移"
+  },
+  {
+   "i": 3,
+   "kind": "attack",
+   "rule": "攻击就绪自述",
+   "quote": "攻击就绪",
+   "value": [],
+   "positive": true,
+   "polarity": "pos",
+   "symbol": null,
+   "at": 49,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "相符",
+   "why": "自称「就绪」，屏幕=就绪",
+   "row": 6,
+   "tick": 0,
+   "screenSha": "77efe51c7dcc",
+   "clause": "(E)，4个可拾取物(+)，若干墙(#)。HP满10/10，攻击就绪。计划向右移动试探基本动作。"
+  },
+  {
+   "i": 4,
+   "kind": "moveIntent",
+   "rule": "移动意图（非事实主张）",
+   "quote": "移动到[2,1]",
+   "value": [
+    2,
+    1
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 0,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "意图不是事实主张，屏幕无从反驳（预测由 M4-a 通道核对）",
+   "row": 9,
+   "tick": 1,
+   "screenSha": "026785b613a0",
+   "clause": "移动到[2,1]后，发现敌人(标记E)每帧似乎在移动——原本在[2,1]的E"
+  },
+  {
+   "i": 5,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "[2,1]",
+   "value": [
+    2,
+    1
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 31,
+   "retro": true,
+   "retroWord": "原本",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "回溯性陈述（命中「原本」），子句里读不出它说的是哪一帧；本判据只对决策前最后一帧（第 1 帧）负责",
+   "row": 9,
+   "tick": 1,
+   "screenSha": "026785b613a0",
+   "clause": "动到[2,1]后，发现敌人(标记E)每帧似乎在移动——原本在[2,1]的E消失并在其他位置出现，同时远处也有新的E出现。分数仍为0"
+  },
+  {
+   "i": 6,
+   "kind": "score",
+   "rule": "分数绝对值",
+   "quote": "分数仍为0",
+   "value": [
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 61,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "相符",
+   "why": "自称 0，屏幕分数 0",
+   "row": 9,
+   "tick": 1,
+   "screenSha": "026785b613a0",
+   "clause": "[2,1]的E消失并在其他位置出现，同时远处也有新的E出现。分数仍为0，HP保持10/10。需要测试攻击和拾取机制。现在尝试向下移"
+  },
+  {
+   "i": 7,
+   "kind": "moveIntent",
+   "rule": "移动意图（非事实主张）",
+   "quote": "向下移动到[2,2]",
+   "value": [
+    2,
+    2
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 93,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "意图不是事实主张，屏幕无从反驳（预测由 M4-a 通道核对）",
+   "row": 9,
+   "tick": 1,
+   "screenSha": "026785b613a0",
+   "clause": "仍为0，HP保持10/10。需要测试攻击和拾取机制。现在尝试向下移动到[2,2]接近敌人，测试是否可以攻击相邻敌人。"
+  },
+  {
+   "i": 8,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "[2,2]",
+   "value": [
+    2,
+    2
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 3,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 12,
+   "tick": 2,
+   "screenSha": "82d0a88d159d",
+   "clause": "现在在[2,2]，发现敌人E似乎每帧都在移动，而且数量不止3个了——第0、1"
+  },
+  {
+   "i": 9,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "[1,2]",
+   "value": [
+    1,
+    2
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 62,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 12,
+   "tick": 2,
+   "screenSha": "82d0a88d159d",
+   "clause": "——第0、1、2行都有E出现，说明敌人在生成或移动。同时看到[1,2]有个紧邻我左边的敌人(E)。现在测试攻击机制：向左攻击应该能"
+  },
+  {
+   "i": 10,
+   "kind": "moveIntent",
+   "rule": "移动意图（非事实主张）",
+   "quote": "向下走到[2,3]",
+   "value": [
+    2,
+    3
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 52,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "意图不是事实主张，屏幕无从反驳（预测由 M4-a 通道核对）",
+   "row": 15,
+   "tick": 3,
+   "screenSha": "be347656d698",
+   "clause": "进入冷却（不可用）。发现敌人确实可被击败。现在测试拾取机制：向下走到[2,3]看能否接近(+)."
+  },
+  {
+   "i": 11,
+   "kind": "attack",
+   "rule": "攻击就绪自述",
+   "quote": "攻击冷却中",
+   "value": [],
+   "positive": false,
+   "polarity": "neg",
+   "symbol": null,
+   "at": 3,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "相符",
+   "why": "自称「冷却中」，屏幕=冷却中",
+   "row": 18,
+   "tick": 4,
+   "screenSha": "6d7d2637909c",
+   "clause": "观察到攻击冷却中，分数为1。发现(+ )在[1,4]等位置，计划向下走到[2"
+  },
+  {
+   "i": 12,
+   "kind": "score",
+   "rule": "分数绝对值",
+   "quote": "分数为1",
+   "value": [
+    1
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 9,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "相符",
+   "why": "自称 1，屏幕分数 1",
+   "row": 18,
+   "tick": 4,
+   "screenSha": "6d7d2637909c",
+   "clause": "观察到攻击冷却中，分数为1。发现(+ )在[1,4]等位置，计划向下走到[2,4]再向"
+  },
+  {
+   "i": 13,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "[1,4]",
+   "value": [
+    1,
+    4
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 21,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 18,
+   "tick": 4,
+   "screenSha": "6d7d2637909c",
+   "clause": "观察到攻击冷却中，分数为1。发现(+ )在[1,4]等位置，计划向下走到[2,4]再向左到[1,4]去拾取测试。"
+  },
+  {
+   "i": 14,
+   "kind": "moveIntent",
+   "rule": "移动意图（非事实主张）",
+   "quote": "向下走到[2,4]",
+   "value": [
+    2,
+    4
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 32,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "意图不是事实主张，屏幕无从反驳（预测由 M4-a 通道核对）",
+   "row": 18,
+   "tick": 4,
+   "screenSha": "6d7d2637909c",
+   "clause": "到攻击冷却中，分数为1。发现(+ )在[1,4]等位置，计划向下走到[2,4]再向左到[1,4]去拾取测试。"
+  },
+  {
+   "i": 15,
+   "kind": "moveIntent",
+   "rule": "移动意图（非事实主张）",
+   "quote": "再向左到[1,4]",
+   "value": [
+    1,
+    4
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 41,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "意图不是事实主张，屏幕无从反驳（预测由 M4-a 通道核对）",
+   "row": 18,
+   "tick": 4,
+   "screenSha": "6d7d2637909c",
+   "clause": "为1。发现(+ )在[1,4]等位置，计划向下走到[2,4]再向左到[1,4]去拾取测试。"
+  },
+  {
+   "i": 16,
+   "kind": "moveIntent",
+   "rule": "移动意图（非事实主张）",
+   "quote": "向下走到[1,4]",
+   "value": [
+    1,
+    4
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 10,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "意图不是事实主张，屏幕无从反驳（预测由 M4-a 通道核对）",
+   "row": 21,
+   "tick": 5,
+   "screenSha": "be79d4de2a01",
+   "clause": "攻击已重新就绪。计划向下走到[1,4]接近(+)."
+  },
+  {
+   "i": 17,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "[0,3]",
+   "value": [
+    0,
+    3
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 3,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 24,
+   "tick": 6,
+   "screenSha": "71439ec9533b",
+   "clause": "现在在[0,3]，下方是墙。看到(+ )在[1,5]，计划向左移动到[0,2"
+  },
+  {
+   "i": 18,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "[1,5]",
+   "value": [
+    1,
+    5
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 21,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 24,
+   "tick": 6,
+   "screenSha": "71439ec9533b",
+   "clause": "现在在[0,3]，下方是墙。看到(+ )在[1,5]，计划向左移动到[0,2]尝试绕路接近(+)."
+  },
+  {
+   "i": 19,
+   "kind": "moveIntent",
+   "rule": "移动意图（非事实主张）",
+   "quote": "向左移动到[0,2]",
+   "value": [
+    0,
+    2
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 29,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "意图不是事实主张，屏幕无从反驳（预测由 M4-a 通道核对）",
+   "row": 24,
+   "tick": 6,
+   "screenSha": "71439ec9533b",
+   "clause": "现在在[0,3]，下方是墙。看到(+ )在[1,5]，计划向左移动到[0,2]尝试绕路接近(+)."
+  },
+  {
+   "i": 20,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(1,5)",
+   "value": [
+    1,
+    5
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 32,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 27,
+   "tick": 7,
+   "screenSha": "2a68837fe5a3",
+   "clause": "冷却约2帧（第3帧攻击，第4帧冷却，第5帧就绪）。发现多个+(1,5),(2,7),(7,7)。墙形成障碍。尝试向右移动到[1,2"
+  },
+  {
+   "i": 21,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(2,7)",
+   "value": [
+    2,
+    7
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 38,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 27,
+   "tick": 7,
+   "screenSha": "2a68837fe5a3",
+   "clause": "第3帧攻击，第4帧冷却，第5帧就绪）。发现多个+(1,5),(2,7),(7,7)。墙形成障碍。尝试向右移动到[1,2]接近(+)"
+  },
+  {
+   "i": 22,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(7,7)",
+   "value": [
+    7,
+    7
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 44,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 27,
+   "tick": 7,
+   "screenSha": "2a68837fe5a3",
+   "clause": "第4帧冷却，第5帧就绪）。发现多个+(1,5),(2,7),(7,7)。墙形成障碍。尝试向右移动到[1,2]接近(+)."
+  },
+  {
+   "i": 23,
+   "kind": "moveIntent",
+   "rule": "移动意图（非事实主张）",
+   "quote": "向右移动到[1,2]",
+   "value": [
+    1,
+    2
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 58,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "意图不是事实主张，屏幕无从反驳（预测由 M4-a 通道核对）",
+   "row": 27,
+   "tick": 7,
+   "screenSha": "2a68837fe5a3",
+   "clause": "现多个+(1,5),(2,7),(7,7)。墙形成障碍。尝试向右移动到[1,2]接近(+)."
+  },
+  {
+   "i": 24,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "[2,2]",
+   "value": [
+    2,
+    2
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 3,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 30,
+   "tick": 8,
+   "screenSha": "abdc7cb5fdb9",
+   "clause": "当前在[2,2]。发现墙壁布局：第3行[2,3]和[3,3]是墙(#), 第"
+  },
+  {
+   "i": 25,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "[2,3]",
+   "value": [
+    2,
+    3
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 19,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 30,
+   "tick": 8,
+   "screenSha": "abdc7cb5fdb9",
+   "clause": "当前在[2,2]。发现墙壁布局：第3行[2,3]和[3,3]是墙(#), 第5行[3,5]是墙。计划向下绕路"
+  },
+  {
+   "i": 26,
+   "kind": "cellSymbol",
+   "rule": "某格内容断言",
+   "quote": "[3,3]是墙",
+   "value": [
+    3,
+    3
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": "#",
+   "at": 25,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "相符",
+   "why": "(x,y) 读法下该格可见「#」",
+   "row": 30,
+   "tick": 8,
+   "screenSha": "abdc7cb5fdb9",
+   "clause": "当前在[2,2]。发现墙壁布局：第3行[2,3]和[3,3]是墙(#), 第5行[3,5]是墙。计划向下绕路接近(+ )在["
+  },
+  {
+   "i": 27,
+   "kind": "cellSymbol",
+   "rule": "某格内容断言",
+   "quote": "[3,5]是墙",
+   "value": [
+    3,
+    5
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": "#",
+   "at": 40,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "相符",
+   "why": "(x,y) 读法下该格可见「#」",
+   "row": 30,
+   "tick": 8,
+   "screenSha": "abdc7cb5fdb9",
+   "clause": "现墙壁布局：第3行[2,3]和[3,3]是墙(#), 第5行[3,5]是墙。计划向下绕路接近(+ )在[1,5]."
+  },
+  {
+   "i": 28,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "[1,5]",
+   "value": [
+    1,
+    5
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 61,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 30,
+   "tick": 8,
+   "screenSha": "abdc7cb5fdb9",
+   "clause": "墙(#), 第5行[3,5]是墙。计划向下绕路接近(+ )在[1,5]."
+  }
+ ]
+}

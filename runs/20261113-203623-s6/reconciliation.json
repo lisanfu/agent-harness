@@ -1,0 +1,389 @@
+{
+ "recon": {
+  "recon": "m4d-5",
+  "sha": "30bb9ffb08a1b219e324daeb453a8a98ed26cf79bd3faf900037edd1160651b4",
+  "frozenAt": "2026-11-18"
+ },
+ "run": "20261113-203623-s6",
+ "brain": "openai:agnes-2.5-flash",
+ "align": {
+  "screens": 7,
+  "ticksMonotone": true,
+  "firstTick": 0,
+  "lastTick": 5,
+  "worldRows": 6
+ },
+ "usable": true,
+ "thoughtRows": 9,
+ "skippedRows": 11,
+ "claims": 12,
+ "counts": {
+  "相符": 5,
+  "矛盾": 1,
+  "约定存疑": 1,
+  "无法核对": 5
+ },
+ "byKind": {
+  "playerPos": {
+   "相符": 1,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "movedTo": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "moveIntent": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 1
+  },
+  "cellSymbol": {
+   "相符": 2,
+   "矛盾": 1,
+   "约定存疑": 1,
+   "无法核对": 1
+  },
+  "pickupHere": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "hp": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "hpValue": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "score": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "alive": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "attack": {
+   "相符": 2,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "enemyCount": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "pickupCount": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "gridSize": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "barePair": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 3
+  }
+ },
+ "excluded": {
+  "增量自述": 1,
+  "机制假设": 5,
+  "方位词位置": 3
+ },
+ "detail": [
+  {
+   "i": 0,
+   "kind": "cellSymbol",
+   "rule": "某格内容断言",
+   "quote": "E 在 (1,0)",
+   "value": [
+    1,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": "E",
+   "at": 21,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "相符",
+   "why": "(x,y) 读法下该格可见「E」",
+   "row": 3,
+   "tick": 0,
+   "screenSha": "77efe51c7dcc",
+   "clause": "我先尝试进行攻击，因为紧邻右侧有一个敌人 E 在 (1,0)。通过 attack 可以测试战斗距离、伤害判定等基础规则。"
+  },
+  {
+   "i": 1,
+   "kind": "moveIntent",
+   "rule": "移动意图（非事实主张）",
+   "quote": "先向右移动到(1,0)",
+   "value": [
+    1,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 24,
+   "retro": true,
+   "retroWord": "原来",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "回溯性陈述（命中「原来」），子句里读不出它说的是哪一帧；本判据只对决策前最后一帧（第 2 帧）负责",
+   "row": 10,
+   "tick": 2,
+   "screenSha": "50a077615ec8",
+   "clause": "wait一帧后敌人没动、攻击仍冷却。为摸清规则，先向右移动到(1,0)——原来敌人在(1,0)但刚刚被击退/消除（分数+1且无新敌"
+  },
+  {
+   "i": 2,
+   "kind": "cellSymbol",
+   "rule": "某格内容断言",
+   "quote": "敌人在(1,0)",
+   "value": [
+    1,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": "E",
+   "at": 39,
+   "retro": true,
+   "retroWord": "原来",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "回溯性陈述（命中「原来」），子句里读不出它说的是哪一帧；本判据只对决策前最后一帧（第 2 帧）负责",
+   "row": 10,
+   "tick": 2,
+   "screenSha": "50a077615ec8",
+   "clause": "没动、攻击仍冷却。为摸清规则，先向右移动到(1,0)——原来敌人在(1,0)但刚刚被击退/消除（分数+1且无新敌出现）。想验证墙和物品位"
+  },
+  {
+   "i": 3,
+   "kind": "cellSymbol",
+   "rule": "某格内容断言",
+   "quote": "(5,3)是'#'",
+   "value": [
+    5,
+    3
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": "#",
+   "at": 79,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "约定存疑",
+   "why": "只在(y,x)/行列 读法下该格是「#」，屏幕未标轴",
+   "row": 10,
+   "tick": 2,
+   "screenSha": "50a077615ec8",
+   "clause": "刚被击退/消除（分数+1且无新敌出现）。想验证墙和物品位置：(5,3)是'#'表示墙，不能进入"
+  },
+  {
+   "i": 4,
+   "kind": "cellSymbol",
+   "rule": "某格内容断言",
+   "quote": "(5,5)是'+'",
+   "value": [
+    5,
+    5
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": "+",
+   "at": 97,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "矛盾",
+   "why": "两种读法都不是「+」：屏幕上这两格是「.」/「.」",
+   "row": 10,
+   "tick": 2,
+   "screenSha": "50a077615ec8",
+   "clause": "(5,5)是'+'表示可拾取物品。下一步准备attack测试是否能再次打到相邻"
+  },
+  {
+   "i": 5,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(1,0)",
+   "value": [
+    1,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 7,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 12,
+   "tick": 3,
+   "screenSha": "f8aa0eefd02f",
+   "clause": "玩家右移一格到(1,0)后，敌人数量由1增至2（原来在(7,0)的敌人还在，新出现了"
+  },
+  {
+   "i": 6,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(7,0)",
+   "value": [
+    7,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 27,
+   "retro": true,
+   "retroWord": "原来",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "回溯性陈述（命中「原来」），子句里读不出它说的是哪一帧；本判据只对决策前最后一帧（第 3 帧）负责",
+   "row": 12,
+   "tick": 3,
+   "screenSha": "f8aa0eefd02f",
+   "clause": "玩家右移一格到(1,0)后，敌人数量由1增至2（原来在(7,0)的敌人还在，新出现了另一个），且攻击冷却已重置为就绪。推测："
+  },
+  {
+   "i": 7,
+   "kind": "playerPos",
+   "rule": "玩家位置自述（现在时）",
+   "quote": "玩家在(2,0)",
+   "value": [
+    2,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 0,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "相符",
+   "why": "(x,y) 读法相符：屏幕 @ 在 (2,0)",
+   "row": 14,
+   "tick": 4,
+   "screenSha": "af214e9de578",
+   "clause": "玩家在(2,0)，右侧相邻(3,0)是敌人，且攻击已就绪。准备再次attac"
+  },
+  {
+   "i": 8,
+   "kind": "cellSymbol",
+   "rule": "某格内容断言",
+   "quote": "(3,0)是敌人",
+   "value": [
+    3,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": "E",
+   "at": 13,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "相符",
+   "why": "(x,y) 读法下该格可见「E」",
+   "row": 14,
+   "tick": 4,
+   "screenSha": "af214e9de578",
+   "clause": "玩家在(2,0)，右侧相邻(3,0)是敌人，且攻击已就绪。准备再次attack验证击杀得分与冷却重置机"
+  },
+  {
+   "i": 9,
+   "kind": "attack",
+   "rule": "攻击就绪自述",
+   "quote": "攻击已就绪",
+   "value": [],
+   "positive": true,
+   "polarity": "pos",
+   "symbol": null,
+   "at": 23,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "相符",
+   "why": "自称「就绪」，屏幕=就绪",
+   "row": 14,
+   "tick": 4,
+   "screenSha": "af214e9de578",
+   "clause": "玩家在(2,0)，右侧相邻(3,0)是敌人，且攻击已就绪。准备再次attack验证击杀得分与冷却重置机制，同时观察其"
+  },
+  {
+   "i": 10,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(2,0)",
+   "value": [
+    2,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 37,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 15,
+   "tick": 5,
+   "screenSha": "e13f07656961",
+   "clause": "中预测（0分项不符），击杀得1分、冷却重置规则已确认。当前在(2,0)且攻击冷却中，右侧远处仍有敌人E。下一步继续观察：先用not"
+  },
+  {
+   "i": 11,
+   "kind": "attack",
+   "rule": "攻击就绪自述",
+   "quote": "攻击冷却中",
+   "value": [],
+   "positive": false,
+   "polarity": "neg",
+   "symbol": null,
+   "at": 43,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "相符",
+   "why": "自称「冷却中」，屏幕=冷却中",
+   "row": 15,
+   "tick": 5,
+   "screenSha": "e13f07656961",
+   "clause": "项不符），击杀得1分、冷却重置规则已确认。当前在(2,0)且攻击冷却中，右侧远处仍有敌人E。下一步继续观察：先用note固化已发现"
+  }
+ ]
+}

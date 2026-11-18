@@ -1,0 +1,418 @@
+{
+ "recon": {
+  "recon": "m4d-5",
+  "sha": "30bb9ffb08a1b219e324daeb453a8a98ed26cf79bd3faf900037edd1160651b4",
+  "frozenAt": "2026-11-18"
+ },
+ "run": "m1-control2/20261113-082355-s6",
+ "brain": "openai:agnes-2.5-flash",
+ "align": {
+  "screens": 13,
+  "ticksMonotone": true,
+  "firstTick": 0,
+  "lastTick": 11,
+  "worldRows": 12
+ },
+ "usable": true,
+ "thoughtRows": 12,
+ "skippedRows": 5,
+ "claims": 13,
+ "counts": {
+  "相符": 0,
+  "矛盾": 11,
+  "约定存疑": 1,
+  "无法核对": 1
+ },
+ "byKind": {
+  "playerPos": {
+   "相符": 0,
+   "矛盾": 9,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "movedTo": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "moveIntent": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "cellSymbol": {
+   "相符": 0,
+   "矛盾": 2,
+   "约定存疑": 1,
+   "无法核对": 0
+  },
+  "pickupHere": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "hp": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "hpValue": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "score": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "alive": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "attack": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "enemyCount": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "pickupCount": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "gridSize": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "barePair": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 1
+  }
+ },
+ "excluded": {
+  "增量自述": 0,
+  "机制假设": 2,
+  "方位词位置": 14
+ },
+ "detail": [
+  {
+   "i": 0,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(1,1)",
+   "value": [
+    1,
+    1
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 3,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 1,
+   "tick": 0,
+   "screenSha": "77efe51c7dcc",
+   "clause": "当前在(1,1)位置，周围有敌人和可拾取物。我先向上移动一格到一个安全位置，"
+  },
+  {
+   "i": 1,
+   "kind": "playerPos",
+   "rule": "玩家位置自述（现在时）",
+   "quote": "我在(2,1)",
+   "value": [
+    2,
+    1
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 2,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "矛盾",
+   "why": "两种读法都不符：自称 (2,1)，屏幕 @ 在 (0,1)",
+   "row": 3,
+   "tick": 2,
+   "screenSha": "e97849ade58b",
+   "clause": "现在我在(2,1)，右边一格有敌人E在(3,1)。我先向上移动一格来拉开距离并"
+  },
+  {
+   "i": 2,
+   "kind": "cellSymbol",
+   "rule": "某格内容断言",
+   "quote": "E在(3,1)",
+   "value": [
+    3,
+    1
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": "E",
+   "at": 17,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "矛盾",
+   "why": "两种读法都不是「E」：屏幕上这两格是「.」/「.」",
+   "row": 3,
+   "tick": 2,
+   "screenSha": "e97849ade58b",
+   "clause": "现在我在(2,1)，右边一格有敌人E在(3,1)。我先向上移动一格来拉开距离并观察地图其他区域。"
+  },
+  {
+   "i": 3,
+   "kind": "playerPos",
+   "rule": "玩家位置自述（现在时）",
+   "quote": "我处于(1,1)",
+   "value": [
+    1,
+    1
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 0,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "矛盾",
+   "why": "两种读法都不符：自称 (1,1)，屏幕 @ 在 (0,0)",
+   "row": 4,
+   "tick": 3,
+   "screenSha": "8c38539b9b86",
+   "clause": "我处于(1,1)位置，右边有敌人E在(2,4)。我想向右移动接近地图右侧区域"
+  },
+  {
+   "i": 4,
+   "kind": "cellSymbol",
+   "rule": "某格内容断言",
+   "quote": "E在(2,4)",
+   "value": [
+    2,
+    4
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": "E",
+   "at": 16,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "矛盾",
+   "why": "两种读法都不是「E」：屏幕上这两格是「.」/「.」",
+   "row": 4,
+   "tick": 3,
+   "screenSha": "8c38539b9b86",
+   "clause": "我处于(1,1)位置，右边有敌人E在(2,4)。我想向右移动接近地图右侧区域，观察更多地形和可能存在的危险"
+  },
+  {
+   "i": 5,
+   "kind": "playerPos",
+   "rule": "玩家位置自述（现在时）",
+   "quote": "我目前在(2,1)",
+   "value": [
+    2,
+    1
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 0,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "矛盾",
+   "why": "两种读法都不符：自称 (2,1)，屏幕 @ 在 (1,0)",
+   "row": 5,
+   "tick": 4,
+   "screenSha": "909eec5ebef6",
+   "clause": "我目前在(2,1)，右侧有敌人E在(4,1)。我先向左移动一格以观察左侧区域，"
+  },
+  {
+   "i": 6,
+   "kind": "cellSymbol",
+   "rule": "某格内容断言",
+   "quote": "E在(4,1)",
+   "value": [
+    4,
+    1
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": "E",
+   "at": 15,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "约定存疑",
+   "why": "只在(y,x)/行列 读法下该格是「E」，屏幕未标轴",
+   "row": 5,
+   "tick": 4,
+   "screenSha": "909eec5ebef6",
+   "clause": "我目前在(2,1)，右侧有敌人E在(4,1)。我先向左移动一格以观察左侧区域，避免被敌人攻击。"
+  },
+  {
+   "i": 7,
+   "kind": "playerPos",
+   "rule": "玩家位置自述（现在时）",
+   "quote": "我现在位于(2,1)",
+   "value": [
+    2,
+    1
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 0,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "矛盾",
+   "why": "两种读法都不符：自称 (2,1)，屏幕 @ 在 (0,0)",
+   "row": 6,
+   "tick": 5,
+   "screenSha": "8ee42fcc4f3e",
+   "clause": "我现在位于(2,1)，右边有敌人。为了探索并收集物品，我先向下移动两格来到一个更"
+  },
+  {
+   "i": 8,
+   "kind": "playerPos",
+   "rule": "玩家位置自述（现在时）",
+   "quote": "我现在位于(3,2)",
+   "value": [
+    3,
+    2
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 0,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "矛盾",
+   "why": "两种读法都不符：自称 (3,2)，屏幕 @ 在 (0,1)",
+   "row": 7,
+   "tick": 6,
+   "screenSha": "857c8dbedaf0",
+   "clause": "我现在位于(3,2)，左边有敌人。为了收集物品和观察局势，我先向右移动一格到安全"
+  },
+  {
+   "i": 9,
+   "kind": "playerPos",
+   "rule": "玩家位置自述（现在时）",
+   "quote": "我在(3,2)",
+   "value": [
+    3,
+    2
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 0,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "矛盾",
+   "why": "两种读法都不符：自称 (3,2)，屏幕 @ 在 (1,1)",
+   "row": 8,
+   "tick": 7,
+   "screenSha": "b91e29c3542b",
+   "clause": "我在(3,2)位置，左侧有敌人。为了收集物品并继续探索，我选择向下移动一格"
+  },
+  {
+   "i": 10,
+   "kind": "playerPos",
+   "rule": "玩家位置自述（现在时）",
+   "quote": "我在(4,2)",
+   "value": [
+    4,
+    2
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 0,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "矛盾",
+   "why": "两种读法都不符：自称 (4,2)，屏幕 @ 在 (1,2)",
+   "row": 9,
+   "tick": 8,
+   "screenSha": "fa3527856267",
+   "clause": "我在(4,2)位置，周围暂时安全。为了探索地图右侧区域并收集物品，我决定向"
+  },
+  {
+   "i": 11,
+   "kind": "playerPos",
+   "rule": "玩家位置自述（现在时）",
+   "quote": "我在(5,2)",
+   "value": [
+    5,
+    2
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 0,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "矛盾",
+   "why": "两种读法都不符：自称 (5,2)，屏幕 @ 在 (2,2)",
+   "row": 14,
+   "tick": 9,
+   "screenSha": "11714aa9d2ca",
+   "clause": "我在(5,2)位置，右边有空间且下方有墙。我先向右移动一格观察更远的区域。"
+  },
+  {
+   "i": 12,
+   "kind": "playerPos",
+   "rule": "玩家位置自述（现在时）",
+   "quote": "我处于(6,2)",
+   "value": [
+    6,
+    2
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 0,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "矛盾",
+   "why": "两种读法都不符：自称 (6,2)，屏幕 @ 在 (3,2)",
+   "row": 15,
+   "tick": 10,
+   "screenSha": "89edb6dcf675",
+   "clause": "我处于(6,2)位置，右侧还有空间且暂时安全，我先向右移动一格继续探索地图右"
+  }
+ ]
+}

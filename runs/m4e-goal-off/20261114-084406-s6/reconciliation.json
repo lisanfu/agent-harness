@@ -1,0 +1,688 @@
+{
+ "recon": {
+  "recon": "m4d-5",
+  "sha": "30bb9ffb08a1b219e324daeb453a8a98ed26cf79bd3faf900037edd1160651b4",
+  "frozenAt": "2026-11-18"
+ },
+ "run": "m4e-goal-off/20261114-084406-s6",
+ "brain": "openai:agnes-2.5-flash",
+ "align": {
+  "screens": 23,
+  "ticksMonotone": true,
+  "firstTick": 0,
+  "lastTick": 21,
+  "worldRows": 22
+ },
+ "usable": true,
+ "thoughtRows": 25,
+ "skippedRows": 101,
+ "claims": 25,
+ "counts": {
+  "相符": 5,
+  "矛盾": 1,
+  "约定存疑": 0,
+  "无法核对": 19
+ },
+ "byKind": {
+  "playerPos": {
+   "相符": 3,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "movedTo": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "moveIntent": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "cellSymbol": {
+   "相符": 0,
+   "矛盾": 1,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "pickupHere": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "hp": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "hpValue": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "score": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "alive": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "attack": {
+   "相符": 2,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "enemyCount": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "pickupCount": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "gridSize": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "barePair": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 19
+  }
+ },
+ "excluded": {
+  "增量自述": 0,
+  "机制假设": 18,
+  "方位词位置": 6
+ },
+ "detail": [
+  {
+   "i": 0,
+   "kind": "playerPos",
+   "rule": "玩家位置自述（现在时）",
+   "quote": "我在(0,0)",
+   "value": [
+    0,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 8,
+   "retro": true,
+   "retroWord": "初始",
+   "retroTick": 0,
+   "verdict": "相符",
+   "why": "(x,y) 读法相符：屏幕 @ 在 (0,0)",
+   "row": 6,
+   "tick": 0,
+   "screenSha": "77efe51c7dcc",
+   "clause": "观察到初始状态：我在(0,0)，有三个敌人(E)和两个可拾取物品(+)。尝试向右移动以接近"
+  },
+  {
+   "i": 1,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(7,0)",
+   "value": [
+    7,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 23,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 9,
+   "tick": 1,
+   "screenSha": "026785b613a0",
+   "clause": "敌人似乎在移动。我需要记录敌人的移动规律：敌人(7,0)→(6,0)向左，敌人(1,2)→(1,1)向上，敌人(6,"
+  },
+  {
+   "i": 2,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(6,0)",
+   "value": [
+    6,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 29,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 9,
+   "tick": 1,
+   "screenSha": "026785b613a0",
+   "clause": "敌人似乎在移动。我需要记录敌人的移动规律：敌人(7,0)→(6,0)向左，敌人(1,2)→(1,1)向上，敌人(6,3)→(7,"
+  },
+  {
+   "i": 3,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(1,2)",
+   "value": [
+    1,
+    2
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 39,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 9,
+   "tick": 1,
+   "screenSha": "026785b613a0",
+   "clause": "需要记录敌人的移动规律：敌人(7,0)→(6,0)向左，敌人(1,2)→(1,1)向上，敌人(6,3)→(7,2)向右上对角线移动"
+  },
+  {
+   "i": 4,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(1,1)",
+   "value": [
+    1,
+    1
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 45,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 9,
+   "tick": 1,
+   "screenSha": "026785b613a0",
+   "clause": "的移动规律：敌人(7,0)→(6,0)向左，敌人(1,2)→(1,1)向上，敌人(6,3)→(7,2)向右上对角线移动。继续观察更"
+  },
+  {
+   "i": 5,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(6,3)",
+   "value": [
+    6,
+    3
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 55,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 9,
+   "tick": 1,
+   "screenSha": "026785b613a0",
+   "clause": ",0)→(6,0)向左，敌人(1,2)→(1,1)向上，敌人(6,3)→(7,2)向右上对角线移动。继续观察更多帧来理解行为模式。"
+  },
+  {
+   "i": 6,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(7,2)",
+   "value": [
+    7,
+    2
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 61,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 9,
+   "tick": 1,
+   "screenSha": "026785b613a0",
+   "clause": ",0)向左，敌人(1,2)→(1,1)向上，敌人(6,3)→(7,2)向右上对角线移动。继续观察更多帧来理解行为模式。"
+  },
+  {
+   "i": 7,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(7,2)",
+   "value": [
+    7,
+    2
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 23,
+   "retro": true,
+   "retroWord": "原来",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "回溯性陈述（命中「原来」），子句里读不出它说的是哪一帧；本判据只对决策前最后一帧（第 3 帧）负责",
+   "row": 23,
+   "tick": 3,
+   "screenSha": "3530fe4722f4",
+   "clause": "发现奇怪现象：原来的三个敌人现在只有两个了（原(7,2)的敌人可能离开了或消失了）。接近(4,0)的敌人准备攻击。"
+  },
+  {
+   "i": 8,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(4,0)",
+   "value": [
+    4,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 44,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 23,
+   "tick": 3,
+   "screenSha": "3530fe4722f4",
+   "clause": "现在只有两个了（原(7,2)的敌人可能离开了或消失了）。接近(4,0)的敌人准备攻击。"
+  },
+  {
+   "i": 9,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(4,0)",
+   "value": [
+    4,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 3,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 29,
+   "tick": 4,
+   "screenSha": "137ed8ed7b02",
+   "clause": "我到了(4,0)，看到敌人(3,0)。现在离它一格远，可以继续向右攻击它。检"
+  },
+  {
+   "i": 10,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(3,0)",
+   "value": [
+    3,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 13,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 29,
+   "tick": 4,
+   "screenSha": "137ed8ed7b02",
+   "clause": "我到了(4,0)，看到敌人(3,0)。现在离它一格远，可以继续向右攻击它。检验假设H1关于敌人移"
+  },
+  {
+   "i": 11,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(3,0)",
+   "value": [
+    3,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 26,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 43,
+   "tick": 6,
+   "screenSha": "5f8c6234ad24",
+   "clause": "发现异常：显示'身边没有敌人'但实际上相邻位置有敌人(3,0)和(5,0)。这表明攻击机制可能需要特定方向而非四面通用，或"
+  },
+  {
+   "i": 12,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(5,0)",
+   "value": [
+    5,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 32,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 43,
+   "tick": 6,
+   "screenSha": "5f8c6234ad24",
+   "clause": "异常：显示'身边没有敌人'但实际上相邻位置有敌人(3,0)和(5,0)。这表明攻击机制可能需要特定方向而非四面通用，或攻击有冷却/"
+  },
+  {
+   "i": 13,
+   "kind": "playerPos",
+   "rule": "玩家位置自述（现在时）",
+   "quote": "我在(5,0)",
+   "value": [
+    5,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 7,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "相符",
+   "why": "(x,y) 读法相符：屏幕 @ 在 (5,0)",
+   "row": 56,
+   "tick": 8,
+   "screenSha": "c501f39b2ad1",
+   "clause": "攻击冷却完毕。我在(5,0)，附近无相邻敌人。先向下移动以观察敌人动向，避免被打。"
+  },
+  {
+   "i": 14,
+   "kind": "attack",
+   "rule": "攻击就绪自述",
+   "quote": "攻击就绪",
+   "value": [],
+   "positive": true,
+   "polarity": "pos",
+   "symbol": null,
+   "at": 0,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "相符",
+   "why": "自称「就绪」，屏幕=就绪",
+   "row": 64,
+   "tick": 9,
+   "screenSha": "364449d16f29",
+   "clause": "攻击就绪但无相邻敌人可打。尝试向下走两步再向左，寻找敌人并观察是否有"
+  },
+  {
+   "i": 15,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(2,3)",
+   "value": [
+    2,
+    3
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 1,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 68,
+   "tick": 10,
+   "screenSha": "859334122cc2",
+   "clause": "在(2,3)，上方相邻有敌人。尝试攻击以验证H2中的主动攻击/碰撞伤害假"
+  },
+  {
+   "i": 16,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(4,3)",
+   "value": [
+    4,
+    3
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 3,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 84,
+   "tick": 13,
+   "screenSha": "de2f123a994c",
+   "clause": "当前在(4,3)，攻击就绪但无相邻敌人。向左移动并尝试攻击以检验攻击机制（之"
+  },
+  {
+   "i": 17,
+   "kind": "attack",
+   "rule": "攻击就绪自述",
+   "quote": "攻击就绪",
+   "value": [],
+   "positive": true,
+   "polarity": "pos",
+   "symbol": null,
+   "at": 9,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "相符",
+   "why": "自称「就绪」，屏幕=就绪",
+   "row": 84,
+   "tick": 13,
+   "screenSha": "de2f123a994c",
+   "clause": "当前在(4,3)，攻击就绪但无相邻敌人。向左移动并尝试攻击以检验攻击机制（之前攻击显示"
+  },
+  {
+   "i": 18,
+   "kind": "playerPos",
+   "rule": "玩家位置自述（现在时）",
+   "quote": "我位于(4,3)",
+   "value": [
+    4,
+    3
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 20,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "相符",
+   "why": "(x,y) 读法相符：屏幕 @ 在 (4,3)",
+   "row": 98,
+   "tick": 16,
+   "screenSha": "4e304de1eb52",
+   "clause": "继续观察敌人移动规律，同时测试攻击机制。我位于(4,3)，上方(4,2)为空，可能攻击需要紧邻目标。等待冷却后再次攻"
+  },
+  {
+   "i": 19,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(4,2)",
+   "value": [
+    4,
+    2
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 31,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 98,
+   "tick": 16,
+   "screenSha": "4e304de1eb52",
+   "clause": "续观察敌人移动规律，同时测试攻击机制。我位于(4,3)，上方(4,2)为空，可能攻击需要紧邻目标。等待冷却后再次攻击。"
+  },
+  {
+   "i": 20,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(5,3)",
+   "value": [
+    5,
+    3
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 3,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 118,
+   "tick": 19,
+   "screenSha": "ae580caf8559",
+   "clause": "当前在(5,3)无相邻敌人，左下(4,5)是斜对方向敌人非紧邻四格，符合H3"
+  },
+  {
+   "i": 21,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(4,5)",
+   "value": [
+    4,
+    5
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 16,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 118,
+   "tick": 19,
+   "screenSha": "ae580caf8559",
+   "clause": "当前在(5,3)无相邻敌人，左下(4,5)是斜对方向敌人非紧邻四格，符合H3假设。观察画面发现多个可拾"
+  },
+  {
+   "i": 22,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(5,4)",
+   "value": [
+    5,
+    4
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 3,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 124,
+   "tick": 20,
+   "screenSha": "e2a50bd074b0",
+   "clause": "当前在(5,4)，下方(5,5)是空但更下方(4,6)有可拾取道具。尝试向下"
+  },
+  {
+   "i": 23,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(5,5)",
+   "value": [
+    5,
+    5
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 11,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 124,
+   "tick": 20,
+   "screenSha": "e2a50bd074b0",
+   "clause": "当前在(5,4)，下方(5,5)是空但更下方(4,6)有可拾取道具。尝试向下移动接近道具。"
+  },
+  {
+   "i": 24,
+   "kind": "cellSymbol",
+   "rule": "某格内容断言",
+   "quote": "(4,6)有可拾取",
+   "value": [
+    4,
+    6
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": "+",
+   "at": 22,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "矛盾",
+   "why": "两种读法都不是「+」：屏幕上这两格是「.」/「.」",
+   "row": 124,
+   "tick": 20,
+   "screenSha": "e2a50bd074b0",
+   "clause": "当前在(5,4)，下方(5,5)是空但更下方(4,6)有可拾取道具。尝试向下移动接近道具。"
+  }
+ ]
+}

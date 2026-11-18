@@ -1,0 +1,544 @@
+{
+ "recon": {
+  "recon": "m4d-5",
+  "sha": "30bb9ffb08a1b219e324daeb453a8a98ed26cf79bd3faf900037edd1160651b4",
+  "frozenAt": "2026-11-18"
+ },
+ "run": "m4f-model/D02-on/20261116-230824-s6",
+ "brain": "openai:agnes-2.5-flash",
+ "align": {
+  "screens": 20,
+  "ticksMonotone": true,
+  "firstTick": 0,
+  "lastTick": 18,
+  "worldRows": 19
+ },
+ "usable": true,
+ "thoughtRows": 19,
+ "skippedRows": 57,
+ "claims": 19,
+ "counts": {
+  "相符": 3,
+  "矛盾": 3,
+  "约定存疑": 0,
+  "无法核对": 13
+ },
+ "byKind": {
+  "playerPos": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "movedTo": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "moveIntent": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 2
+  },
+  "cellSymbol": {
+   "相符": 1,
+   "矛盾": 1,
+   "约定存疑": 0,
+   "无法核对": 1
+  },
+  "pickupHere": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "hp": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "hpValue": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "score": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "alive": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "attack": {
+   "相符": 2,
+   "矛盾": 2,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "enemyCount": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "pickupCount": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "gridSize": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 0
+  },
+  "barePair": {
+   "相符": 0,
+   "矛盾": 0,
+   "约定存疑": 0,
+   "无法核对": 10
+  }
+ },
+ "excluded": {
+  "增量自述": 2,
+  "机制假设": 17,
+  "方位词位置": 5
+ },
+ "detail": [
+  {
+   "i": 0,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(0,0)",
+   "value": [
+    0,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 21,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 5,
+   "tick": 0,
+   "screenSha": "77efe51c7dcc",
+   "clause": "开始记录初始状态并试探移动规则。当前位于 (0,0)，最近敌人 E 在 (1,0)，最近可拾取物 + 在 (2,"
+  },
+  {
+   "i": 1,
+   "kind": "cellSymbol",
+   "rule": "某格内容断言",
+   "quote": "E 在 (1,0)",
+   "value": [
+    1,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": "E",
+   "at": 32,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "相符",
+   "why": "(x,y) 读法下该格可见「E」",
+   "row": 5,
+   "tick": 0,
+   "screenSha": "77efe51c7dcc",
+   "clause": "记录初始状态并试探移动规则。当前位于 (0,0)，最近敌人 E 在 (1,0)，最近可拾取物 + 在 (2,5)。先尝试右移一格，贴近最近"
+  },
+  {
+   "i": 2,
+   "kind": "cellSymbol",
+   "rule": "某格内容断言",
+   "quote": "+ 在 (2,5)",
+   "value": [
+    2,
+    5
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": "+",
+   "at": 49,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "矛盾",
+   "why": "两种读法都不是「+」：屏幕上这两格是「.」/「.」",
+   "row": 5,
+   "tick": 0,
+   "screenSha": "77efe51c7dcc",
+   "clause": "于 (0,0)，最近敌人 E 在 (1,0)，最近可拾取物 + 在 (2,5)。先尝试右移一格，贴近最近的敌人以观察其交互反应与战斗逻辑。"
+  },
+  {
+   "i": 3,
+   "kind": "attack",
+   "rule": "攻击就绪自述",
+   "quote": "攻击就绪",
+   "value": [],
+   "positive": true,
+   "polarity": "pos",
+   "symbol": null,
+   "at": 2,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "相符",
+   "why": "自称「就绪」，屏幕=就绪",
+   "row": 9,
+   "tick": 1,
+   "screenSha": "026785b613a0",
+   "clause": "确认攻击就绪未因右移消耗，记录初始环境动态"
+  },
+  {
+   "i": 4,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(1,1)",
+   "value": [
+    1,
+    1
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 19,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 21,
+   "tick": 4,
+   "screenSha": "893759644f2a",
+   "clause": "攻击冷却确认2帧。尝试攻击当前相邻敌人(1,1)的上方敌人E在(1,0)，测试攻击范围和伤害。"
+  },
+  {
+   "i": 5,
+   "kind": "cellSymbol",
+   "rule": "某格内容断言",
+   "quote": "E在(1,0)",
+   "value": [
+    1,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": "E",
+   "at": 29,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "该格是玩家所在，render 用「@」覆盖「E」，屏幕上看不出来",
+   "row": 21,
+   "tick": 4,
+   "screenSha": "893759644f2a",
+   "clause": "攻击冷却确认2帧。尝试攻击当前相邻敌人(1,1)的上方敌人E在(1,0)，测试攻击范围和伤害。"
+  },
+  {
+   "i": 6,
+   "kind": "attack",
+   "rule": "攻击就绪自述",
+   "quote": "攻击就绪",
+   "value": [],
+   "positive": true,
+   "polarity": "pos",
+   "symbol": null,
+   "at": 69,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "矛盾",
+   "why": "自称「就绪」，屏幕=冷却中",
+   "row": 24,
+   "tick": 5,
+   "screenSha": "3b1f7c6c8bde",
+   "clause": "交邻格而非自身所在格，且当前攻击可能有隐藏判定条件（例如只有攻击就绪时才能生效、或需要特定朝向）。同时注意到敌人似乎不主动移动。"
+  },
+  {
+   "i": 7,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(0,0)",
+   "value": [
+    0,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 108,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 24,
+   "tick": 5,
+   "screenSha": "3b1f7c6c8bde",
+   "clause": "、或需要特定朝向）。同时注意到敌人似乎不主动移动。我先后退到(0,0)并立一条假设来系统验证。"
+  },
+  {
+   "i": 8,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(0,0)",
+   "value": [
+    0,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 4,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 27,
+   "tick": 6,
+   "screenSha": "d1cc738ce79c",
+   "clause": "现在位于(0,0)，(1,0)紧邻有敌人。之前攻击提示'身边没有敌人'很可能是"
+  },
+  {
+   "i": 9,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(1,0)",
+   "value": [
+    1,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 10,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 27,
+   "tick": 6,
+   "screenSha": "d1cc738ce79c",
+   "clause": "现在位于(0,0)，(1,0)紧邻有敌人。之前攻击提示'身边没有敌人'很可能是因为攻击冷却"
+  },
+  {
+   "i": 10,
+   "kind": "attack",
+   "rule": "攻击就绪自述",
+   "quote": "攻击就绪",
+   "value": [],
+   "positive": true,
+   "polarity": "pos",
+   "symbol": null,
+   "at": 54,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "矛盾",
+   "why": "自称「就绪」，屏幕=冷却中",
+   "row": 27,
+   "tick": 6,
+   "screenSha": "d1cc738ce79c",
+   "clause": "击提示'身边没有敌人'很可能是因为攻击冷却期间无法发动。等待攻击就绪后再测是否能击中相邻敌人。"
+  },
+  {
+   "i": 11,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(0,0)",
+   "value": [
+    0,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 16,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 33,
+   "tick": 8,
+   "screenSha": "edb318a14c74",
+   "clause": "敌人会动态生成或移动——我右移后(0,0)出现新敌人，敌人数从2变回3。现在(0,0)紧邻我左侧，尝试"
+  },
+  {
+   "i": 12,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(0,0)",
+   "value": [
+    0,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 38,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 33,
+   "tick": 8,
+   "screenSha": "edb318a14c74",
+   "clause": "移动——我右移后(0,0)出现新敌人，敌人数从2变回3。现在(0,0)紧邻我左侧，尝试攻击测试伤害机制。"
+  },
+  {
+   "i": 13,
+   "kind": "attack",
+   "rule": "攻击就绪自述",
+   "quote": "攻击仍在冷却",
+   "value": [],
+   "positive": false,
+   "polarity": "neg",
+   "symbol": null,
+   "at": 0,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "相符",
+   "why": "自称「冷却中」，屏幕=冷却中",
+   "row": 43,
+   "tick": 10,
+   "screenSha": "dfc1a41101fd",
+   "clause": "攻击仍在冷却，等待冷却结束后再次尝试攻击。"
+  },
+  {
+   "i": 14,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(1,0)",
+   "value": [
+    1,
+    0
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 52,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 46,
+   "tick": 11,
+   "screenSha": "1296d075fb0a",
+   "clause": "但攻击似乎对它们无效(可能因为它们是幽灵/特殊类型)。现在在(1,0)，尝试向右侧移动接近可拾取物或测试其他机制。"
+  },
+  {
+   "i": 15,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(2,1)",
+   "value": [
+    2,
+    1
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 9,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 53,
+   "tick": 13,
+   "screenSha": "fb39f74ad13a",
+   "clause": "移动到地图中央位置(2,1)，周围有敌人但距离适中。尝试攻击测试伤害机制是否不同。"
+  },
+  {
+   "i": 16,
+   "kind": "barePair",
+   "rule": "主语不明的数字对（兜底，不丢）",
+   "quote": "(5,1)",
+   "value": [
+    5,
+    1
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 68,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "同句内没有可绑定的主语，无法确定这条数字对说的是谁",
+   "row": 62,
+   "tick": 15,
+   "screenSha": "7eb37e80e9f7",
+   "clause": "③拾取需要站在物品正上方。尝试向(5,1)的可拾取物移动测试道具效果。"
+  },
+  {
+   "i": 17,
+   "kind": "moveIntent",
+   "rule": "移动意图（非事实主张）",
+   "quote": "移动到(5,1)",
+   "value": [
+    5,
+    1
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 34,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "意图不是事实主张，屏幕无从反驳（预测由 M4-a 通道核对）",
+   "row": 65,
+   "tick": 16,
+   "screenSha": "dd39884729d8",
+   "clause": "完成但周围无邻格敌人——说明攻击只打紧邻的敌人，且无效。现在移动到(5,1)的可拾取物尝试。"
+  },
+  {
+   "i": 18,
+   "kind": "moveIntent",
+   "rule": "移动意图（非事实主张）",
+   "quote": "移动到(4,1)",
+   "value": [
+    4,
+    1
+   ],
+   "positive": null,
+   "polarity": "none",
+   "symbol": null,
+   "at": 0,
+   "retro": false,
+   "retroWord": "",
+   "retroTick": null,
+   "verdict": "无法核对",
+   "why": "意图不是事实主张，屏幕无从反驳（预测由 M4-a 通道核对）",
+   "row": 70,
+   "tick": 17,
+   "screenSha": "21c1bc44a7be",
+   "clause": "移动到(4,1)，所有预测都正确。现在尝试攻击测试远程或范围伤害机制。"
+  }
+ ]
+}
