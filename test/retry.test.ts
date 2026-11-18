@@ -205,9 +205,20 @@ test('Retry-After 秒数优先于自己的指数退避', async () => {
 });
 
 test('Retry-After 写成 HTTP 日期也能换算，不是 NaN', async () => {
+  // ⚠️ 这条原来写的是 `waits[0] >= 4000 && <= 5000`，加压下（6 个 yes + 全表并发）实测红了：3982。
+  // 根因不在产品代码，在**判据选错**：`toUTCString()` 只有整秒粒度，"5000ms 之后"的头
+  // 落进 [4001, 5000] 是**世界**决定的；测试再手抄一遍这个区间，就等于把一个随机器忙闲漂移的量当常量断言。
+  // 第二版改成"等待值 == 到期时刻 − 那一刻"并留 ±5ms 松弛量——**同一个错误掉到下一层**：
+  // 加压第 6 轮实测差 6ms 又红。松弛量本身也是手挑的负载常数。
+  // 现在的两条界是**结构上负载免疫**的：下界 `deadline - Date.now()` 随时间只会变小（断言只会变松，不会误红），
+  // 上界 5000 由 `deadline ≤ 起算+5000` 与"换算不减负"保证。两条合起来仍然抓得住全部真故障：
+  // NaN（两边都过不去）、掉回 1000ms 指数退避（过不了下界）、多睡（过上界）。
+  const deadline = Math.floor((Date.now() + 5000) / 1000) * 1000;
+  const header = new Date(deadline).toUTCString();
+  assert.equal(Date.parse(header), deadline, '夹具前提：秒级取整后的日期必须能无损往返，否则下面测的不是换算');
   const s = await withServer((n, _body, res) => {
     if (n === 0) {
-      res.writeHead(429, { 'retry-after': new Date(Date.now() + 5000).toUTCString() });
+      res.writeHead(429, { 'retry-after': header });
       res.end('slow down');
       return;
     }
@@ -217,8 +228,11 @@ test('Retry-After 写成 HTTP 日期也能换算，不是 NaN', async () => {
     const { b, waits } = brain(s.url);
     await b.decide(req);
     assert.equal(waits.length, 1);
-    assert.ok(!Number.isNaN(waits[0]!), '日期格式换算出 NaN 会让退避失效');
-    assert.ok(waits[0]! >= 4000 && waits[0]! <= 5000, `期望约 5000ms，实际 ${waits[0]}`);
+    const w = waits[0]!;
+    assert.ok(!Number.isNaN(w), '日期格式换算出 NaN 会让退避失效');
+    const floor = deadline - Date.now();
+    assert.ok(w >= floor, `不许把服务端广告的等待时间砍成指数退避那 1 秒：w=${w}，下界=${floor}`);
+    assert.ok(w <= 5000, `不许比服务端说的更久睡：w=${w}`);
   } finally { await s.close(); }
 });
 
