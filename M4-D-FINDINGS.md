@@ -220,7 +220,10 @@ npm run verify:recon:selftest# 10 处注入造假 + 3 组反向对照 + 5 条冻
 npm test                     # 全套 438 例
 ```
 
-四条都在 CI 的"复核矩阵 · 依赖已发布证据那批"里（`.github/workflows/ci.yml`），干净克隆之后不必任何 key 就能全部跑通——`reconciliation.json` 是可再生成的产物，判据与语料才是被审的对象。
+四条都在 CI 的"复核矩阵 · 依赖已发布证据那批"里（`.github/workflows/ci.yml`）。**并且真的按读者视角验过**：
+`9d84088` 匿名 clone 到空目录 → `npm test` 438/438 → `verify:recon` 把 30 份 `reconciliation.json` 重新生成，
+与仓库里已发布的那一份**逐字节同一**（30 份 + `summary.json` 的 md5 聚合 `e2d3e4a6df8b…`）——
+本报告引用的每一个数字都不依赖"我跑过一次"，见 [HAND-CODING.md](HAND-CODING.md) 第 17 站。
 
 ---
 

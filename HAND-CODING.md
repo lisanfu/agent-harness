@@ -323,6 +323,13 @@ npm run verify:reproduction:selftest  # 复现包审计自己的篡改自检：�
 把 run 目录名写错时三个审计脚本各自给 `[证据缺失]` 与人话原因后非零退出，没有一处假装绿。
 CI 侧 `verify` 工作流同一 commit 全绿（11 步全 success，含"依赖已发布证据那批"）。
 
+**第 17 站（M4-d 之后重跑，`9d84088`，同样从 GitHub 匿名 clone 到空目录）**：`npm test` **438/438**；
+`verify:recon` 把 30 份 `reconciliation.json` **在克隆里重新生成**，与仓库里已发布的那一份**逐字节同一**
+（30 份 + `summary.json` 的 md5 聚合 `e2d3e4a6df8b64846d395e6dd96070f9`，克隆前后各算一次，中间删掉重生成）——
+这才是"你能自己重算"的硬样子：**对账不靠我跑过，靠任何人在没有 key、没有原始会话的情况下再跑一遍得到同一张表**。
+`verify:recon:audit` 1226/1226、`verify:recon:selftest` 漏抓 0；`verify:detect:reference` 重算出同一个 `0/4 = 0.0% [0.0, 49.0]`；
+上限表再逐字节一致（4800 行，`md5 79631681c80a5c45d6dfad5c22679020`，57s 重算）；`verify:reproduction` 与入库文档逐字节相符；`verify:m4` 总计不一致 0 处。
+
 全绿之后，最后一步才是真本事：把 `.env` 里的远端端点接上（**只用远端，不用本地模型**），
 自己跑一局，然后**用 `verify/` 下的脚本独立复核你自己这一局**——
 那一刻你才会明白为什么这套工程里"审计有牙"排在"agent 会玩"前面。
