@@ -397,7 +397,14 @@ CI 侧 `verify` 工作流同一 commit 全绿（11 步全 success，含"依赖�
 得同一个 `005bf4ac5920edc4c7ec92efa1f2424b`。`smoke` 落在 gitignore 的 `sandbox/smoke/`，
 `runs/` 里 `brainId=mock:TEST-DOUBLE` 的局数 **14 → 14 未增**（那 14 局是 M0/M1 时代发布的历史证据，身份写在 header 里），
 全套跑完 `git status` **一个字都不脏**（#36 的修法同样在陌生人机器上复核过）。
-CI 侧 `verify` 工作流（单 job `measurements`，含 `npm test` + `smoke` + 依赖已发布证据那批 + `verify:ear:check`）同一 commit **success**。
+CI 侧 `verify` 工作流（单 job `measurements`，含 `npm test` + `smoke` + 依赖已发布证据那批 + `verify:ear:check`）同一 commit **success**；
+带那条偶发失败的 `942fd35` 在 CI 上也一直是绿的——**"CI 绿"从来不是这条的显形条件**，这就是 #37 的教训本体。
+
+**第四次抽查（`30ea492`，只改文档与注释那一个 commit，仍匿名 clone；HTTPS 第一次因 TLS 抖动失败，重试第 2 次成功）**：
+`npm test` 空载 **491/491**、8 路 `yes` 满载 **491/491**（34.8s）；`verify:ear:check` rc=0 且两份产物逐字节一致；
+`smoke` 落 `sandbox/smoke/`、`runs/` 替身局 **14 未增**、`git status` 空。
+最后一步是把**文档自己印出的数字**当成被测对象在克隆里重算一遍：`src 8698 / test 8003 / verify 6049 行`、
+台账 **37** 条、自测清单 **37** 条、`wc -c` **833586 / 6951** ——**全部与 README、HAND-CODING 写的逐位相同**（口径：`find <目录> -name '*.ts' | xargs wc -l`、`grep -c '^### #' README.md`、`grep -c '^- \[ \] ' KNOWLEDGE.md`）。
 
 全绿之后，最后一步才是真本事：把 `.env` 里的远端端点接上（**只用远端，不用本地模型**），
 自己跑一局，然后**用 `verify/` 下的脚本独立复核你自己这一局**——
