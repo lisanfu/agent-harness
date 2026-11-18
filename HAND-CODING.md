@@ -39,7 +39,7 @@ export PATH=/home/fuyuan/.local/node-22/bin:$PATH
 
 ## 1. 总进度表（17 站，测试数只增不减）
 
-参考仓库的真实数字：`src/` 37 个文件 **8698 行**，`test/` 30 个文件 **7988 行 / 491 测试**，`verify/` 19 个文件 **6049 行**。
+参考仓库的真实数字：`src/` 37 个文件 **8698 行**，`test/` 30 个文件 **8003 行 / 491 测试**，`verify/` 19 个文件 **6049 行**。
 
 | 站 | 里程碑 | 这一站新增测试 | 累计 | 行数预算（src / test） | 半天 |
 |---|---|---|---|---|---|
@@ -60,7 +60,7 @@ export PATH=/home/fuyuan/.local/node-22/bin:$PATH
 | S14 | 度量：审计脚本 + 汇总 + 随机臂（M4-e） | 18（`ablation`13 `random-baseline`5） | **380** | 1056 / 200 | ×2 |
 | S15 | 度量：缺陷版靶场 + 检出判决器（M4-f） | 16（`detect`16：词表冻结/版本戳/四层漏斗/六判决/子串陷阱/零泄漏） | **396** | +lexicon+detect+m4f / +detect-fixture+audit+selftest | ×1.5 |
 | S16 | 度量：主客观对账（M4-d） | 42（`reconcile`42：四桶恒等式/双读法/图层覆盖/回溯归位/括注/零内部状态） | **438** | 985 / 725 ＋ `verify/recon*` 1394 | ×1.5 |
-| S17 | 第二条独立投影：听觉通道（M4-c 上半） | 53（`sound`25 `m4c`18 `ear-guard`5 `mock-gate`5） | **491** | 742 / 1030 | ×1.5 |
+| S17 | 第二条独立投影：听觉通道（M4-c 上半） | 53（`sound`25 `m4c`18 `ear-guard`5 `mock-gate`5） | **491** | 742 / 1053 | ×1.5 |
 
 > **测试数掉了要当故障看，不能当噪声看。** 这条是这套工程的第 #17 号教训的自用版：
 > 本项目曾经因为测试文件加载失败，`npm test` 从 359 掉到 338 而没人立刻发现。
@@ -308,7 +308,7 @@ export PATH=/home/fuyuan/.local/node-22/bin:$PATH
   缺证据就写"缺"，别用替身产出一条之后没法解释它凭什么算证据的数字；
   **#35** "逐字节一致"那个数不是字节——**中文仓库里"字节"有两个含义**，口径必须落到 Buffer 那一层、报的数必须能被 `wc -c` 复核；
   **#36** `npm run smoke` 每跑一次就往 `runs/` 塞一局替身（默认 `--out ./runs` + 证据目录全量入库），修法是把 `--out` 指到 gitignore 的 `sandbox/`，并让测试静态检查"凡 `--brain mock` 的脚本都不许写进 `runs/`"；
-  **#37** 干净克隆首跑 `# pass 490 / # fail 1`、同份 clone 再跑 4 次全绿——`test/retry.test.ts` 把**世界定的漂移量**（`toUTCString()` 的整秒粒度 + 请求往返）抄成了 `[4000, 5000]`。
+  **#37** 干净克隆**空载连跑 4 轮 491/491**、加压第 3 轮才红一条（`实际 3982`）——`test/retry.test.ts` 把**世界定的漂移量**（`toUTCString()` 的整秒粒度 + 请求往返）抄成了 `[4000, 5000]`。
   第一版修法（`±5ms` 松弛量）加压第 6 轮差 6ms 又红——**松弛量也是手挑的负载常数，同一个错误掉到下一层**。
   终版换成两条结构上负载免疫的界：下界 `deadline - Date.now()`（只随机器变忙而变松）、上界 5000。**产品代码全程是对的**，这是 #31 的镜像形态：零星红先怀疑的应该是判据自己。
 - ⚠️ **诚实边界（这一站最容易被读歪的地方）**：上面所有数字都是**仪器上限**，不是模型表现。
@@ -371,6 +371,7 @@ npm run verify:ear:check        # 同一批 2400 例**重算 + 与已发布产�
 `runs/` 已随仓库发布，所以那一次 clone 必须能重算出**同一个** `0/4` 与同一张上限表——
 在自己的工作目录里跑绿，只证明你的机器；在干净克隆上跑绿，才证明交付物。
 本轮就是在这一步翻出故障 #21（`误报率 1/2 = 50.0%` 当众印出来），CI 也已把这套矩阵挂成每次 push 都跑。
+**同一条纪律在第三次验收时又翻出一条 #37**（490/491，且只在 clone 里偶发）——所以这一步不是仪式，是这套仓库唯一抓得住"只在我的机器上坏"的关。
 
 **这一站已经真跑过（`1b1b225`，从 GitHub 匿名 clone 到空目录）**：零依赖 → `npm test` 396/396；
 上面每条 `verify:*` 全部 rc=0，`verify:detect:reference` 重算出同一个 `0/4 = 0.0% [0.0, 49.0]`；
@@ -384,6 +385,19 @@ CI 侧 `verify` 工作流同一 commit 全绿（11 步全 success，含"依赖�
 这才是"你能自己重算"的硬样子：**对账不靠我跑过，靠任何人在没有 key、没有原始会话的情况下再跑一遍得到同一张表**。
 `verify:recon:audit` 1226/1226、`verify:recon:selftest` 漏抓 0；`verify:detect:reference` 重算出同一个 `0/4 = 0.0% [0.0, 49.0]`；
 上限表再逐字节一致（4800 行，`md5 79631681c80a5c45d6dfad5c22679020`，57s 重算）；`verify:reproduction` 与入库文档逐字节相符；`verify:m4` 总计不一致 0 处。
+
+**终局验收第三次（M4-c 上半收尾，`df9774d`，同样从 GitHub 匿名 clone 到空目录；日志全留盘）**：
+`npm test` 空载 3 轮 **491/491 / 491/491 / 491/491**（24.2–26.5s），**8 路 `yes` 满载再 3 轮 491/491**（31.6–40.9s，是空载的 1.25–1.7 倍——
+这正是台账 #37 那条偶发唯一的显形条件）；`test/retry.test.ts` 单独复跑 3 轮 21/21（另起 6 路 `yes`，机器仍忙）。
+18 条 `verify:*` 加 `npm run smoke`、`verify:ear:ceiling` 共 20 条命令**全部 rc=0**（每条一份留盘日志）。`verify:ear:check` 在克隆里重算 2400 例，
+报出 `ear_ceiling.jsonl 逐字节一致（833586 字节）`、`ear_ceiling_summary.json 逐字节一致（6951 字节）`——
+**这两个数与克隆里的 `wc -c` 逐位相同**（#35 的修法在陌生人机器上复核过）；写盘版 `verify:ear:ceiling` 重算后
+`md5sum -c` 两份产物全过（`a7ee189e…` / `2ea16770…`）。`verify:recon` 在克隆里重新生成 30 份 `reconciliation.json` + `summary.json`，
+重跑前后各自算一次聚合 md5（`{find runs -name reconciliation.json; echo runs/m4d-recon/summary.json} | sort | xargs md5sum | md5sum`）
+得同一个 `005bf4ac5920edc4c7ec92efa1f2424b`。`smoke` 落在 gitignore 的 `sandbox/smoke/`，
+`runs/` 里 `brainId=mock:TEST-DOUBLE` 的局数 **14 → 14 未增**（那 14 局是 M0/M1 时代发布的历史证据，身份写在 header 里），
+全套跑完 `git status` **一个字都不脏**（#36 的修法同样在陌生人机器上复核过）。
+CI 侧 `verify` 工作流（单 job `measurements`，含 `npm test` + `smoke` + 依赖已发布证据那批 + `verify:ear:check`）同一 commit **success**。
 
 全绿之后，最后一步才是真本事：把 `.env` 里的远端端点接上（**只用远端，不用本地模型**），
 自己跑一局，然后**用 `verify/` 下的脚本独立复核你自己这一局**——
