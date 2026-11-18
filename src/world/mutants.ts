@@ -11,6 +11,8 @@
  *   本文件里的 label/expectedSymptom 只用于**实验度量**，绝不喂给公证器。
  */
 import { ALL_CAPS, type Capabilities } from './arena.ts';
+import type { SoundCaps, SoundRig } from './sound.ts';
+import { ALL_SOUND_CAPS } from './sound.ts';
 
 export interface Mutant {
   id: string;
@@ -52,5 +54,64 @@ export const ALL_MUTANTS: Mutant[] = [...SINGLE_MUTANTS, ...DOUBLE_MUTANTS];
 export function findMutant(id: string): Mutant {
   const m = ALL_MUTANTS.find((x) => x.id === id);
   if (!m) throw new Error(`未知变异体：${id}（可用：${ALL_MUTANTS.map((x) => x.id).join(', ')}）`);
+  return m;
+}
+
+// ─────────────────────── 输出层变异体（M4-c）───────────────────────
+
+/**
+ * 声音侧变异体：**世界一个字节都不改，只改"播什么"。**
+ *
+ * 为什么必须单独有一族：M4-f 的上限表用屏幕当唯一分叉面，`invisible=0` 那条结论
+ * 只覆盖**世界层**缺陷（`step()` 里的能力被删）。真实引擎里"算"和"播"是两条代码路径，
+ * 音频层/渲染层的 bug 不落进状态——只看屏幕的测试工具对这一族**结构性失明**。
+ * 这一族就是为了让"失明"变成可数的数字而存在，不是为了难为 agent。
+ *
+ * 三类形状，缺一不可：
+ *  - **漏报**（S01–S08）：某个触发不播了。屏幕照常变化。
+ *  - **误报**（S09）：条件写宽，正常移动也播一记闷响。**单局、无参考版**就能让耳朵说出屏幕反对的话
+ *    ——这就是"眼耳矛盾是独立异常源"的现成证据，不需要知道正确答案。
+ *  - **时钟错位**（S10）：内容全对、帧号整体后移一帧。路线图 M4 那一栏预言过的故障。
+ *    它是判据的靶子：把"次数对、内容错"与"内容对、时刻错"混成一桶的判据，
+ *    会在 S10 上满屏假矛盾，或在 S09 上全部漏判。
+ */
+export interface SoundMutant {
+  id: string;
+  label: string;
+  /** 被改坏的发声形状。人工度量与报告用，判据不看。 */
+  cue: 'reference' | keyof SoundCaps | 'misfire_bump_on_move' | 'shift_one_tick';
+  rig: SoundRig;
+}
+
+function soundWithout(...keys: (keyof SoundCaps)[]): SoundRig {
+  const caps: SoundCaps = { ...ALL_SOUND_CAPS };
+  for (const k of keys) caps[k] = false;
+  return { caps };
+}
+
+/** 阴性对照：参考版 vs 参考版。两侧都必须零分叉，分叉了就是仪器自己漏气。 */
+export const REFERENCE_SOUND: SoundMutant = {
+  id: 'R0', label: '参考版发声（阴性对照，应当两侧都不分叉）',
+  cue: 'reference', rig: { caps: { ...ALL_SOUND_CAPS } },
+};
+
+export const SOUND_MUTANTS: SoundMutant[] = [
+  { id: 'S01', label: '脚步声丢失（移动无声）', cue: 'footstep', rig: soundWithout('footstep') },
+  { id: 'S02', label: '撞墙闷响丢失（撞上硬物不发声）', cue: 'wallBump', rig: soundWithout('wallBump') },
+  { id: 'S03', label: '挥击破风声丢失', cue: 'swing', rig: soundWithout('swing') },
+  { id: 'S04', label: '敌人倒地声丢失（击杀无反馈）', cue: 'killThud', rig: soundWithout('killThud') },
+  { id: 'S05', label: '受击闷哼丢失（挨打无声）', cue: 'hurtGrunt', rig: soundWithout('hurtGrunt') },
+  { id: 'S06', label: '拾取咔哒丢失', cue: 'pickupClick', rig: soundWithout('pickupClick') },
+  { id: 'S07', label: '自身倒地声丢失', cue: 'deathThud', rig: soundWithout('deathThud') },
+  { id: 'S08', label: '敌人挪动的窸窣丢失', cue: 'enemyFootstep', rig: soundWithout('enemyFootstep') },
+  { id: 'S09', label: '误报：正常移动也播闷响（触发条件写宽）', cue: 'misfire_bump_on_move', rig: { caps: { ...ALL_SOUND_CAPS }, bumpOnMove: true } },
+  { id: 'S10', label: '时钟错位：整条声流晚一帧（内容全对）', cue: 'shift_one_tick', rig: { caps: { ...ALL_SOUND_CAPS }, shiftTicks: 1 } },
+];
+
+export const ALL_SOUND: SoundMutant[] = [REFERENCE_SOUND, ...SOUND_MUTANTS];
+
+export function findSoundMutant(id: string): SoundMutant {
+  const m = ALL_SOUND.find((x) => x.id === id);
+  if (!m) throw new Error(`未知发声变异体：${id}（可用：${ALL_SOUND.map((x) => x.id).join(', ')}）`);
   return m;
 }

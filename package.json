@@ -8,7 +8,7 @@
   "scripts": {
     "start": "node src/cli.ts",
     "test": "node --test test/*.test.ts",
-    "smoke": "node src/cli.ts --brain mock --task \"机械冒烟：只验接线，mock 不是大脑\" --max-steps 6 --i-know-mock-is-not-a-brain",
+    "smoke": "node src/cli.ts --brain mock --task \"机械冒烟：只验接线，mock 不是大脑\" --max-steps 6 --i-know-mock-is-not-a-brain --out sandbox/smoke",
     "verify:replay": "node verify/replay.ts runs/20261113-204204-s6",
     "verify:predict": "node verify/predict-audit.ts runs/20261113-203623-s6 runs/20261113-204204-s6 runs/20261113-204625-s6",
     "verify:board": "node verify/board-audit.ts $(node verify/board-fixture.ts)",
@@ -26,6 +26,8 @@
     "verify:recon:audit": "node verify/recon-audit.ts $(node verify/recon-fixture.ts) --corpus",
     "verify:recon:selftest": "node verify/recon-selftest.ts",
     "verify:detect:ceiling": "node src/m4f.ts --policy random --out runs/m4f-ceiling",
+    "verify:ear:ceiling": "node src/m4c.ts --seeds 6,7,8,42 --budgets 25,120 --reps 20 --out runs/m4c-ear",
+    "verify:ear:check": "node src/m4c.ts --seeds 6,7,8,42 --budgets 25,120 --reps 20 --check runs/m4c-ear",
     "verify:detect:model": "node src/m4f.ts --policy model --mutants M01,M03,M05,M07,D02 --arms on --seed 6 --max-steps 40 --out runs/m4f-model",
     "verify:m4e": "node verify/board-audit.ts runs/20261113-234041-s6 runs/m4b2-goal-on/20261113-234338-s6 runs/m4b2-goal-on/20261113-234921-s6 runs/m4e-goal-on/20261114-083043-s6 runs/m4e-goal-on/20261114-083409-s6 runs/m4b2-goal-off/20261113-234650-s6 runs/m4b2-goal-off/20261113-235237-s6 runs/m4e-goal-off/20261114-083720-s6 runs/m4e-goal-off/20261114-084053-s6 runs/m4e-goal-off/20261114-084406-s6 && node verify/goal-audit.ts runs/20261113-234041-s6 runs/m4b2-goal-on/20261113-234338-s6 runs/m4b2-goal-on/20261113-234921-s6 runs/m4e-goal-on/20261114-083043-s6 runs/m4e-goal-on/20261114-083409-s6 runs/m4b2-goal-off/20261113-234650-s6 runs/m4b2-goal-off/20261113-235237-s6 runs/m4e-goal-off/20261114-083720-s6 runs/m4e-goal-off/20261114-084053-s6 runs/m4e-goal-off/20261114-084406-s6 && node verify/predict-audit.ts runs/20261113-234041-s6 runs/m4b2-goal-on/20261113-234338-s6 runs/m4b2-goal-on/20261113-234921-s6 runs/m4e-goal-on/20261114-083043-s6 runs/m4e-goal-on/20261114-083409-s6 runs/m4b2-goal-off/20261113-234650-s6 runs/m4b2-goal-off/20261113-235237-s6 runs/m4e-goal-off/20261114-083720-s6 runs/m4e-goal-off/20261114-084053-s6 runs/m4e-goal-off/20261114-084406-s6 && npm run verify:ablation",
     "docs:reproduction": "node verify/reproduction.ts --emit REPRODUCTION.md",

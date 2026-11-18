@@ -16,7 +16,7 @@
  */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { MockBrain } from '../src/brain/mock.ts';
@@ -317,10 +317,18 @@ test('header.seams 声明本局开了哪些验证通道：旧版与消融版在�
   const hdr = (runDir: string) => JSON.parse(readFileSync(join(runDir, 'header.json'), 'utf8')) as Record<string, any>;
 
   const on = await runArena({ brain: new ScriptBrain([d('wait'), d('finish', { summary: 's' })]), seed: 6, config: cfg(), doMinimize: false });
-  assert.deepEqual(hdr(on.run.runDir).seams, { predict: true, goal: true }, '两条通道都开着就得都声明；声明由循环层写，世界层不需要各报各的');
+  assert.deepEqual(hdr(on.run.runDir).seams, { predict: true, goal: true, ear: true }, '三条通道都开着就得都声明；声明由循环层写，世界层不需要各报各的');
 
   const off = await runArena({ brain: new ScriptBrain([d('wait'), d('finish', { summary: 's' })]), seed: 6, config: cfg(), doMinimize: false, doGoal: false });
-  assert.deepEqual(hdr(off.run.runDir).seams, { predict: true, goal: false }, '消融版的 goal=false 是**声明**，不是靠"证据里没有"倒推');
+  assert.deepEqual(hdr(off.run.runDir).seams, { predict: true, goal: false, ear: true }, '消融版的 goal=false 是**声明**，不是靠"证据里没有"倒推');
+
+  // 耳朵那条声明刻意**从工具清单里读**（loop.ts），而不是让调用方自报：
+  // 这样"声明说给了、契约里却没有"这条路从根上不存在。反过来也要成立——
+  // 关掉时契约里必须真的没有 listen，否则消融对照组是假的。
+  const deaf = await runArena({ brain: new ScriptBrain([d('wait'), d('finish', { summary: 's' })]), seed: 6, config: cfg(), doMinimize: false, doEar: false });
+  assert.deepEqual(hdr(deaf.run.runDir).seams, { predict: true, goal: true, ear: false }, '关掉耳朵必须声明成 false（M4-c 消融的真对照组）');
+  assert.equal(existsSync(join(deaf.run.runDir, 'sound.jsonl')), false, '没装耳朵的局不许产 sound.jsonl：产物必须与声明同进同退');
+  assert.equal(existsSync(join(on.run.runDir, 'sound.jsonl')), true, '装着耳朵却不落声流证据 = 通道存在但没法复核（故障 #8 的第四种形态）');
 
   // 关掉通道时 initialState.goals 这个键也不该出现：器官不存在 ≠ 器官存在且板子空着
   assert.ok(!('goals' in hdr(off.run.runDir).initialState), '关着的器官不许在初始状态里留一个空键冒充足迹');

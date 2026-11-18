@@ -5,7 +5,7 @@
  * 输出纪律：人类日志一律 stderr；stdout 留给 stdio 大脑协议。
  * 退出码：0=finished，2=其他停止原因，1=配置/启动错误。便于将来接 CI。
  */
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { createBrain, loadEnv, type BrainKind } from './brain/index.ts';
 import { classify } from './errors.ts';
@@ -58,6 +58,8 @@ function usage(): void {
   --no-predict                  仅 arena：关掉预测-对照（M4），退回 M1 的契约条件做对照
   --no-goal                     仅 arena：关掉目标通道（M4-b2）。goal 工具不注册、契约里不出现、
                                 产物里没有 goal_* 事件——M4-e 消融需要一个真对照组
+  --no-ear                      仅 arena：关掉听觉通道（M4-c）。listen 工具不注册、契约里不出现、
+                                产物里没有 sound.jsonl——"只有眼睛"的那个对照组必须真的存在
   --dd-max-tests <n>            仅 arena：ddmin 谓词调用预算，默认 400
   --sandbox <目录>              工具可访问的根，默认 ./sandbox（arena 模式不使用）
   --seed <数字|字符串>          随机种子，默认 42；字符串会哈希成整数
@@ -72,6 +74,7 @@ function usage(): void {
 
 arena 模式产出（除标准三件套外）:
   world.jsonl    逐帧世界哈希 + 现象描述（M3 证明只存终态会漏检掩蔽缺陷）
+  sound.jsonl    逐帧声流（M4-c 第二条独立投影；--no-ear 时不落此文件）
   coverage.json  状态覆盖账本（只给裁判/日志，绝不给 agent）
   defect.json    agent 主观陈述 + 公证器客观判定 + 最小化可重放序列
 
@@ -150,6 +153,17 @@ function detectionLine(d: Detection): string {
     + (quotes ? `${quotes}\n` : '');
 }
 
+/**
+ * 听觉通道那一行（M4-c）。开没开**必须出声**，不许静默：
+ * "这一局 agent 有耳朵"与"这一局只有眼睛"是两种实验条件，
+ * 事后从产物里倒推会把消融局误读成"这个大脑不会用听觉"。
+ */
+function earLine(r: { files: { sound: string | null } }): string {
+  if (!r.files.sound) return '[耳朵] 本局没装听觉通道（listen 未注册，seams.ear=false）\n';
+  const n = readFileSync(r.files.sound, 'utf8').split('\n').filter(Boolean).length;
+  return `[耳朵] sound.jsonl 落了 ${n} 条现象（通道已给用；用没用是另一本账，见 trace 里的 listen 调用）\n`;
+}
+
 async function main(): Promise<number> {  loadEnv(join(ROOT, '.env'));
   const args = parseArgv(process.argv.slice(2));
   if (args['help'] || args['h']) { usage(); return 0; }
@@ -215,6 +229,7 @@ async function main(): Promise<number> {  loadEnv(join(ROOT, '.env'));
       doMinimize: args['no-minimize'] !== true,
       doPredict: args['no-predict'] !== true,
       doGoal: args['no-goal'] !== true,
+      doEar: args['no-ear'] !== true,
       ddMaxTests: num(args['dd-max-tests'], 400),
     });
     const n = r.notary;
@@ -233,7 +248,7 @@ async function main(): Promise<number> {  loadEnv(join(ROOT, '.env'));
 [agent 主观] 笔记 ${r.agentClaims.notes.length} 条；目标 ${r.agentClaims.goals.length} 条；结论: ${r.agentClaims.finishSummary ?? '（未给结论）'}
 ${hypothesisLine(r.run.hypothesisStats)}${goalLine(r.run.goalStats)}[公证器客观] 分叉=${n.diverged}${n.firstStep !== null ? ` 首分叉第 ${n.firstStep} 步` : ''}${n.masked ? '（掩蔽：终态又相同）' : ''}
 ${n.firstFields.length ? `       首分叉字段: ${n.firstFields.join(', ')}\n` : ''}${n.minimized ? `       最小化: ${n.minimized.originalLength}→${n.minimized.actions.length} 步，1-minimal=${n.minimized.oneMinimal}，独立复核=${n.minimized.reverified}\n` : ''}       覆盖: 走过 ${r.coverage.cellsVisited}/${r.coverage.cellsTotal} 格，血量见过 [${r.coverage.hpSeen.join(',')}]，hp归零=${r.coverage.hpZeroReached}，死亡=${r.coverage.died}，击杀=${r.coverage.kills}
-${predictLine}${detectionLine(r.detection)}`);
+${predictLine}${earLine(r)}${detectionLine(r.detection)}`);
     return r.run.stopReason === 'finished' ? 0 : 2;
   }
 

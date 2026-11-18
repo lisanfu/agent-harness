@@ -50,9 +50,9 @@ test('finished：大脑主动收手，证据三件套齐全', async () => {
 
   const header = JSON.parse(readFileSync(join(r.runDir, 'header.json'), 'utf8'));
   assert.equal(header.seed, 42);
-  // 文件模式没有画面 → 预测与目标两条通道都不存在。seams 写 false 而不是省略，
-  // 是为了让"这局没这器官"和"器官在但没跑"在证据里是两件事。
-  assert.deepEqual(header.seams, { predict: false, goal: false }, '没有屏幕的 harness 不许声明自己有感知校验通道');
+  // 文件模式没有画面 → 预测与目标两条通道都不存在；没有世界 → 也就没有耳朵。
+  // seams 写 false 而不是省略，是为了让"这局没这器官"和"器官在但没跑"在证据里是两件事。
+  assert.deepEqual(header.seams, { predict: false, goal: false, ear: false }, '没有屏幕的 harness 不许声明自己有感知校验通道');
   assert.ok(Array.isArray(header.initialState.sandboxEntries));
   assert.ok(header.initialState.sandboxEntries.some((e: string) => e.includes('a.txt')));
 

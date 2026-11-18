@@ -18,6 +18,7 @@ import type { Tool, ToolResult } from '../types.ts';
 import type { Action } from '../world/arena.ts';
 import { parseDir } from '../world/render.ts';
 import type { ApplyResult, GameSession } from '../world/session.ts';
+import { earText } from '../world/sound.ts';
 import { finish, note } from './builtin.ts';
 
 function acted(r: ApplyResult): ToolResult {
@@ -29,8 +30,12 @@ function acted(r: ApplyResult): ToolResult {
  *
  * 刻意不用模块级变量承接 session：那是可变单例，同进程跑参考版 + 变异版对照时
  * 后建的会覆盖先建的，两个世界串台，差分结论直接作废。闭包没有这个问题。
+ *
+ * `ear` 决定**耳朵这个器官存不存在**（M4-c）。它不是"给多点信息"的开关：
+ * 消融对照需要一个"根本没有第二条通道"的真对照组，所以关掉时工具不注册、
+ * 契约里不出现这个名字——这件事由 header.seams.ear 声明，审计再核产物。
  */
-export function gameTools(session: GameSession): Tool[] {
+export function gameTools(session: GameSession, opts: { ear?: boolean } = {}): Tool[] {
   const look: Tool = {
     name: 'look',
     description: '看一眼当前屏幕：地图、你的血量与分数、刚才发生的事。不消耗游戏时间。',
@@ -78,8 +83,28 @@ export function gameTools(session: GameSession): Tool[] {
     },
   };
 
+  // 耳朵（M4-c）：第二条**独立投影**。它给的是现象，不是解释——
+  // 不说这声是谁发的、更不说它对应哪个内部事件（那等于把缺陷的名字念给 agent 听）。
+  // 与 look 一样不消耗游戏时间，所以它不进动作序列、不影响重放。
+  const listen: Tool = {
+    name: 'listen',
+    description: '听这一局到现在的声音，按帧列出。不消耗游戏时间。可给 from（帧号）只听那之后。',
+    params: { from: { type: 'number', description: '起始帧号（含）。省略则从第 0 帧起。', required: false } },
+    run(args): ToolResult {
+      const raw = args['from'];
+      let from = 0;
+      if (raw !== undefined && raw !== null && raw !== '') {
+        const n = Number(raw);
+        // 拒绝理由可行动（ACI 那一课）：不说 invalid，说该给什么
+        if (!Number.isInteger(n) || n < 0) return readable(ErrCode.TOOL_ARGS, 'from 只能是不小于 0 的整数帧号');
+        from = n;
+      }
+      return { ok: true, output: earText(session.soundEvents().filter((e) => e.tick >= from)) };
+    },
+  };
+
   // note / finish 直接复用文件版：假设板与收手是通用器官，不该为游戏重造一份
-  return [look, move, attack, pickup, wait, note, finish];
+  return opts.ear ? [look, listen, move, attack, pickup, wait, note, finish] : [look, move, attack, pickup, wait, note, finish];
 }
 
 /** 工具名 → 世界动作。用于从 agent 的动作序列里滤出可重放的那部分。 */

@@ -588,7 +588,9 @@ export interface RunHeader {
    * ⚠️ 残余局限（写清楚，不许假装已解决）：把 seams 整块删掉仍能冒充更早的版本。
    * 证据层防得住"部分删改"，防不住"全删"——后者只能靠运行记录与 outDir 命名区分。
    */
-  seams?: { predict: boolean; goal: boolean };
+  /** 本局启用的感知/核对接缝。`ear` 是 M4-c 才加的键，所以**缺键 = 跑在装耳朵之前**，
+   *  不等于"关掉了耳朵"——消融关耳会明确写 `ear: false`。审计必须把这两档分开。 */
+  seams?: { predict: boolean; goal: boolean; ear?: boolean };
   /**
    * 判决口径的版本戳（M4-f）。**开局就写，不是局末补**。
    *

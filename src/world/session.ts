@@ -15,6 +15,7 @@ import {
   type Action, type Capabilities, type WorldState,
 } from './arena.ts';
 import { describe, render, renderInitial } from './render.ts';
+import { frameSounds, REFERENCE_RIG, shiftedTick, type SoundEvent, type SoundRig } from './sound.ts';
 
 export interface ApplyResult {
   /** 动作后的屏幕文本。agent 唯一能看到的东西 */
@@ -30,6 +31,14 @@ export interface Frame {
   action: Action | null;
   hash: string;
   events: string[];
+}
+
+/** 逐帧声音账本的一条。**刻意不并进 `Frame`**：Frame 就是 world.jsonl 的每一行，
+ *  加字段会让已发布的 30 局证据逐字节变化，那些数字全部要重算。
+ *  耳朵是**新增的一份证据**（sound.jsonl），不是给旧证据补列。 */
+interface SoundFrame {
+  tick: number;
+  lines: string[];
 }
 
 /**
@@ -84,8 +93,11 @@ function emptyCoverage(size: number): Coverage {
 export class GameSession {
   readonly seed: number;
   readonly caps: Capabilities;
+  /** 发声装置（M4-c）。默认参考版；缺陷版换 rig 而**不动 caps**——世界一个字节都不改。 */
+  readonly rig: SoundRig;
   private state: WorldState;
   private readonly frameLog: Frame[] = [];
+  private readonly soundLog: SoundFrame[] = [];
   private readonly actions: Action[] = [];
   private readonly visited = new Set<string>();
   private readonly hpSeen = new Set<number>();
@@ -93,9 +105,10 @@ export class GameSession {
   /** 串行队列：这就是「只有一只手」的实现 */
   private queue: Promise<unknown> = Promise.resolve();
 
-  constructor(seed: number, caps: Capabilities = ALL_CAPS) {
+  constructor(seed: number, caps: Capabilities = ALL_CAPS, rig: SoundRig = REFERENCE_RIG) {
     this.seed = seed;
     this.caps = caps;
+    this.rig = rig;
     this.state = createWorld(seed);
     this.cov = emptyCoverage(this.state.size);
     const h = worldHash(this.state);
@@ -137,6 +150,9 @@ export class GameSession {
     this.actions.push(action);
     const hash = worldHash(next);
     this.frameLog.push({ tick: next.tick, action, hash, events });
+    // 第二条投影：与 describe() 零共享（同一帧各算各的），所以"眼耳一致"不是同义反复。
+    // 这一行**不许**读 events：读了就成了同一个主人产两份，交叉核对当场退化成自证。
+    this.soundLog.push({ tick: next.tick, lines: frameSounds(prev, action, next, this.rig) });
     this.observe(next, prev);
     return { screen: render(next, events), events, tick: next.tick, hash };
   }
@@ -201,6 +217,23 @@ export class GameSession {
   /** 逐帧账本。M3 证明只存终态会漏检掩蔽缺陷，所以每帧都留。 */
   frames(): readonly Frame[] {
     return this.frameLog;
+  }
+
+  /**
+   * 这一局听到的声流（M4-c）。
+   *
+   * 与 `coverage()` 分家的一条线：覆盖账本**只给裁判**，这个**给器官**——
+   * `listen` 工具读它，agent 由此真的有一条独立于画面的通道。
+   * 给出去的只有帧号与现象文本（`SoundEvent` 就这三个字段），
+   * 类别名、能力名、内部状态一个都不给（那等于把答案印在证据上）。
+   */
+  soundEvents(): SoundEvent[] {
+    const out: SoundEvent[] = [];
+    for (const f of this.soundLog) {
+      const tick = shiftedTick(f.tick, this.rig);
+      for (let seq = 0; seq < f.lines.length; seq++) out.push({ tick, seq, text: f.lines[seq]! });
+    }
+    return out;
   }
 
   /** 纯动作序列：可脱离 harness 独立重放的那份证物 */

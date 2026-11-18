@@ -72,6 +72,10 @@ jobs:
           # 复现包（对外交付面）：先独立重放审计 + 与入库文档逐字节比对，再验它自己有没有牙
           npm run verify:reproduction
           npm run verify:reproduction:selftest
+          # 双通道上限表（M4-c）：2400 例零 key 重算，逐字节比对已发布产物。
+          # 上限表是确定性生成的，所以"重算得到同一份字节"是可判据化的——
+          # 这条就是 README 里"你能自己重算"那句话的可执行形式。
+          npm run verify:ear:check
 
       - name: 判据指纹没被人动过
         run: |

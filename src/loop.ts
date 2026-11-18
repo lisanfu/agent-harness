@@ -170,7 +170,10 @@ export async function runHarness(opts: RunOptions): Promise<RunResult> {
     // 证据来源：谁产生的这批证据。循环层只抄 config 里的声明，不自己判——
     // 它连"夹具"是什么都不知道。缺省不写，校验侧按 'real' 处理（旧证据本来就没有这个键）。
     ...(config.provenance ? { provenance: config.provenance } : {}),
-    seams: { predict: opts.prediction !== undefined, goal: opts.goal !== undefined },
+    // ⚠️ ear 这一项刻意**从工具清单里读**，不让调用方自报：耳朵不是一条代码核对接缝，
+    //    它就是一个器官——清单里有 listen 就是给了，没有就是没给。
+    //    声明与契约同源，就少一条"声明说给了、契约里却没有"的免检通道。
+    seams: { predict: opts.prediction !== undefined, goal: opts.goal !== undefined, ear: registry.has('listen') },
     initialState,
   });
 

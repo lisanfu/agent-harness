@@ -26,6 +26,7 @@ import { findMutant } from './mutants.ts';
 import { detectOne, judgeStamp, type Detection } from './detect.ts';
 import { GOAL_SEAM } from './goal.ts';
 import { PREDICT_SPEC, checkPrediction, describeCheck } from './predict.ts';
+import { REFERENCE_RIG, type SoundRig } from './sound.ts';
 import { GameSession, type Coverage } from './session.ts';
 
 /** 零说明书任务：只给目标，不给策略，不给答案。 */
@@ -56,6 +57,19 @@ export interface ArenaRunOptions {
    * 消融对照（M4-e）才有一个"没有目标导向意图"的真对照组。
    */
   doGoal?: boolean;
+  /**
+   * 是否给 agent 装耳朵（M4-c）。默认 true。
+   * 与 doGoal 同一条理由：**接口给了不等于模型会用，但给了就必须能证明它给了**。
+   * 关掉它 → `listen` 工具不注册、契约里不出现这个名字、产物里没有 sound.jsonl，
+   * 消融对照才有一个"只有眼睛"的真对照组；开没开由 header.seams.ear 声明、审计核产物。
+   */
+  doEar?: boolean;
+  /**
+   * 发声装置（M4-c）。省略 = 参考版。
+   * ⚠️ 只改"播什么"，**不改世界**：`caps` 与 `rig` 是两套互不影响的东西，
+   *    所以这一项开起来时屏幕与缺陷版参考版完全一致——那正是本项目的靶心。
+   */
+  rig?: SoundRig;
 }
 
 export interface NotaryVerdict {
@@ -107,17 +121,18 @@ export interface ArenaRunResult {
   /** 证据一致性：session 实际执行的动作 vs 从 trace 抽出的动作，必须逐位相同 */
   evidenceConsistent: boolean;
   worldActions: number;
-  files: { world: string; coverage: string; defect: string; detection: string };
+  files: { world: string; coverage: string; defect: string; detection: string; sound: string | null };
 }
 
 export async function runArena(opts: ArenaRunOptions): Promise<ArenaRunResult> {
   const mutantId = opts.mutant ?? null;
   const caps = mutantId ? findMutant(mutantId).caps : ALL_CAPS;
-  const session = new GameSession(opts.seed, caps);
+  const ear = opts.doEar ?? true;
+  const session = new GameSession(opts.seed, caps, opts.rig ?? REFERENCE_RIG);
   const log = opts.log ?? (() => {});
 
   const registry = new ToolRegistry();
-  for (const t of gameTools(session)) registry.register(t);
+  for (const t of gameTools(session, { ear })) registry.register(t);
 
   const initialWorld = {
     kind: 'arena',
@@ -283,10 +298,24 @@ export async function runArena(opts: ArenaRunOptions): Promise<ArenaRunResult> {
     fullWorldActions: fromTrace,
   }, null, 2)}\n`);
 
+  // ── 耳朵那份证据（M4-c）──
+  // 刻意**新开一个文件**而不是往 world.jsonl / defect.json 里加列：
+  // 那两份是已发布 30 局证据的逐字节基准，加字段等于让 M4-d / M4-f 的数字全部重算。
+  // 新证据只在装了耳朵的局里存在；开没开由 header.seams.ear 声明（那一项直接从工具清单读出来）。
+  let soundPath: string | null = null;
+  if (ear) {
+    const events = session.soundEvents();
+    soundPath = join(run.runDir, 'sound.jsonl');
+    writeFileSync(soundPath, (events.length ? events.map((e) => JSON.stringify(e)).join('\n') + '\n' : ''));
+    log(`[耳朵] sound.jsonl 落了 ${events.length} 条现象（listen 工具在场：${ear}）`);
+  } else {
+    log('[耳朵] 本局没装 listen 工具（消融对照组），不产 sound.jsonl');
+  }
+
   return {
     run, coverage, initialHash: session.initialHash(), agentClaims, notary, detection,
     replayMatchesLiveSession, evidenceConsistent,
     worldActions: fromTrace.length,
-    files: { world: worldPath, coverage: coveragePath, defect: defectPath, detection: detectionPath },
+    files: { world: worldPath, coverage: coveragePath, defect: defectPath, detection: detectionPath, sound: soundPath },
   };
 }

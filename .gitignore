@@ -7,5 +7,6 @@ sandbox/
 # （上限表 4800 案例、逐局 detection.json、真模型臂原始 trace）。
 # 一个卖点叫"你能自己重算"的仓库，如果 clone 下来 verify/ 全跑空，那个卖点就是自相矛盾。
 # 代价说清楚：新跑出来的局会出现在 git status 里，是否入库由人判断，不自动提交。
-# 已扫描：无 API key、无端点 URL、无 token 形态；94 个文件含本机绝对路径 /home/fuyuan
-# （header.json 的 sandbox 字段，原样保留——**证据不许为了好看被改写**）。
+# 已扫描：无 API key、无端点 URL、无 token 形态；92 个文件的 header.json / result.json
+# 带本机绝对路径（sandbox 字段，原样保留——**证据不许为了好看被改写**）。
+# 复核：grep -rl "/home/fuyuan" runs | wc -l ；grep -rEn "sk-[A-Za-z0-9]{16,}|Bearer [A-Za-z0-9._-]{20,}" runs | wc -l
