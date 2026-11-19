@@ -34,6 +34,7 @@
     "verify:m4e": "node verify/board-audit.ts runs/20261113-234041-s6 runs/m4b2-goal-on/20261113-234338-s6 runs/m4b2-goal-on/20261113-234921-s6 runs/m4e-goal-on/20261114-083043-s6 runs/m4e-goal-on/20261114-083409-s6 runs/m4b2-goal-off/20261113-234650-s6 runs/m4b2-goal-off/20261113-235237-s6 runs/m4e-goal-off/20261114-083720-s6 runs/m4e-goal-off/20261114-084053-s6 runs/m4e-goal-off/20261114-084406-s6 && node verify/goal-audit.ts runs/20261113-234041-s6 runs/m4b2-goal-on/20261113-234338-s6 runs/m4b2-goal-on/20261113-234921-s6 runs/m4e-goal-on/20261114-083043-s6 runs/m4e-goal-on/20261114-083409-s6 runs/m4b2-goal-off/20261113-234650-s6 runs/m4b2-goal-off/20261113-235237-s6 runs/m4e-goal-off/20261114-083720-s6 runs/m4e-goal-off/20261114-084053-s6 runs/m4e-goal-off/20261114-084406-s6 && node verify/predict-audit.ts runs/20261113-234041-s6 runs/m4b2-goal-on/20261113-234338-s6 runs/m4b2-goal-on/20261113-234921-s6 runs/m4e-goal-on/20261114-083043-s6 runs/m4e-goal-on/20261114-083409-s6 runs/m4b2-goal-off/20261113-234650-s6 runs/m4b2-goal-off/20261113-235237-s6 runs/m4e-goal-off/20261114-083720-s6 runs/m4e-goal-off/20261114-084053-s6 runs/m4e-goal-off/20261114-084406-s6 && npm run verify:ablation",
     "docs:reproduction": "node verify/reproduction.ts --emit REPRODUCTION.md",
     "verify:reproduction": "node verify/reproduction.ts --check REPRODUCTION.md",
-    "verify:reproduction:selftest": "node verify/reproduction-selftest.ts"
+    "verify:reproduction:selftest": "node verify/reproduction-selftest.ts",
+    "verify:docs": "node verify/doc-numbers.ts"
   }
 }

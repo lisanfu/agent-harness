@@ -81,6 +81,9 @@ jobs:
           # 上限表是确定性生成的，所以"重算得到同一份字节"是可判据化的——
           # 这条就是 README 里"你能自己重算"那句话的可执行形式。
           npm run verify:ear:check
+          # 交付面守卫（#45）：README/HAND-CODING/KNOWLEDGE 里印出的行数、条数、字节数逐格重算。
+          # 评审在克隆里跑的就是这份文档，文档里的数字一旦腐化，"你能自己重算"那句话自己先站不住。
+          npm run verify:docs
 
       - name: 判据指纹没被人动过
         run: |
