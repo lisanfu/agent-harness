@@ -3,6 +3,11 @@ sandbox/
 .env
 *.log
 
+# 本仓库零依赖，跑 npm test / verify:* 根本不需要 npm install；
+# 但读者手滑跑一次就会冒出 package-lock.json，把"全套跑完 git status 一个字都不脏"
+# 这条承诺弄成假红（第六次抽查的脚本自己踩到过）。忽略它，不是证据、也不是依赖清单。
+package-lock.json
+
 # runs/ 故意**不**忽略：这里是"游戏缺陷度量衡"的全部证据
 # （上限表 4800 案例、逐局 detection.json、真模型臂原始 trace）。
 # 一个卖点叫"你能自己重算"的仓库，如果 clone 下来 verify/ 全跑空，那个卖点就是自相矛盾。
