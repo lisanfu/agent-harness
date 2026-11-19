@@ -26,6 +26,8 @@
     "verify:recon:audit": "node verify/recon-audit.ts $(node verify/recon-fixture.ts) --corpus",
     "verify:recon:selftest": "node verify/recon-selftest.ts",
     "verify:detect:ceiling": "node src/m4f.ts --policy random --out runs/m4f-ceiling",
+    "verify:ear": "node verify/ear-audit.ts $(node verify/ear-fixture.ts)",
+    "verify:ear:selftest": "node verify/ear-selftest.ts",
     "verify:ear:ceiling": "node src/m4c.ts --seeds 6,7,8,42 --budgets 25,120 --reps 20 --out runs/m4c-ear",
     "verify:ear:check": "node src/m4c.ts --seeds 6,7,8,42 --budgets 25,120 --reps 20 --check runs/m4c-ear",
     "verify:detect:model": "node src/m4f.ts --policy model --mutants M01,M03,M05,M07,D02 --arms on --seed 6 --max-steps 40 --out runs/m4f-model",

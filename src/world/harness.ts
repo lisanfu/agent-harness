@@ -13,7 +13,7 @@
  * 另一条纪律：agent 全程不知道自己在玩变异版，也不知道变异体 id。
  * 任务文本只给目标，不给策略，更不给答案。
  */
-import { writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { runHarness } from '../loop.ts';
 import { minimize } from '../notary/ddmin.ts';
@@ -22,11 +22,12 @@ import { ToolRegistry } from '../tools/registry.ts';
 import { gameTools, isWorldTool, toWorldActions } from '../tools/game.ts';
 import type { Brain, GoalSeam, HarnessConfig, PredictionSeam, RunResult } from '../types.ts';
 import { ALL_CAPS, type Action } from './arena.ts';
-import { findMutant } from './mutants.ts';
+import { findMutant, findSoundMutant } from './mutants.ts';
 import { detectOne, judgeStamp, type Detection } from './detect.ts';
 import { GOAL_SEAM } from './goal.ts';
 import { PREDICT_SPEC, checkPrediction, describeCheck } from './predict.ts';
-import { REFERENCE_RIG, type SoundRig } from './sound.ts';
+import { REFERENCE_RIG, type SoundEvent } from './sound.ts';
+import { earFrames, earStamp, type EarClaim, type EarFramesResult, type EarSound, type EarVerdict } from './ear.ts';
 import { GameSession, type Coverage } from './session.ts';
 
 /** 零说明书任务：只给目标，不给策略，不给答案。 */
@@ -65,11 +66,18 @@ export interface ArenaRunOptions {
    */
   doEar?: boolean;
   /**
-   * 发声装置（M4-c）。省略 = 参考版。
-   * ⚠️ 只改"播什么"，**不改世界**：`caps` 与 `rig` 是两套互不影响的东西，
+   * 发声变异体 id（M4-c）。null / 省略 = `R0` 参考版发声。
+   * ⚠️ 只改"播什么"，**不改世界**：`caps` 与发声装置是两套互不影响的东西，
    *    所以这一项开起来时屏幕与缺陷版参考版完全一致——那正是本项目的靶心。
+   *
+   * 这里刻意收 **id** 而不是 `SoundRig` 对象（上一版收的是对象，本轮改的正是这一处）：
+   *   - 收对象 ⇒ 调用方可以一边传 `REFERENCE_RIG`、一边在证据里自称 `S10`，
+   *     标签与实际装置是**两次独立的输入**，审计只能事后猜（`ear-fixture.ts` 的 D2 注入
+   *     专门打这一族：把 rig 标签改成 R0，运行时装置不动）。
+   *   - 收 id ⇒ 装置由 `findSoundMutant(id)` 现查，标签与装置同源，**没有可造假的那条缝**。
+   *     id 不认识直接抛（`findSoundMutant` 自带这条），不存在"写错了但照样跑"。
    */
-  rig?: SoundRig;
+  soundMutant?: string | null;
 }
 
 export interface NotaryVerdict {
@@ -90,6 +98,35 @@ export interface NotaryVerdict {
     /** 独立复核：最小化后重新跑差分，仍分叉才算数 */
     reverified: boolean;
   } | null;
+}
+
+/**
+ * 局末眼耳对账的判决（写进 `ear.json`）。
+ *
+ * 与 `detection`（M4-f，屏幕通道的检出漏斗）并列而**不是同一件事**：
+ * detection 问"agent 有没有看见并报对"，这一份问"耳朵这一局的每一声，屏幕上对不对得上"。
+ * 两者都只在局末由代码算，都不进契约、不进工具返回，agent 全程读不到。
+ */
+export interface EarRunSummary {
+  /** 冻结判据戳：版本 + 规范化判据的 sha256。换口径必须升版本、按版本分箱重出表 */
+  ear: { ear: string; sha: string; frozenAt: string };
+  seed: number;
+  /** 世界层变异体（null = 参考版世界） */
+  mutant: string | null;
+  /** 发声侧装置 id（'R0' = 参考版发声）。装置与标签同源：这一项就是查装置用的那个 key */
+  soundMutant: string;
+  soundMutantLabel: string;
+  actions: number;
+  sounds: number;
+  /** 证据自洽性：屏幕流/动作流/帧号三者是否对齐（对不上时五桶全不可信） */
+  consistency: EarFramesResult['consistency'];
+  /** 判决用的屏幕是重放出来的，必须与实玩 session 的逐帧现象相同 */
+  screensMatchLiveRun: boolean;
+  counts: Record<EarVerdict, number>;
+  byKey: Record<string, Record<EarVerdict, number>>;
+  /** 「矛盾」拆成三种形状：修法完全不同，混成一个数不叫诊断 */
+  splits: { 漏报: number; 误报: number; 数字少报: number };
+  claims: EarClaim[];
 }
 
 export interface ArenaRunResult {
@@ -116,19 +153,30 @@ export interface ArenaRunResult {
    * detection 才答"agent 有没有看见、有没有报、报得对不对"。
    */
   detection: Detection;
+  /**
+   * M4-c 眼耳对账判决（写进 `ear.json`）。与 `detection` 同侧不同事：
+   * 那一份量"agent 检出没检出"，这一份量"每一声在屏幕上对不对得上"。
+   * 没装耳朵的局这里是 null，**不是零计数**——消融对照组里没有这份证据。
+   */
+  ear: EarRunSummary | null;
   /** 判决器重放的缺陷版覆盖 vs agent 真玩的 session 覆盖，必须逐字段相同 */
   replayMatchesLiveSession: boolean;
   /** 证据一致性：session 实际执行的动作 vs 从 trace 抽出的动作，必须逐位相同 */
   evidenceConsistent: boolean;
   worldActions: number;
-  files: { world: string; coverage: string; defect: string; detection: string; sound: string | null };
+  files: { world: string; coverage: string; defect: string; detection: string; sound: string | null; ear: string | null };
 }
 
 export async function runArena(opts: ArenaRunOptions): Promise<ArenaRunResult> {
   const mutantId = opts.mutant ?? null;
   const caps = mutantId ? findMutant(mutantId).caps : ALL_CAPS;
   const ear = opts.doEar ?? true;
-  const session = new GameSession(opts.seed, caps, opts.rig ?? REFERENCE_RIG);
+  // 发声装置**只从 id 现查**（见 ArenaRunOptions.soundMutant 的注释）：装置与标签同源，
+  // 证据里写的 id 就是这一局真正装上的那个。R0 显式映射到 REFERENCE_RIG，
+  // 这样"省略"与"点名 R0"是同一条实验条件，不产两种字节。
+  const soundMutantId = opts.soundMutant ?? 'R0';
+  const rig = soundMutantId === 'R0' ? REFERENCE_RIG : findSoundMutant(soundMutantId).rig;
+  const session = new GameSession(opts.seed, caps, rig);
   const log = opts.log ?? (() => {});
 
   const registry = new ToolRegistry();
@@ -303,8 +351,9 @@ export async function runArena(opts: ArenaRunOptions): Promise<ArenaRunResult> {
   // 那两份是已发布 30 局证据的逐字节基准，加字段等于让 M4-d / M4-f 的数字全部重算。
   // 新证据只在装了耳朵的局里存在；开没开由 header.seams.ear 声明（那一项直接从工具清单读出来）。
   let soundPath: string | null = null;
+  let events: SoundEvent[] = [];
   if (ear) {
-    const events = session.soundEvents();
+    events = session.soundEvents();
     soundPath = join(run.runDir, 'sound.jsonl');
     writeFileSync(soundPath, (events.length ? events.map((e) => JSON.stringify(e)).join('\n') + '\n' : ''));
     log(`[耳朵] sound.jsonl 落了 ${events.length} 条现象（listen 工具在场：${ear}）`);
@@ -312,10 +361,82 @@ export async function runArena(opts: ArenaRunOptions): Promise<ArenaRunResult> {
     log('[耳朵] 本局没装 listen 工具（消融对照组），不产 sound.jsonl');
   }
 
+  // ── 眼耳对账那份判决（M4-c 下半）──
+  // 输入**只有已落盘的两份证据**：声流从刚写完的 sound.jsonl 读回，屏幕由 `earFrames`
+  // 拿 seed + 同一份动作序列重放。判决不读 session 的内部状态、不读发声层，
+  // 所以"眼睛和耳朵各说一遍"不是同一份数据的复读——这正是 ear.ts 顶部那条分工的落地。
+  // 同样刻意**新开一个文件**：world.jsonl / defect.json 是已发布 30 局的逐字节基准。
+  let earPath: string | null = null;
+  let earRun: EarRunSummary | null = null;
+  if (ear && soundPath) {
+    // 读回磁盘那一份，而不是直接交给判决内存里的 `events`：
+    // 落盘序列化和判决输入之间只要丢一个字段，这里就会当场对不上（故障 #14 那一族）。
+    const sounds = soundFromDisk(soundPath);
+    if (sounds.length !== events.length) {
+      log(`[眼耳对账] 严重：sound.jsonl 读回 ${sounds.length} 条，session 内存里是 ${events.length} 条——落盘与判决输入不是同一份，本判决不可信`);
+    }
+    const judged = await earFrames({ seed: opts.seed, actions: fromTrace, sounds, caps });
+    // 重放对齐守卫：判决用的屏幕是 earFrames 自己重放出来的，必须与 agent 真玩那一局
+    // 记进 world.jsonl 的现象逐帧相同。不同 ⇒ 重放错位，五桶计数全部作废（同 M4-f 的
+    // replayMatchesLiveSession，一条纪律换了个通道再走一遍）。
+    const live = session.frames();
+    const screensMatchLiveRun = judged.frames.every((f) => {
+      if (!f.inRange) return true;
+      const rec = live.find((x) => x.tick === f.tick);
+      return rec !== undefined && JSON.stringify(rec.events) === JSON.stringify(f.next.events);
+    });
+    const missed = judged.claims.filter((c) => c.verdict === '矛盾' && c.side === '眼' && c.why.startsWith('漏报')).length;
+    const under = judged.claims.filter((c) => c.verdict === '矛盾' && c.side === '眼' && c.why.startsWith('数字对不上')).length;
+    const falseAlarm = judged.claims.filter((c) => c.verdict === '矛盾' && c.side === '耳').length;
+    const stamp = earStamp();
+    earRun = {
+      ear: stamp,
+      seed: opts.seed,
+      mutant: mutantId,
+      soundMutant: soundMutantId,
+      soundMutantLabel: findSoundMutant(soundMutantId).label,
+      actions: fromTrace.length,
+      sounds: sounds.length,
+      consistency: judged.consistency,
+      screensMatchLiveRun,
+      counts: judged.counts,
+      byKey: judged.byKey,
+      splits: { 漏报: missed, 误报: falseAlarm, 数字少报: under },
+      claims: judged.claims,
+    };
+    earPath = join(run.runDir, 'ear.json');
+    writeFileSync(earPath, `${JSON.stringify(earRun, null, 2)}\n`);
+    log(
+      `[眼耳对账] 相符 ${judged.counts['相符']}／矛盾 ${judged.counts['矛盾']}（漏报 ${missed}・误报 ${falseAlarm}・数字少报 ${under}）`
+      + `／时钟错位 ${judged.counts['时钟错位']}／无法核对 ${judged.counts['无法核对']}／容量差 ${judged.counts['容量差']}`
+      + `｜装置=${soundMutantId} 口径=${stamp.ear} ${stamp.sha.slice(0, 12)}`
+      + `${screensMatchLiveRun ? '' : ' ❌重放屏幕与实玩 session 不同——重放错位，本判决不可信'}`
+      + `${judged.consistency.tickAligned ? '' : ' ❌声流帧号与屏幕帧号没对齐'}`,
+    );
+  } else if (ear) {
+    log('[眼耳对账] 有 sound.jsonl 才谈得上对账，本局没装耳朵，不产 ear.json');
+  }
+
   return {
-    run, coverage, initialHash: session.initialHash(), agentClaims, notary, detection,
+    run, coverage, initialHash: session.initialHash(), agentClaims, notary, detection, ear: earRun,
     replayMatchesLiveSession, evidenceConsistent,
     worldActions: fromTrace.length,
-    files: { world: worldPath, coverage: coveragePath, defect: defectPath, detection: detectionPath, sound: soundPath },
+    files: { world: worldPath, coverage: coveragePath, defect: defectPath, detection: detectionPath, sound: soundPath, ear: earPath },
   };
+}
+
+/**
+ * 从落盘的 sound.jsonl 把声流读回判决输入的形状。
+ * 只认 `{tick, seq, text}` 三样：多一个字段说明写盘口径变了，少一个字段说明证据残缺，
+ * 两种都必须当场炸，不许静默凑出一份"看起来能判"的声流。
+ */
+function soundFromDisk(path: string): EarSound[] {
+  const lines = readFileSync(path, 'utf8').split('\n').filter(Boolean);
+  return lines.map((l, i) => {
+    const s = JSON.parse(l) as Partial<EarSound>;
+    if (typeof s?.tick !== 'number' || typeof s?.seq !== 'number' || typeof s?.text !== 'string') {
+      throw new Error(`sound.jsonl 第 ${i + 1} 行形状不对（要 tick/seq/text）：${l.slice(0, 80)}`);
+    }
+    return { tick: s.tick, seq: s.seq, text: s.text };
+  });
 }

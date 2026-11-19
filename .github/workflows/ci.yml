@@ -58,6 +58,11 @@ jobs:
           npm run verify:random
           npm run verify:detect
           npm run verify:detect:selftest
+          # 眼耳对账三件套（M4-c 下半）：夹具 20 格已知判决 → 审计**不 import 判据**自己重判 →
+          # 篡改自检。它不读 runs/，所以这一格放在"自给自足"这批；
+          # 阴性对照那 8 格是这里的重点：审计有牙没牙，只看它敢不敢对"两个通道都说对"的那批放行。
+          npm run verify:ear
+          npm run verify:ear:selftest
 
       # 这批读 runs/ 里的真实证据——证据目录已随仓库发布，所以评审在 CI 里
       # 重算出来的数，必须与 FINDINGS 报告里引用的是同一个。
@@ -86,4 +91,15 @@ jobs:
               process.exit(1);
             }
             console.log('词表还是跑前冻结那一张（' + FROZEN_SHA256.slice(0, 12) + '…）✅');
+          "
+          # 第二条独立投影的判据同样要钉住：八族现象文本、六条容量差词条、窸窣下界算法、
+          # 整族位移口径、五桶名单全都进指纹。改了判据却不升版本 = 新旧数字混在一格里，
+          # 而 ear.json 里那个 sha 是唯一能事后分辨的东西。
+          node --input-type=module -e "
+            import { FROZEN_SHA256 as EAR_FROZEN, earSha, EAR_VERSION } from './src/world/ear.ts';
+            if (earSha() !== EAR_FROZEN) {
+              console.error('眼耳判据已偏离冻结指纹：判决口径在跑后被改过，五桶数字全部作废');
+              process.exit(1);
+            }
+            console.log('眼耳判据还是冻结那一张（' + EAR_VERSION + ' ' + EAR_FROZEN.slice(0, 12) + '…）✅');
           "

@@ -28,7 +28,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { randomActions, type Action } from './world/arena.ts';
-import { ALL_MUTANTS, findMutant } from './world/mutants.ts';
+import { ALL_MUTANTS, ALL_SOUND, findMutant } from './world/mutants.ts';
 import { detectOne, type Detection } from './world/detect.ts';
 import { runDifferential } from './notary/diff.ts';
 import { minimize } from './notary/ddmin.ts';
@@ -82,7 +82,7 @@ M4-f 缺陷版靶场
                   [--mutants all|M01,M07] [--dd-per-mutant 3] [--out runs/m4f-ceiling]
 
   node src/m4f.ts --policy model --mutants M01,M02 [--arms on,off] [--reps 1] [--seed 6]
-                  [--max-steps 25] [--brain openai] [--out runs/m4f-model]
+                  [--max-steps 25] [--brain openai] [--sound-mutants R0,S10] [--out runs/m4f-model]
 
 汇总不在这里：跑完后用
   node verify/detect-audit.ts $(cat 那些 runDir) [--ceiling runs/m4f-ceiling]
@@ -91,6 +91,12 @@ M4-f 缺陷版靶场
 两臂：
   random    零 key 上限表（可见分叉率／前提达成率／结构性不可见数），**跑真模型前先出这张表**
   model     真模型缺陷臂：变异体 × 目标开/关 × 重复局 —— **检出率只从这一臂的证据里算**
+
+--sound-mutants（M4-c 下半，仅 model 臂）：给这一臂再加一维"装哪个发声装置"。
+  默认只有 R0，也就是**不加这一项时跑的条件与已发布那批逐字节相同**。
+  ⚠️ 它不改世界：S01..S10 下 world.jsonl 与 R0 完全一致，变的只有 sound.jsonl / ear.json。
+     所以这一维量的是"耳朵能不能替眼睛兜住屏幕看不见的缺陷"，不是检出率的分母。
+     发声侧的可达上限表在 src/m4c.ts（npm run verify:ear:ceiling），不在这里。
 `);
 }
 
@@ -296,6 +302,8 @@ function baseConfig(args: Args, outDir: string, seed: number): HarnessConfig {
 
 interface ModelRunRow {
   mutant: string | null;
+  /** 发声装置 id（'R0' = 参考版发声）。M4-c 下半：屏幕那侧的缺陷臂与耳朵那侧的装置是**两套独立条件** */
+  sound: string;
   arm: 'on' | 'off' | 'ref';
   rep: number;
   seed: number;
@@ -307,12 +315,17 @@ interface ModelRunRow {
   playerPremise: boolean | null;
   whyNot: string | null;
   steps: number | null;
+  /** 局末眼耳对账五桶（没装耳朵/没跑出判决则 null） */
+  ear: Record<string, number> | null;
 }
 
 async function armModel(args: Args): Promise<number> {
   loadEnv(join(ROOT, '.env'));
   const kind = (typeof args['brain'] === 'string' ? args['brain'] : 'openai') as BrainKind;
   const ids = list(args['mutants'], ['M01', 'M02', 'M03', 'M07'], ALL_MUTANTS.map((m) => m.id));
+  // 默认只有 R0：这一项不加进来时，本臂跑的条件与已发布那批**逐字节相同**。
+  // 它是"再加一维"的把手，不是一个默认就换掉实验条件的开关。
+  const sounds = list(args['sound-mutants'], ['R0'] as string[], ALL_SOUND.map((m) => m.id));
   const arms = list(args['arms'], ['on', 'off'] as ('on' | 'off')[], ['on', 'off']);
   const reps = num(args['reps'], 1);
   const seeds = nums(args['seed'], [6]);
@@ -321,25 +334,28 @@ async function armModel(args: Args): Promise<number> {
   mkdirSync(outDir, { recursive: true });
 
   const brain = createBrain(kind);
-  log(`M4-f 真模型臂｜brain=${brain.id} 变异体=${ids.join(',')} 档位=${arms.join('/')} 每格=${reps} 局 世界seed=${seeds.join(',')}`);
+  log(`M4-f 真模型臂｜brain=${brain.id} 变异体=${ids.join(',')} 发声装置=${sounds.join(',')} 档位=${arms.join('/')} 每格=${reps} 局 世界seed=${seeds.join(',')}`);
   log('每局独立捕获异常：429 打断只作废这一局，绝不带走整批（M4-e 的教训）。');
 
   const rows: ModelRunRow[] = [];
-  const plan: { mutant: string | null; arm: 'on' | 'off' | 'ref' }[] = [];
-  for (const arm of arms) for (const id of ids) plan.push({ mutant: id, arm });
-  if (withControl) for (const arm of arms) plan.push({ mutant: null, arm });
+  const plan: { mutant: string | null; sound: string; arm: 'on' | 'off' | 'ref' }[] = [];
+  for (const arm of arms) for (const id of ids) for (const s of sounds) plan.push({ mutant: id, sound: s, arm });
+  if (withControl) for (const arm of arms) for (const s of sounds) plan.push({ mutant: null, sound: s, arm });
 
   for (const p of plan) {
     for (const seed of seeds) {
       for (let rep = 1; rep <= reps; rep++) {
         const tag = p.mutant ?? 'control';
-        const dir = join(outDir, `${tag}-${p.arm}`);
-        const label = `${tag}/${p.arm}/seed${seed}/rep${rep}`;
+        // 只在真装了非参考版装置时才改目录名：已发布那批的路径形状（<id>/<arm>/<时间戳>）不许动
+        const sfx = p.sound === 'R0' ? '' : `-${p.sound}`;
+        const dir = join(outDir, `${tag}${sfx}-${p.arm}`);
+        const label = `${tag}${sfx}/${p.arm}/seed${seed}/rep${rep}`;
         try {
           const r = await runArena({
             brain,
             seed,
             mutant: p.mutant,
+            soundMutant: p.sound,
             config: baseConfig(args, dir, seed),
             doGoal: p.arm === 'on',
             log: (l) => log(`  ${label} ${l}`),
@@ -356,15 +372,17 @@ async function armModel(args: Args): Promise<number> {
             internal: { diverged: r.notary.diverged, firstStep: r.notary.firstStep },
           });
           rows.push({
-            mutant: p.mutant, arm: p.mutant ? p.arm : 'ref', rep, seed, ok: true,
+            mutant: p.mutant, sound: p.sound, arm: p.mutant ? p.arm : 'ref', rep, seed, ok: true,
             runDir: r.run.runDir, error: null,
             verdict: d.verdict, visible: d.visible.diverged, playerPremise: d.playerPremise,
             whyNot: d.whyNot, steps: r.run.steps.length,
+            ear: r.ear ? r.ear.counts : null,
           });
-          log(`  ${label} → 判决=${d.verdict} 可见=${d.visible.diverged} 前提=${d.playerPremise} 失败层=${d.whyNot ?? '—'} 步=${r.run.steps.length}`);
+          log(`  ${label} → 判决=${d.verdict} 可见=${d.visible.diverged} 前提=${d.playerPremise} 失败层=${d.whyNot ?? '—'} 步=${r.run.steps.length}`
+            + `｜眼耳对账=${r.ear ? `${r.ear.counts['相符']}/${r.ear.counts['矛盾']}/${r.ear.counts['时钟错位']}/${r.ear.counts['无法核对']}/${r.ear.counts['容量差']}` : '（无耳朵）'}`);
         } catch (e) {
           const msg = (e as Error).message.slice(0, 160);
-          rows.push({ mutant: p.mutant, arm: p.mutant ? p.arm : 'ref', rep, seed, ok: false, runDir: null, error: msg, verdict: null, visible: null, playerPremise: null, whyNot: null, steps: null });
+          rows.push({ mutant: p.mutant, sound: p.sound, arm: p.mutant ? p.arm : 'ref', rep, seed, ok: false, runDir: null, error: msg, verdict: null, visible: null, playerPremise: null, whyNot: null, steps: null, ear: null });
           log(`  ${label} ❌ 失败：${msg}（这一局作废，继续下一局）`);
         }
       }

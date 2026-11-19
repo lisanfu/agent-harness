@@ -13,8 +13,8 @@ import { runHarness } from './loop.ts';
 import { seedFromString } from './rng.ts';
 import { builtinTools } from './tools/builtin.ts';
 import { ToolRegistry } from './tools/registry.ts';
-import { ARENA_TASK, runArena } from './world/harness.ts';
-import { ALL_MUTANTS } from './world/mutants.ts';
+import { ARENA_TASK, runArena, type EarRunSummary } from './world/harness.ts';
+import { ALL_MUTANTS, ALL_SOUND } from './world/mutants.ts';
 import type { Detection } from './world/detect.ts';
 import type { GoalStats, HarnessConfig, HypothesisStats } from './types.ts';
 
@@ -59,7 +59,12 @@ function usage(): void {
   --no-goal                     仅 arena：关掉目标通道（M4-b2）。goal 工具不注册、契约里不出现、
                                 产物里没有 goal_* 事件——M4-e 消融需要一个真对照组
   --no-ear                      仅 arena：关掉听觉通道（M4-c）。listen 工具不注册、契约里不出现、
-                                产物里没有 sound.jsonl——"只有眼睛"的那个对照组必须真的存在
+                                产物里没有 sound.jsonl 与 ear.json——"只有眼睛"的那个对照组必须真的存在
+  --sound-mutant <id>           仅 arena：装哪个发声装置（R0=参考版 / S01..S10，M4-c）。
+                                它**只改放不放这一声，不改世界一个字节**：world.jsonl 与 R0 逐字节相同，
+                                变的只有 sound.jsonl 与 ear.json。省略 = R0。
+                                这里收的是 id 而不是装置对象：装置由 id 现查，
+                                证据里写的装置就是这一局真装上的那个，没有可造假的那条缝
   --dd-max-tests <n>            仅 arena：ddmin 谓词调用预算，默认 400
   --sandbox <目录>              工具可访问的根，默认 ./sandbox（arena 模式不使用）
   --seed <数字|字符串>          随机种子，默认 42；字符串会哈希成整数
@@ -75,6 +80,8 @@ function usage(): void {
 arena 模式产出（除标准三件套外）:
   world.jsonl    逐帧世界哈希 + 现象描述（M3 证明只存终态会漏检掩蔽缺陷）
   sound.jsonl    逐帧声流（M4-c 第二条独立投影；--no-ear 时不落此文件）
+  ear.json       局末眼耳对账判决（M4-c：五桶计数 + 逐条主张 + 冻结判据戳；
+                 输入只有上面那两份已落盘的证据，--no-ear 时不落此文件）
   coverage.json  状态覆盖账本（只给裁判/日志，绝不给 agent）
   defect.json    agent 主观陈述 + 公证器客观判定 + 最小化可重放序列
 
@@ -157,11 +164,25 @@ function detectionLine(d: Detection): string {
  * 听觉通道那一行（M4-c）。开没开**必须出声**，不许静默：
  * "这一局 agent 有耳朵"与"这一局只有眼睛"是两种实验条件，
  * 事后从产物里倒推会把消融局误读成"这个大脑不会用听觉"。
+ *
+ * 装了耳朵就把局末的眼耳对账一起打出来（M4-c 下半）。同一条纪律：
+ * **五桶一个一个报，"矛盾"还要拆成漏报/误报/数字少报**——
+ * 只报"有几处矛盾"等于把修法完全不同的三种病压成一个数，那不是诊断。
  */
-function earLine(r: { files: { sound: string | null } }): string {
+function earLine(r: { files: { sound: string | null; ear: string | null }; ear: EarRunSummary | null }): string {
   if (!r.files.sound) return '[耳朵] 本局没装听觉通道（listen 未注册，seams.ear=false）\n';
   const n = readFileSync(r.files.sound, 'utf8').split('\n').filter(Boolean).length;
-  return `[耳朵] sound.jsonl 落了 ${n} 条现象（通道已给用；用没用是另一本账，见 trace 里的 listen 调用）\n`;
+  const e = r.ear;
+  if (!e) return `[耳朵] sound.jsonl 落了 ${n} 条现象，但局末对账没跑成（ear.json 缺）——这一局的五桶没有数\n`;
+  const c = e.counts;
+  return `[耳朵] sound.jsonl 落了 ${n} 条现象（通道已给用；用没用是另一本账，见 trace 里的 listen 调用）\n`
+    + `[眼耳对账] 装置=${e.soundMutant}〔${e.soundMutantLabel}〕口径=${e.ear.ear} ${e.ear.sha.slice(0, 12)}…\n`
+    + `           相符 ${c['相符']} / 矛盾 ${c['矛盾']}（漏报 ${e.splits['漏报']}・误报 ${e.splits['误报']}・数字少报 ${e.splits['数字少报']}）`
+    + ` / 时钟错位 ${c['时钟错位']} / 无法核对 ${c['无法核对']} / 容量差 ${c['容量差']}\n`
+    + `           证据自洽：屏幕流 ${e.consistency.screens} 帧 vs 动作 ${e.actions} 步（帧号对齐=${e.consistency.tickAligned}）`
+    + `，重放屏幕与实玩相同=${e.screensMatchLiveRun}`
+    + `${e.consistency.soundsBeyondScreen ? `，落在屏幕账本之外的声 ${e.consistency.soundsBeyondScreen} 条（只记无法核对，不冒充矛盾）` : ''}\n`
+    + `${e.screensMatchLiveRun && e.consistency.tickAligned ? '' : '           🔴 上面这份判决的输入没对齐，五桶全部不可信\n'}`;
 }
 
 async function main(): Promise<number> {  loadEnv(join(ROOT, '.env'));
@@ -181,6 +202,22 @@ async function main(): Promise<number> {  loadEnv(join(ROOT, '.env'));
   }
   if (mutant && !ALL_MUTANTS.some((m) => m.id === mutant)) {
     process.stderr.write(`错误：未知变异体 "${mutant}"。可用：${ALL_MUTANTS.map((m) => m.id).join(', ')}\n`);
+    return 1;
+  }
+
+  // 发声装置：与 --mutant 同一条纪律——**id 写错就必须炸**，不许静默退回参考版。
+  // 退回参考版等于把"我跑的是 S10"这批证据悄悄换成 R0，那是最难查的一种假阴性。
+  const soundMutant = typeof args['sound-mutant'] === 'string' ? args['sound-mutant'] : null;
+  if (soundMutant && world !== 'arena') {
+    process.stderr.write('错误：--sound-mutant 只在 --world arena 下有意义。\n');
+    return 1;
+  }
+  if (soundMutant && !ALL_SOUND.some((m) => m.id === soundMutant)) {
+    process.stderr.write(`错误：未知发声装置 "${soundMutant}"。可用：${ALL_SOUND.map((m) => m.id).join(', ')}\n`);
+    return 1;
+  }
+  if (soundMutant && soundMutant !== 'R0' && args['no-ear'] === true) {
+    process.stderr.write(`错误：--sound-mutant ${soundMutant} 与 --no-ear 互相矛盾：耳朵都没装，装置放给谁听？\n`);
     return 1;
   }
 
@@ -223,13 +260,14 @@ async function main(): Promise<number> {  loadEnv(join(ROOT, '.env'));
 
   // ── arena 模式：M1 眼睛和手 + M3 公证器 ──
   if (world === 'arena') {
-    process.stderr.write(`[run] brain=${brain.id} world=arena seed=${seed} mutant=${mutant ?? '（参考版对照组）'}\n`);
+    process.stderr.write(`[run] brain=${brain.id} world=arena seed=${seed} mutant=${mutant ?? '（参考版对照组）'} 发声装置=${soundMutant ?? 'R0（参考版）'}\n`);
     const r = await runArena({
       brain, seed, mutant, config, log,
       doMinimize: args['no-minimize'] !== true,
       doPredict: args['no-predict'] !== true,
       doGoal: args['no-goal'] !== true,
       doEar: args['no-ear'] !== true,
+      soundMutant,
       ddMaxTests: num(args['dd-max-tests'], 400),
     });
     const n = r.notary;
