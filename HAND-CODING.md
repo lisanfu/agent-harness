@@ -490,8 +490,10 @@ CI 侧 `verify` 工作流（单 job `measurements`，含 `npm test` + `smoke` + 
 CI `verify` 工作流同一 commit **success**（run #12，runs #10–#12 三连绿）。
 回写后又拿新 commit 复跑了一次 clone，这次**我自己多跑了一步 `npm install`**（本仓库零依赖，根本不需要装），
 于是 `git status` 冒出 `?? package-lock.json` 一行——数字没坏，坏的是"跑完全套仍然干净"这句话的前提被我的脚本悄悄改了。
-`.gitignore` 从此忽略 `package-lock.json`（可复核：`git check-ignore -v package-lock.json` 命中第 9 行），
-复跑脚本删掉那步多余的 install，回到 **0 行**。
+修法：`.gitignore` 从此忽略 `package-lock.json`，可复核 `git check-ignore -v package-lock.json` 命中第 9 行。
+复跑（`4686dd8`）**故意把那步多余的 install 留着**，让"矩阵跑完 `git status` **0 行**"和"连多余的 install 也不脏，
+`git status` 仍 **0 行**"两件事在同一次 clone 里各自成立；那一轮的其余数字与上面逐位相同
+（`npm test` 556/556、12 条命令矩阵全 rc=0、`verify:docs` 相符 32／不符 0／不核 0、上限表 **833586 / 6951** 字节、替身局 14、`ear.json` 0 份）。
 
 全绿之后，最后一步才是真本事：把 `.env` 里的远端端点接上（**只用远端，不用本地模型**），
 自己跑一局，然后**用 `verify/` 下的脚本独立复核你自己这一局**——
