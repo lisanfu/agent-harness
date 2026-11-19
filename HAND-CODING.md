@@ -475,6 +475,20 @@ CI 侧 `verify` 工作流（单 job `measurements`，含 `npm test` + `smoke` + 
 **发生在数字被抄进文档之后**。其余几格（src 9642、`verify:ear` 两份产物字节、台账 44 / 清单 44、`world.jsonl` 3185 字节 vs 2657 字符）当时逐位相符。
 修法不是再抄一遍，是落成命令：**`npm run verify:docs`（S19）**——见上面 §5 命令清单最后一条与本站 §「S19」。
 
+**第六次抽查（S19 落地后，`d02c45e`，仍匿名 HTTPS clone 到空目录；日志逐条留盘）**：
+`npm test` 空载 **556/556**（27.9s）、8 路 `yes` 满载 **556/556**（40.0s，1.44 倍——#37 那条的显形条件照跑）。
+命令矩阵 12 条**全部 rc=0**：`verify:docs`、耳三件套（`verify:ear` / `:selftest` / `:check`）、`verify:detect` 两件、`verify:recon` 两件、
+`verify:reproduction`、`verify:m4`、`verify:random`、`smoke`。这一轮跟前面五次多出来的东西只有一件——
+**"把文档自己印的数字当被测对象"这一步不再是我手写 shell 命令，而是仓库里的一条 `npm run verify:docs`**，
+它在克隆里报 `表格合计 32 行：相符 32｜不符 0｜当众声明不核 0`、`doc-numbers：全部相符 ✅`。
+然后仍按 #45 的老办法**换一种工具**再算一遍（守卫和被守卫的文档不能由同一个工具自证）：
+`find <目录> -name '*.ts' | xargs wc -l | tail -1` 给 `src 9642 / test 9067（33 个文件）/ verify 7984（23 个文件）`，
+`grep -c '^### #' README.md` = 台账 **46**、`grep -c '^- \[ \] ' KNOWLEDGE.md` = 清单 **46**（两者必须相等，I1），
+`runs/` **45** 项 / **291** 个文件，单文件 `wc -l`：`ear.ts` 767、`doc-numbers.ts` 471、`doc-numbers.test.ts` 227——
+**逐位与 `verify:docs` 的结论相同**，上限表两份产物 `wc -c` 仍是 **833586 / 6951**。
+洁净度：全套跑完 `git status` **0 行**、`runs/` 替身局 **14 未增**、`ear.json` 份数 **0**。
+CI `verify` 工作流同一 commit **success**（run #12，runs #10–#12 三连绿）。
+
 全绿之后，最后一步才是真本事：把 `.env` 里的远端端点接上（**只用远端，不用本地模型**），
 自己跑一局，然后**用 `verify/` 下的脚本独立复核你自己这一局**——
 那一刻你才会明白为什么这套工程里"审计有牙"排在"agent 会玩"前面。
