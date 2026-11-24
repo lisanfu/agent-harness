@@ -2,7 +2,7 @@
 
 > 这份文档不是第二份 README。README §3（Step 0–10）给的是**可以复制的代码**；
 > 这份给的是**自己敲的顺序、每一站的过关判据、以及你一定会撞上的坑**。
-> 每一站都对应这套工程里一次真实的"跑→坏→查→修→归纳"，坑号与 README §8 故障台账一致（共 37 条）。
+> 每一站都对应这套工程里一次真实的"跑→坏→查→修→归纳"，坑号与 README §8 故障台账一致（共 61 条）。
 
 ---
 
@@ -25,7 +25,7 @@
 - `noUncheckedIndexedAccess` → `arr[i]` 的类型是 `T | undefined`。**这不是噪声，是判据**：
   它逼你显式处理"这一格根本没有"，而 agent 工程里最贵的错就是把"没数据"读成"数据是 0"。
 
-**手敲的纪律**：另开目录，不要动参考仓库（它现在 556 测试全绿 + M4-e 十局真证据 + M4-f 上限表(4800 例)/缺陷臂真跑证据 + M4-d 30 局主客观对账落盘 + M4-c 双通道上限表(2400 例)与眼耳五桶判据(20 格三方一致)，改坏了你就失去对照物了）。
+**手敲的纪律**：另开目录，不要动参考仓库（它现在 590 测试全绿 + M4-e 十局真证据 + M4-f 上限表(4800 例)/缺陷臂真跑证据 + M4-d 30 局主客观对账落盘 + M4-c 双通道上限表(2400 例)与眼耳五桶判据(20 格三方一致) + M5 MCP/Skill 真 stdio 冒烟，改坏了你就失去对照物了）。
 
 ```bash
 mkdir -p ~/practice/agent-harness && cd ~/practice/agent-harness && git init
@@ -37,9 +37,9 @@ export PATH=/home/fuyuan/.local/node-22/bin:$PATH
 
 ---
 
-## 1. 总进度表（19 站，测试数只增不减）
+## 1. 总进度表（20 站，测试数只增不减）
 
-参考仓库的真实数字：`src/` 38 个文件 **9642 行**，`test/` 33 个文件 **9067 行 / 556 测试**，`verify/` 23 个文件 **7984 行**。
+参考仓库的真实数字：`src/` 44 个文件 **11045 行**，`test/` 37 个文件 **10268 行 / 590 测试**，`verify/` 23 个文件 **7984 行**。
 **这三个数不是手抄的**：`npm run verify:docs` 每次重算（8 个句子锚点 + 4 条恒等式 + 五脏清单表逐行），差一位就 rc=1——这条命令本身是台账 #45 的产物。
 
 | 站 | 里程碑 | 这一站新增测试 | 累计 | 行数预算（src / test） | 半天 |
@@ -64,6 +64,7 @@ export PATH=/home/fuyuan/.local/node-22/bin:$PATH
 | S17 | 第二条独立投影：听觉通道（M4-c 上半） | 53（`sound`25 `m4c`18 `ear-guard`5 `mock-gate`5） | **491** | 742 / 1053 | ×1.5 |
 | **S18** | **眼耳矛盾判据 + 复核三件套 + `--sound-mutant` 接线（M4-c 下半）** | 49（`ear`35 `ear-wiring`14） | **540** | 944 / 825 ＋ `verify/ear*` 1464 | ×1.5 |
 | **S19** | **交付面守卫：文档自己印的数字变成被测对象（#45/#46）** | 16（`doc-numbers`：口径对表 wc -l、4 类注入、结构守卫） | **556** | — / 227 ＋ `verify/doc-numbers.ts` 471 | ×0.5 |
+| **S20** | **分发：MCP server + Skill，大脑归宿主、判据归量具** | 34（`mcp-protocol` 7 `mcp-integration` 8 `mcp-session` 17 `arena-shared` 2） | **590** | 净 +1403（共享引擎重构 + MCP） / +1201（`mcp*` 1067＋`arena-shared` 134） | ×2 |
 
 > **测试数掉了要当故障看，不能当噪声看。** 这条是这套工程的第 #17 号教训的自用版：
 > 本项目曾经因为测试文件加载失败，`npm test` 从 359 掉到 338 而没人立刻发现。
@@ -363,14 +364,40 @@ export PATH=/home/fuyuan/.local/node-22/bin:$PATH
   1. `npm run verify:docs` 退出码 0，输出里"不符 0 处"，且 `表格合计 32 行：相符 32`。
   2. **口径对表真命令**：`lineCount` 在 src/test/verify 三个目录上的合计 == `find … | xargs wc -l | tail -1` 的结果（逐目录跑 shell 比）。
   3. 注入必须当场红：改一位 / 删整句 / 复制成两份不同数 / 表格某行 +1 / 中文数词改大 / 文件格指向不存在的文件——**六种各有归属**（bad／missing／ambiguous／bad／bad／当众不核）。
-  4. 不核的格**只许出声不许偷偷通过**："540（现 556）例"这一格由 `npm test` 自己证，脚本必须打印"⚪ 不核 + 理由"。
+  4. 不核的格**只许出声不许偷偷通过**："590（现为 590）例"这一格由 `npm test` 自己证，脚本必须打印"⚪ 不核 + 理由"。
   5. `main()` 只在直接运行时执行：`node --test test/doc-numbers.test.ts` 必须报出 16 个测试，而不是"一张 doc-numbers 报表 + 1 个失败"。
 - **故意破坏实验（跑过，不是设想）**：本轮最先被破坏的是**守卫自己**——首跑 31 处不符里 29 处来自我用 `split('\n')` 冒充 `wc -l`
   （仓库里 29/38 个 src 文件不以换行符结尾，于是每个文件恰好多 1 行），1 处来自锚点凭记忆写句式（真实文本是 `（不落盘）：… 字节`），
   1 处来自 import 即执行 CLI（测试进程被 `process.exit(1)` 劫走）。修完 30 处假红归零，剩下 2 处正是 #45 的真故障。**详见 #46。**
 - 坑：**#45**（数字坏在抄写之后，不坏在代码里）与 **#46**（新审计首跑的"不符"，默认嫌疑人是审计自己；审计脚本被 import 时只许交出函数）。
 - ⚠️ **诚实边界**：这条守卫只保证**文档与磁盘相符**，不保证文档里的**结论**对。
-  它管不到"540/556 例"这类只有跑起来才知道的数（已按纪律写明不核），也管不到措辞与判断——那是 README §8 与 FINDINGS 报告自己的责任。
+  它管不到"590 例"这类只有跑起来才知道的数（已按纪律写明不核），也管不到措辞与判断——那是 README §8 与 FINDINGS 报告自己的责任。
+
+### S20 分发：MCP server + Skill，大脑归宿主、判据归量具（`src/engine.ts`、`src/mcp*.ts`）
+
+- **目标**：让 Qoder / Claude Code / Codex 等宿主现成的大脑直接驱动这套量具，同时**不在 server 内复制循环、不偷偷启动模型、不把裁判答案发给玩家**。
+- **要写的东西（按依赖顺序）**：
+  1. 把 `loop.ts` 的执行、回填、预算与停止抽成可暂停的 `engine.ts`；CLI 只保留 `brain.decide()` 与解析回炉，成为薄门面。
+  2. 把 `world/harness.ts` 拆成 `createArenaWorld()` 与 `finalizeArenaWorld()`；连续跑和分步跑共用同一套世界、预测、目标、假设与局末证据。
+  3. 写 stdio JSON-RPC：现代 `2026-07-28` 的 `_meta` 校验、`server/discover`、completion envelope，同时兼容 legacy `initialize`。
+  4. 只暴露三个工具：`harness_start` / `harness_step` / `harness_status`；一个安全 player resource 与一个不泄策略的 `arena-play` prompt。
+  5. 显式 run handle + `expected_step`；进程内串行队列、跨进程文件锁、原子 v2 checkpoint；执行前预写 `inFlight`，重启逐帧重放核哈希；中断局 fail-closed。
+  6. 输出根只由启动环境决定；工具不能传 `outDir` / `mutant`。Skill 只教宿主工作流，fixture 冒烟不算模型证据。
+- **过关判据（实现前先注册，见 `M5-FINDINGS.md` A1–A12）**：
+  1. `npm test` 累计 **590**、失败 0；其中 S20 新增 **34**（协议 7 / 集成 8 / 会话 17 / 共享装配 2）。
+  2. `npm run verify:mcp` 退出码 0：现代与 legacy 都走**真子进程**发现并调用；宿主 start→step→finish 后六份证据齐全。
+  3. 共享 finalizer 与 `runArena()` 同 seed 短局的返回值、六份证据**逐字节相同**——不是只比"都有文件"。
+  4. 进行中的 start/step/status/resource 全查 `mutant`、内部字段、`coverage`、`detection`，零命中；server 目录无 sampling，源码无 `.decide()` / brain 工厂 / 模型 SDK。
+  5. 同 `expected_step` 并发两请求只执行一次；坏决策回炉不烧步、三次耗尽返回 `brain_failed`；max steps / wall clock / active runs 都真触发。
+  6. 篡改初始或中间帧哈希必须拒绝；执行前磁盘上已有 `inFlight`；崩溃恢复不重复动作且裁判结果 `certified:false`。
+  7. 双 server 进程同 expected_step 只执行一次；跨进程 start 共享容量；旧 manager 看到另一进程收手后能释放名额。
+  8. 恢复后 trace 前缀与 header 不变；仓库根、`runs/`、源码目录、文件系统根都由**真实入口**拒绝。
+  9. Skill fixture 从仓库内与仓库外各真跑一次；临时证据自动清理，不进入 `runs/`，header 明标 `provenance=fixture`。
+- **故意破坏实验（本轮真红过）**：恢复时把 `StepRecord[]` 直接塞给动作翻译器 ⇒ 重放为空、哈希不符（#48）；checkpoint 不保存 pending ⇒ 重启后板面事件重复（#49）；把 `{kind:'brain_failed', ...publicResult}` 反过来展开 ⇒ 失败标签被 `finished` 覆盖（#50）。这些证明恢复不是"JSON 一存一读"，而是**对象 + 待处理消息 + 外部世界 + 时间预算**四个一致性面。
+  终验前又补了八条：并发恢复各自造 entry（#53）；执行后 checkpoint 前崩溃会重复动作（#54）；双进程队列互不共享（#55）；只核末态漏掉初始/中间帧篡改（#56）；容量信内存而不信磁盘（#57）；解析失败原文丢失（#58）；多个等待者删死锁会误删新锁（#59）；repair pending 重启后退步（#60）；中断局仍像已认证（#61）。
+- 坑：**#47–#61** 全部有回归；核心归纳是**执行意图必须先于副作用落盘、跨进程状态必须以磁盘为准、无法证明执行完成的局不许续跑或冒充认证**。
+- ⚠️ **诚实边界**：本轮证明的是协议、状态机与宿主工作流可接入；**没有真实 Qoder / Claude Code / Codex 客户端注册与长局试玩记录**。
+  fixture 由测试客户端供决策，不是模型证据；MCP trace 的 `brainMs` 无法精确含宿主模型思考时间，如实为 0；文件锁只保护共享本地输出根的进程，不是跨主机分布式锁，也不是多租户隔离。
 
 ---
 
@@ -387,10 +414,10 @@ export PATH=/home/fuyuan/.local/node-22/bin:$PATH
 - `types.ts` 里那 658 行的**注释**（本项目文档密度最高的文件）：读，别抄。
 - `m3.ts` 的 452 行**靶场编排**（跑批逻辑，判据在 `notary/diff.ts` 里）。
 - `goal-audit-selftest.ts` 的 440 行注入清单：照 S14 的做法**自己写 5 条**就够，剩下的是体力活。
-- `README.md` / `KNOWLEDGE.md` / 九份 `*-FINDINGS.md` 全部是文档，读。
+- `README.md` / `KNOWLEDGE.md` / 十份 `*-FINDINGS.md` 全部是文档，读。
 - `reconcile.ts` 里那 14 条**抽取正则的源串**（400+ 行）：读懂「每条为什么必须落进且只落进一个桶」，再自己写 3 条（位置 / 数量 / 极性）就够，剩下的是体力活。**必须自己敲的是四桶判决、子句定位、`reconCanonical()` 与恒等式**——那才是这一站的肌肉。
 
-粗估：**手敲约 7100 行 src + 6150 行 test**，其余是读。按每天有效 4 小时算，19 站 ≈ **16～20 天**；
+粗估：**手敲约 7100 行 src + 6150 行 test**，其余是读。按每天有效 4 小时算，20 站 ≈ **16～21 天**；
 周末冲刺（每天 8 小时）≈ **8 个周末**。中间任何一站连续卡超过 1 小时，就去看那一份 FINDINGS 报告里对应的故障条目——
 **这些坑都已经踩过并写下来了，不必再花一遍学费。**
 
@@ -402,7 +429,8 @@ export PATH=/home/fuyuan/.local/node-22/bin:$PATH
 export PATH=/home/fuyuan/.local/node-22/bin:$PATH
 cd ~/practice/agent-harness
 
-npm test                        # 期望：# pass 556 / # fail 0
+npm test                        # 期望：# pass 590 / # fail 0
+npm run verify:mcp             # S20：现代/legacy 真 stdio + 分步会话/恢复/安全视图 + Skill fixture 冒烟
 npm run smoke                   # mock 大脑 6 步走通（只验接线）——落 `sandbox/smoke`，不许写进 runs/（台账 #36）
 npm run verify:board            # 夹具 → 审计：总计不一致 0 处
 npm run verify:goal             # 同上，目标通道

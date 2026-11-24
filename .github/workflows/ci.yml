@@ -49,6 +49,9 @@ jobs:
       - name: 机械冒烟（只验接线）
         run: npm run smoke
 
+      - name: MCP + Skill 真 stdio 冒烟（只验接线）
+        run: npm run verify:mcp
+
       - name: 复核矩阵 · 自给自足那批（夹具 → 审计 → 篡改自检）
         run: |
           npm run verify:board

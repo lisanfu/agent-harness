@@ -7,6 +7,7 @@
   "engines": { "node": ">=22.18" },
   "scripts": {
     "start": "node src/cli.ts",
+    "mcp": "node src/mcp.ts",
     "test": "node --test test/*.test.ts",
     "smoke": "node src/cli.ts --brain mock --task \"机械冒烟：只验接线，mock 不是大脑\" --max-steps 6 --i-know-mock-is-not-a-brain --out sandbox/smoke",
     "verify:replay": "node verify/replay.ts runs/20261113-204204-s6",
@@ -35,6 +36,7 @@
     "docs:reproduction": "node verify/reproduction.ts --emit REPRODUCTION.md",
     "verify:reproduction": "node verify/reproduction.ts --check REPRODUCTION.md",
     "verify:reproduction:selftest": "node verify/reproduction-selftest.ts",
-    "verify:docs": "node verify/doc-numbers.ts"
+    "verify:docs": "node verify/doc-numbers.ts",
+    "verify:mcp": "node --test test/mcp-*.test.ts && node skills/agent-harness-mcp/scripts/smoke.mjs"
   }
 }

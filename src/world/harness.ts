@@ -21,12 +21,12 @@ import { runDifferential } from '../notary/diff.ts';
 import { ToolRegistry } from '../tools/registry.ts';
 import { gameTools, isWorldTool, toWorldActions } from '../tools/game.ts';
 import type { Brain, GoalSeam, HarnessConfig, PredictionSeam, RunResult } from '../types.ts';
-import { ALL_CAPS, type Action } from './arena.ts';
+import { ALL_CAPS, type Action, type Capabilities } from './arena.ts';
 import { findMutant, findSoundMutant } from './mutants.ts';
 import { detectOne, judgeStamp, type Detection } from './detect.ts';
 import { GOAL_SEAM } from './goal.ts';
 import { PREDICT_SPEC, checkPrediction, describeCheck } from './predict.ts';
-import { REFERENCE_RIG, type SoundEvent } from './sound.ts';
+import { REFERENCE_RIG, type SoundEvent, type SoundRig } from './sound.ts';
 import { earFrames, earStamp, type EarClaim, type EarFramesResult, type EarSound, type EarVerdict } from './ear.ts';
 import { GameSession, type Coverage } from './session.ts';
 
@@ -81,6 +81,8 @@ export interface ArenaRunOptions {
 }
 
 export interface NotaryVerdict {
+  /** 只有 false 会写出：动作执行窗口中断时，下面的数值只能当未认证的现场片段。 */
+  certified?: false;
   mutant: string | null;
   /** 公证器客观判定：同一动作序列下参考版与变异版是否分叉 */
   diverged: boolean;
@@ -108,6 +110,8 @@ export interface NotaryVerdict {
  * 两者都只在局末由代码算，都不进契约、不进工具返回，agent 全程读不到。
  */
 export interface EarRunSummary {
+  /** false=执行窗口中断，本份判决未获认证。 */
+  certified?: false;
   /** 冻结判据戳：版本 + 规范化判据的 sha256。换口径必须升版本、按版本分箱重出表 */
   ear: { ear: string; sha: string; frozenAt: string };
   seed: number;
@@ -130,6 +134,8 @@ export interface EarRunSummary {
 }
 
 export interface ArenaRunResult {
+  /** false=保留现场证据，但本局任何裁判数值都不得当作已认证结果。 */
+  certified?: false;
   run: RunResult;
   coverage: Coverage;
   /** 初始世界哈希：重放三要素之一，必须能直接打印/比对 */
@@ -167,7 +173,37 @@ export interface ArenaRunResult {
   files: { world: string; coverage: string; defect: string; detection: string; sound: string | null; ear: string | null };
 }
 
-export async function runArena(opts: ArenaRunOptions): Promise<ArenaRunResult> {
+export interface ArenaWorldOptions {
+  seed: number;
+  mutant?: string | null;
+  doPredict?: boolean;
+  doGoal?: boolean;
+  doEar?: boolean;
+  soundMutant?: string | null;
+}
+
+/**
+ * 一局的可分步执行世界。裁判侧字段只供宿主装配与局末收尾使用；
+ * 交给 agent 的仍然只有 registry 工具与 screen 投影。
+ */
+export interface ArenaWorld {
+  session: GameSession;
+  registry: ToolRegistry;
+  caps: Capabilities;
+  mutantId: string | null;
+  soundMutantId: string;
+  rig: SoundRig;
+  ear: boolean;
+  initialWorld: { kind: 'arena'; seed: number; hash: string; screen: string; mutant: string | null };
+  prediction?: PredictionSeam;
+  goal?: GoalSeam;
+  worldHash(): string;
+  loopFingerprint(): string;
+  screen(): string;
+}
+
+/** 装配世界、工具与接缝；不启动循环，也不产生局末裁判证据。 */
+export function createArenaWorld(opts: ArenaWorldOptions): ArenaWorld {
   const mutantId = opts.mutant ?? null;
   const caps = mutantId ? findMutant(mutantId).caps : ALL_CAPS;
   const ear = opts.doEar ?? true;
@@ -177,12 +213,11 @@ export async function runArena(opts: ArenaRunOptions): Promise<ArenaRunResult> {
   const soundMutantId = opts.soundMutant ?? 'R0';
   const rig = soundMutantId === 'R0' ? REFERENCE_RIG : findSoundMutant(soundMutantId).rig;
   const session = new GameSession(opts.seed, caps, rig);
-  const log = opts.log ?? (() => {});
 
   const registry = new ToolRegistry();
   for (const t of gameTools(session, { ear })) registry.register(t);
 
-  const initialWorld = {
+  const initialWorld: ArenaWorld['initialWorld'] = {
     kind: 'arena',
     seed: opts.seed,
     hash: session.initialHash(),
@@ -213,44 +248,80 @@ export async function runArena(opts: ArenaRunOptions): Promise<ArenaRunResult> {
   // 刻意**没有 applies**：目标断言的是状态，静止帧上"是不是 hp=0"同样是可核对的事实
   // （故障 #10：闸门按"有没有可核对的事实"划，不按"这步有没有动"划）。
   const goal: GoalSeam | undefined = (opts.doGoal ?? true) ? GOAL_SEAM : undefined;
-  // 画面是这两条通道共同的输入。谁开着就得给谁——漏了另一个会静默降级成
-  // "接缝存在但一步都没判过"，那是最难查的假阴性（故障 #8 的第三种形态）。
-  const needScreen = prediction !== undefined || goal !== undefined;
 
+  return {
+    session, registry, caps, mutantId, soundMutantId, rig, ear, initialWorld, prediction, goal,
+    worldHash: () => session.stateHash(),
+    // 死循环判据用**不含 tick** 的局势指纹：帧哈希每帧都变，拿它判循环会永远判不出；
+    // 只比动作签名又会把直线走图误判成循环（真跑三局全被砍在 7~12 步）。
+    loopFingerprint: () => session.situationHash(),
+    screen: () => session.screen(),
+  };
+}
+
+export interface ArenaFinalizeOptions {
+  doMinimize?: boolean;
+  ddMaxTests?: number;
+  log?: (line: string) => void;
+}
+
+/** CLI 连续执行与 MCP 分步执行共用的薄门面。 */
+export async function runArena(opts: ArenaRunOptions): Promise<ArenaRunResult> {
+  const world = createArenaWorld(opts);
+  const log = opts.log ?? (() => {});
   const run = await runHarness({
     brain: opts.brain,
-    registry,
+    registry: world.registry,
     config: opts.config,
     log,
     // M4-f：判决口径戳随 header.json 一起落盘，早于 agent 的第一步。
     // 世界层在这里组装戳（它才认识词表），循环层只负责抄——分工见 types.ts 的 JudgementStamp。
     judgement: judgeStamp(),
-    worldHash: () => session.stateHash(),
-    // 死循环判据用**不含 tick** 的局势指纹：帧哈希每帧都变，拿它判循环会永远判不出；
-    // 只比动作签名又会把直线走图误判成循环（真跑三局全被砍在 7~12 步）。
-    loopFingerprint: () => session.situationHash(),
-    initialWorld,
-    ...(needScreen ? { screen: () => session.screen() } : {}),
-    ...(prediction ? { prediction } : {}),
-    ...(goal ? { goal } : {}),
+    worldHash: world.worldHash,
+    loopFingerprint: world.loopFingerprint,
+    initialWorld: world.initialWorld,
+    // 画面是这两条通道共同的输入。谁开着就得给谁——漏了另一个会静默降级成
+    // "接缝存在但一步都没判过"，那是最难查的假阴性（故障 #8 的第三种形态）。
+    ...(world.prediction !== undefined || world.goal !== undefined ? { screen: world.screen } : {}),
+    ...(world.prediction ? { prediction: world.prediction } : {}),
+    ...(world.goal ? { goal: world.goal } : {}),
   });
+  return finalizeArenaWorld(world, run, { doMinimize: opts.doMinimize, ddMaxTests: opts.ddMaxTests, log });
+}
+
+/** 局末抽动作、裁判、对账与落盘；不读改判据，也不向世界工具暴露裁判信息。 */
+export async function finalizeArenaWorld(
+  world: ArenaWorld,
+  run: RunResult,
+  opts: ArenaFinalizeOptions = {},
+): Promise<ArenaRunResult> {
+  const { session, caps, mutantId, soundMutantId, ear } = world;
+  const uncertified = run.stopReason === 'interrupted';
+  const seed = world.initialWorld.seed;
+  const log = opts.log ?? (() => {});
 
   // ── 抽纯动作序列：look/note/finish 不推进时间，非法方向当时被拒，都要滤掉 ──
   const fromTrace = toWorldActions(run.actionSequence);
   const fromSession = session.actionSequence();
-  const evidenceConsistent = JSON.stringify(fromTrace) === JSON.stringify(fromSession);
+  const evidenceConsistent = run.stopReason !== 'interrupted'
+    && JSON.stringify(fromTrace) === JSON.stringify(fromSession);
+  if (run.stopReason === 'interrupted') {
+    // 预写动作后崩溃时，trace 可能比 checkpoint 多一步、也可能没有；两者都不能证明实玩与账本对齐。
+    // 这一局保留全部证据供审计，但绝不盖上"一致"的章。
+    log('[evidence] 动作执行窗口被中断：拒绝续跑，证据保留但不认证为一致');
+  }
   if (!evidenceConsistent) {
     // 这不是小瑕疵：两份证物不一致意味着重放会错位，整个缺陷报告不可信
     log(`[evidence] 严重：trace 抽出 ${fromTrace.length} 个动作，session 实际执行 ${fromSession.length} 个，不一致`);
   }
 
   // ── 公证器客观判定。它不看 agent 说了什么，也不知道缺陷在哪 ──
-  const diff = runDifferential(opts.seed, fromTrace, caps);
+  const diff = runDifferential(seed, fromTrace, caps);
   let minimized: NotaryVerdict['minimized'] = null;
   if (diff.diverged && (opts.doMinimize ?? true)) {
-    const m = minimize(opts.seed, fromTrace, caps, { maxTests: opts.ddMaxTests ?? 400 });
+    const m = minimize(seed, fromTrace, caps, { maxTests: opts.ddMaxTests ?? 400 });
     // 独立复核：不信 minimize 自己的说法，重新跑一遍
-    const reverified = runDifferential(opts.seed, m.minimized, caps).diverged;
+    const reverified = runDifferential(seed, m.minimized, caps).diverged;
     minimized = {
       actions: m.minimized,
       originalLength: m.originalLength,
@@ -267,6 +338,7 @@ export async function runArena(opts: ArenaRunOptions): Promise<ArenaRunResult> {
   }
 
   const notary: NotaryVerdict = {
+    ...(uncertified ? { certified: false as const } : {}),
     mutant: mutantId,
     diverged: diff.diverged,
     firstStep: diff.first?.step ?? null,
@@ -300,17 +372,23 @@ export async function runArena(opts: ArenaRunOptions): Promise<ArenaRunResult> {
   // 判决发生在**局末**，输入是已落盘口径的动作序列与主观文本。
   // 变异体 id、被删能力、词表全部只在这里出现，一次都不进契约、不进工具返回。
   const detection = await detectOne({
-    seed: opts.seed,
+    seed,
     actions: fromTrace,
     mutant: mutantId,
     claims: agentClaims,
     internal: { diverged: notary.diverged, firstStep: notary.firstStep },
   });
+  if (uncertified) detection.certified = false;
   // 顺带一条免费的一致性检查：判决器自己重放出来的缺陷版覆盖，
   // 必须与刚才 agent 真玩的那个 session 逐字段相同。不同＝重放错位，整个判决不可信。
-  const replayMatchesLiveSession = JSON.stringify(detection.coverage.mutant) === JSON.stringify(coverage);
+  const replayMatchesLiveSession = !uncertified
+    && JSON.stringify(detection.coverage.mutant) === JSON.stringify(coverage);
   const detectionPath = join(run.runDir, 'detection.json');
-  writeFileSync(detectionPath, `${JSON.stringify({ ...detection, replayMatchesLiveSession }, null, 2)}\n`);
+  writeFileSync(detectionPath, `${JSON.stringify({
+    ...detection,
+    ...(uncertified ? { certified: false } : {}),
+    replayMatchesLiveSession,
+  }, null, 2)}\n`);
   log(
     `[检出判决] 屏幕可见分叉=${detection.visible.diverged ? `是（第 ${detection.visible.firstStep} 帧首见，共 ${detection.visible.frames} 帧）` : '否'}`
     + ` 玩家侧前提=${detection.playerPremise ? '达成' : '未达成'} 判决=${detection.verdict}`
@@ -326,7 +404,8 @@ export async function runArena(opts: ArenaRunOptions): Promise<ArenaRunResult> {
   const defectPath = join(run.runDir, 'defect.json');
   writeFileSync(defectPath, `${JSON.stringify({
     // 重放三要素：seed + initialState(在 header.json) + 动作序列
-    seed: opts.seed,
+    seed,
+    ...(uncertified ? { certified: false } : {}),
     initialHash: session.initialHash(),
     mutant: mutantId,
     agentClaims,
@@ -375,12 +454,12 @@ export async function runArena(opts: ArenaRunOptions): Promise<ArenaRunResult> {
     if (sounds.length !== events.length) {
       log(`[眼耳对账] 严重：sound.jsonl 读回 ${sounds.length} 条，session 内存里是 ${events.length} 条——落盘与判决输入不是同一份，本判决不可信`);
     }
-    const judged = await earFrames({ seed: opts.seed, actions: fromTrace, sounds, caps });
+    const judged = await earFrames({ seed, actions: fromTrace, sounds, caps });
     // 重放对齐守卫：判决用的屏幕是 earFrames 自己重放出来的，必须与 agent 真玩那一局
     // 记进 world.jsonl 的现象逐帧相同。不同 ⇒ 重放错位，五桶计数全部作废（同 M4-f 的
     // replayMatchesLiveSession，一条纪律换了个通道再走一遍）。
     const live = session.frames();
-    const screensMatchLiveRun = judged.frames.every((f) => {
+    const screensMatchLiveRun = !uncertified && judged.frames.every((f) => {
       if (!f.inRange) return true;
       const rec = live.find((x) => x.tick === f.tick);
       return rec !== undefined && JSON.stringify(rec.events) === JSON.stringify(f.next.events);
@@ -390,8 +469,9 @@ export async function runArena(opts: ArenaRunOptions): Promise<ArenaRunResult> {
     const falseAlarm = judged.claims.filter((c) => c.verdict === '矛盾' && c.side === '耳').length;
     const stamp = earStamp();
     earRun = {
+      ...(uncertified ? { certified: false as const } : {}),
       ear: stamp,
-      seed: opts.seed,
+      seed,
       mutant: mutantId,
       soundMutant: soundMutantId,
       soundMutantLabel: findSoundMutant(soundMutantId).label,
@@ -418,6 +498,7 @@ export async function runArena(opts: ArenaRunOptions): Promise<ArenaRunResult> {
   }
 
   return {
+    ...(uncertified ? { certified: false as const } : {}),
     run, coverage, initialHash: session.initialHash(), agentClaims, notary, detection, ear: earRun,
     replayMatchesLiveSession, evidenceConsistent,
     worldActions: fromTrace.length,

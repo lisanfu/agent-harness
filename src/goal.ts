@@ -66,6 +66,8 @@ export interface GoalsOptions {
   fields: readonly string[];
   /** 每次写入（含被拒）的出声口。循环层用它落盘 + 计数，板子自己不写文件。 */
   onWrite?: (w: GoalWrite) => void;
+  /** 恢复用快照；不触发 onWrite，历史写入不该在重启时重复计数。 */
+  initialGoals?: readonly Goal[];
 }
 
 /** 完成条件的归一化结果。malformed=true 时原文必须留在 raw 里（不猜、不丢）。 */
@@ -98,7 +100,13 @@ export class Goals implements GoalBoard {
   private readonly map = new Map<string, Goal>();
   private readonly opt: GoalsOptions;
 
-  constructor(opt: GoalsOptions) { this.opt = opt; }
+  constructor(opt: GoalsOptions) {
+    this.opt = opt;
+    for (const g of opt.initialGoals ?? []) {
+      if (this.map.has(g.id)) throw new Error(`目标板恢复快照有重复 id：${g.id}`);
+      this.map.set(g.id, copy(g));
+    }
+  }
 
   /** 交出去的一律是副本：板子外的代码不该能改到板上那条目标。 */
   get(id: string): Goal | undefined {

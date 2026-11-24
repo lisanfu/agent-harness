@@ -16,18 +16,26 @@
  *   runs/<runId>/result.json   —— 停止原因 + 完整动作序列（重放三要素之三）
  */
 import { appendFileSync, mkdirSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { basename, dirname, join } from 'node:path';
 import type { RunHeader, RunResult, StepRecord, ToolCall } from './types.ts';
 
 export class TraceWriter {
   readonly runDir: string;
   private readonly tracePath: string;
 
-  constructor(outDir: string, runId: string) {
+  constructor(outDir: string, runId: string, opts: { append?: boolean } = {}) {
     this.runDir = join(outDir, runId);
     mkdirSync(this.runDir, { recursive: true });
     this.tracePath = join(this.runDir, 'trace.jsonl');
-    writeFileSync(this.tracePath, '');
+    if (!opts.append) writeFileSync(this.tracePath, '');
+  }
+
+  /**
+   * 重开一份已存在的证据流。MCP 进程重启后靠显式 run id 恢复时，绝不能清空 trace；
+   * 新事件必须 append 到旧证据后面，否则"可恢复"会把前半局证据抹掉。
+   */
+  static resume(runDir: string): TraceWriter {
+    return new TraceWriter(dirname(runDir), basename(runDir), { append: true });
   }
 
   header(h: RunHeader): void {

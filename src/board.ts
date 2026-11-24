@@ -55,6 +55,9 @@ export interface BoardOptions {
   step: () => number;
   /** 每次写入（含被拒）的出声口。循环层用它落盘 + 计数，板子自己不写文件。 */
   onWrite?: (w: BoardWrite) => void;
+  /** 恢复用快照。只由 MCP 的显式 run id 恢复路径传入；不触发 onWrite，因为那是历史不是新写入。 */
+  initialNotes?: readonly string[];
+  initialHypotheses?: readonly Hypothesis[];
 }
 
 export class Board implements HypothesisBoard {
@@ -62,7 +65,14 @@ export class Board implements HypothesisBoard {
   private readonly map = new Map<string, Hypothesis>();
   private readonly opt: BoardOptions;
 
-  constructor(opt: BoardOptions) { this.opt = opt; }
+  constructor(opt: BoardOptions) {
+    this.opt = opt;
+    this.plainNotes.push(...(opt.initialNotes ?? []));
+    for (const h of opt.initialHypotheses ?? []) {
+      if (this.map.has(h.id)) throw new Error(`假设板恢复快照有重复 id：${h.id}`);
+      this.map.set(h.id, { ...h });
+    }
+  }
 
   // ── 纯文本通道：M1 语义，一字不改 ──────────────────────
   addPlain(text: string): void { this.plainNotes.push(text); }

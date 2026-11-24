@@ -273,6 +273,8 @@ export function decide(claim: ClaimVerdict, removed: readonly Cap[]): Verdict {
 // ─────────────────────────── 整局判决 ───────────────────────────
 
 export interface Detection {
+  /** false=执行窗口中断，检出漏斗数值未获认证。 */
+  certified?: false;
   judgementVersion: string;
   mutant: string | null;
   /** 作者侧知识，绝不回流给 agent */

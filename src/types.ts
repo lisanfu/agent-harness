@@ -536,7 +536,8 @@ export type StopReason =
   | 'max_steps'       // 步数预算耗尽
   | 'wall_clock'      // 时间预算耗尽
   | 'loop_detected'   // 重复同一动作，判定死循环
-  | 'brain_failed';   // 大脑连续失败，无法继续
+  | 'brain_failed'    // 大脑连续失败，无法继续
+  | 'interrupted';    // 动作预写后进程中断；无法证明是否执行完，拒绝续跑
 
 export interface StepRecord {
   index: number;
@@ -661,6 +662,8 @@ export interface RunResult {
    * 少了它，一局跑了 5 分钟会被误读成模型慢，而真相是撞了十几次限流墙。
    */
   brainRetries?: number;
+  /** 本局宿主/大脑输出解析失败次数。原文与错误逐条留在 trace 的 parse_failure 事件。 */
+  parseFailures?: number;
   /** 预测-对照账本（M4）。没启用接缝时不写这个字段，保持文件模式产物一字不变 */
   predictionStats?: PredictionStats;
   /**
