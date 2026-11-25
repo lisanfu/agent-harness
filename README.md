@@ -37,8 +37,9 @@ M4-d 的 30 份 `reconciliation.json` **在克隆里重新生成后与已发布�
 
 | 验证项 | 结果 |
 |---|---|
-| 单元 + 集成测试 | **590 个全绿**，`npm test`，约 25 秒，37 个文件 |
-| **M5 MCP 分发成立** | `npm run verify:mcp`：现代/legacy 真 stdio、宿主分步决策、零裁判泄漏、并发防重、预算、恢复与 Skill fixture 冒烟；server 不启动模型 |
+| 单元 + 集成测试 | **591 个全绿**，`npm test`，约 37 秒，37 个文件 |
+| **M5 MCP 分发成立** | `npm run verify:mcp`：现代订阅/缓存、legacy 真 stdio、宿主分步决策、零裁判泄漏、并发防重、预算、恢复与 Skill fixture 冒烟；server 不启动模型 |
+| **真实 Qoder MCP 宿主** | 当前 Qoder LLM 自主完成两局：11 步 `wall_clock` + 3 步主动 `finished`；两局证据与独立重放一致。证明当前宿主可接入，不是长局能力或产品兼容性认证 |
 | **文档里的数字也能被重算** | `npm run verify:docs`：8 个句子锚点 + 4 条恒等式 + 五脏清单 33 行逐行核，任一数字与磁盘实测差一位就 rc=1（#45 的成因与修法见 §8） |
 | **真实远端模型自主运行** | `agnes-2.5-flash`，**6 步 / 18.6 秒 / exit=0**，自己发现缺陷，零手喂 |
 | 真实端到端运行（我当宿主大脑，stdio） | 7 步，`stop=finished`，同一世界同一缺陷（对照组） |
@@ -73,7 +74,7 @@ M4-d 的 30 份 `reconciliation.json` **在克隆里重新生成后与已发布�
 | **M4-f 缺陷版靶场成立** | 变异体第一次当**被试缺陷**跑：L1 可见分叉是唯一分母，4800 例随机上限表 `invisible=0`——**内部一旦分叉屏幕必分叉，分母干净** |
 | **M4-f 判据跑前冻结（可机械核对）** | `header.judgement={detector,lexicon,sha}` 第一步之前落盘，审计 `[口径落盘]` 三方交叉核对（header/detection/实时词表 sha）；有 `detection.json` 无戳的局**硬失败**，"局末补写不算" |
 | **M4-f 检出率上限表** | 12 变异体可见分叉率从 100%（M02/D03）到 **1%（M06）**——`M06/M07/M09` 随机轨迹几乎不让屏幕分叉，这几格"没检出"不该算漏检（`whyNot=不可见`） |
-| **M4-f 参考版误报率** | 分母**只收真大脑跑的参考版局**：4 局旧证据经同一冻结词表独立判 → **0/4 = 0.0% [0.0, 49.0]**。原先那句"0/9"是口径混用（见故障 #21）：9 局里混着 2 局 mock 替身、1 局人写夹具、**2 局根本不是参考版（缺陷局报异常是真检出不是误报）**，四类剔除现在逐条出声。n=4 太小，这个数只能说"没抓到误报"，**不能说"误报率低于 5%"** |
+| **M4-f 参考版误报率（旧样本）** | 分母**只收真大脑跑的参考版局**：4 局旧证据经 m4f-1 冻结词表独立判 → **0/4 = 0.0% [0.0, 49.0]**。原先那句"0/9"是口径混用（见故障 #21）：9 局里混着 2 局 mock 替身、1 局人写夹具、**2 局根本不是参考版（缺陷局报异常是真检出不是误报）**，四类剔除现在逐条出声。n=4 太小，这个数只能说"旧样本里没抓到误报"，**不能说"误报率低于 5%"**；2026-11-25 的 Qoder sandbox 局另发现否定句假阳性（#68），不混入旧分母 |
 | **M4-f 夹具探针不进任何率** | 夹具那两局 `mutant=null` 是判据通路自检（一局证明仪器不喊、一局故意埋过火证明审计有牙）。现在 `header.provenance` + `brainId`/`task` 两条独立信号交叉核对，夹具表**不印百分比与置信区间**——标题管不住截图，格式才管得住 |
 | **M4-f 诚实局限** | 真模型臂每格 1 局、25 步目标全被免费额度 429 截断到 0~18 步，3 局 detectable 全 `未上报`——**本轮不出模型臂检出率**，只有上限表与参考臂误报可引用 |
 | **M4-c 第二条独立投影成立** | 耳朵与屏幕**零共享文案**：10 个发声层变异体只改放不放这一声，`world.jsonl` 一字节不动。2400 例上限表实测十个 S 行的「两者都可见」= **0**、前提达成 **1219/1600** 且其上耳分叉率 **100.0%**、反向「仅眼可见」合计 **126** |
@@ -93,7 +94,7 @@ M4-e 的完整数据与诚实局限见 [M4-E-FINDINGS.md](M4-E-FINDINGS.md)，�
 M4-f 的完整数据与诚实局限见 [M4-F-FINDINGS.md](M4-F-FINDINGS.md)，原始证据 `runs/m4f-ceiling/`（4800 例上限表，零 key）+ `runs/m4f-model/`（5 局真模型，受额度截断）+ `verify/detect-fixture.ts` 生成的 9 局已知判决夹具。
 M4-d 的完整数据与诚实局限见 [M4-D-FINDINGS.md](M4-D-FINDINGS.md)，原始证据 `runs/*/reconciliation.json`（30 局，零 key、可由 `npm run verify:recon` 重算）+ `runs/m4d-recon/summary.json` + `verify/recon-{fixture,audit,selftest}.ts` 三件套。
 M4-c 的完整数据与诚实局限见 [M4-C-FINDINGS.md](M4-C-FINDINGS.md)：**上半** §1–§10（`runs/m4c-ear/ear_ceiling.jsonl` 2400 例，零 key、可由 `npm run verify:ear:check` 重算成同一份字节）；**下半** §11–§17（`src/world/ear.ts` 五桶判据 + `verify/ear-{fixture,audit,selftest}.ts` 20 格三方一致 + `--sound-mutant` 接线实测）。
-M5 的接口边界、分步实现、验收判据与诚实局限见 [M5-FINDINGS.md](M5-FINDINGS.md)；Skill 在 `skills/agent-harness-mcp/`，临时证据不进入 `runs/`。
+M5 的接口边界、分步实现、验收判据、现代订阅/缓存修复与两局真实 Qoder 证据见 [M5-FINDINGS.md](M5-FINDINGS.md)；Skill 在 `skills/agent-harness-mcp/`，临时证据不进入 `runs/`。
 
 ---
 
@@ -103,7 +104,7 @@ M5 的接口边界、分步实现、验收判据与诚实局限见 [M5-FINDINGS.
 |---|---|---|---|---|
 | **契约** | 所有接口定义，五脏靠它咬合 | `src/types.ts` | 710 | TypeScript 的 `interface` / Redux 的 action 类型 |
 | **心脏** | CLI 与 MCP 共用的可暂停状态机；CLI 只负责向 brain 要决策 | `src/engine.ts` + `src/loop.ts` | 589 + 57 | 游戏主循环可以暂停存档；宿主只替换“谁做下一帧决策” |
-| **MCP 分发（M5）** | stdio 协议 + 显式 run handle + 跨进程互斥/预算/崩溃恢复 + 安全玩家视图 | `src/mcp.ts`,`src/mcp/{protocol,catalog,server,session}.ts` | 53 + 329 + 104 + 87 + 649 | Web Worker 的 `postMessage`：通道只走协议，日志另走；异步请求用幂等键防重 |
+| **MCP 分发（M5）** | stdio 协议 + 现代订阅/缓存 + 显式 run handle + 跨进程互斥/预算/崩溃恢复 + 安全玩家视图 | `src/mcp.ts`,`src/mcp/{protocol,catalog,server,session}.ts` | 53 + 375 + 104 + 97 + 649 | Web Worker 的 `postMessage`：通道只走协议，日志另走；异步请求用幂等键防重 |
 | **宿主 Skill（M5）** | 教宿主读契约、分步决策、处理回炉与恢复；不提供策略手册 | `skills/agent-harness-mcp/SKILL.md` | 脚本另计 | 给框架写集成指南：只教协议与排错，不替使用者做业务决策 |
 | **大脑接口** | 只认接口，不认模型 | `src/brain/{index,mock,openai,stdio}.ts` | 343 | 适配器模式，像换 HTTP client |
 | **手** | 工具注册 + schema 校验 + 执行 | `src/tools/registry.ts` | 135 | 表单校验 + dispatch |
@@ -136,10 +137,10 @@ M5 的接口边界、分步实现、验收判据与诚实局限见 [M5-FINDINGS.
 | **主客观对账（M4-d）** | 它说过的话 vs 它当时看到的那一帧屏幕 | `src/world/reconcile.ts` | 985 | E2E 里断言只读 DOM 文本，绝不读组件内部 state |
 | **交付面守卫（本轮新增）** | 文档自己印的数字 → 逐格重算：句子锚点 + 恒等式 + 上面这张表逐行 | `verify/doc-numbers.ts` | 471 | 快照测试反过来对准文档：`README` 里每个"多少行/多少条/多少字节"都是一条断言，改代码忘了改说明书就红 |
 
-源码合计 11045 行（44 个文件），测试 10268 行（37 个文件 / 590 例），独立复核脚本 7984 行（23 个文件）。
+源码合计 11101 行（44 个文件），测试 10337 行（37 个文件 / 591 例），独立复核脚本 7984 行（23 个文件）。
 **读的时候别被总量吓住**：`src/` 里 `reconcile.ts`（985）、`ear.ts`（767）、`types.ts`（710）三个文件就占了四分之一，
-其余 41 个文件全在 **35～649 行**之间（中位数 149）——**任何一个都可以单独改掉，靠 590 个测试验证有没有改坏别的器官**。
-上面这行"11045 / 10268 / 7984"不是手数出来的：`npm run verify:docs` 在任意机器上重算一遍，差一位就 rc=1（#45 就是这条命令抓出来的）。
+其余 41 个文件全在 **35～649 行**之间（中位数 149）——**任何一个都可以单独改掉，靠 591 个测试验证有没有改坏别的器官**。
+上面这行"11101 / 10337 / 7984"不是手数出来的：`npm run verify:docs` 在任意机器上重算一遍，差一位就 rc=1（#45 就是这条命令抓出来的）。
 
 ---
 
@@ -695,8 +696,8 @@ result.json    stopReason + steps + notes + actionSequence      ← 三要素之
 ## 7. 测试
 
 ```bash
-npm test                              # 590 个，约 25 秒
-npm run verify:mcp                    # M5：现代/legacy 真 stdio + 分步会话 + Skill fixture 冒烟
+npm test                              # 591 个，约 37 秒
+npm run verify:mcp                    # M5：现代订阅/缓存 + legacy 真 stdio + 分步会话 + Skill fixture 冒烟
 node --test test/loop.test.ts         # 单跑一层
 node --test --test-name-pattern="回炉" test/loop.test.ts
 node --test test/notary.test.ts       # M3 公证器 + ddmin
@@ -776,7 +777,7 @@ node --test test/random-baseline.test.ts  # 随机臂自身：确定性、seed �
 
 ## 8. 故障台账
 
-学习单位不是"一章书"，是**一个可复现的失败**。格式固定：现象 → 根因 → 修法 → 归纳 → 回归测试。
+学习单位不是"一章书"，是**一个可复现的失败**。格式固定：现象 → 根因 → 修法 → 归纳 → 回归测试。尚未修复的条目必须明写“暂无修复回归”，不许用“已记录”冒充“已修”。
 
 ### #1 契约根本没送出去（今天抓到）
 
@@ -1398,6 +1399,62 @@ node --test test/random-baseline.test.ts  # 随机臂自身：确定性、seed �
 - **归纳**：**“未认证”必须逐出口出声；一个总 false 挡不住别处单独读取 true。**
 - **回归**：构造 trace 比 checkpoint 多一步的真实形态，五类结果全部 `certified:false`；正常恢复局不误标。
 
+### #62 声明了 resources，真实客户端却得到 `resources/list` 的 -32601
+
+- **现象**：Qoder 完成能力发现后调用标准 `resources/list`，server 返回 Method not found。
+- **根因**：catalog 暴露了 resource template，却没有实现标准客户端会请求的空资源目录。
+- **修法**：modern/legacy 都返回 `{resources:[]}`；modern 结果再附私有、不缓存元数据。
+- **归纳**：**声明一项能力，就要实现它的标准发现接口；只测“我自己的客户端会调什么”不够。**
+- **回归**：`mcp-integration.test.ts` 对 modern/legacy 的 `resources/list` 都断言无错误。
+
+### #63 现代客户端订阅得 -32601，后续工具目录不加载
+
+- **现象**：Qoder 调用 `subscriptions/listen` 被拒，现代初始化无法继续。
+- **根因**：只实现 legacy initialize，没有现代订阅 acknowledged 握手与请求生命周期。
+- **修法**：先发 acknowledged，subscriptionId 使用原 JSON-RPC id；静态目录确认 `{}`；取消或 stdin EOF 才关闭订阅。
+- **归纳**：**通知可能无响应，但它的建立/确认/关闭仍是有状态协议。**
+- **回归**：协议测试验证 ack、订阅期间目录仍可读、取消后优雅完成；集成测试验证真实 server。
+
+### #64 modern 目录结果缺 `ttlMs/cacheScope`，被客户端 schema 拒绝
+
+- **现象**：server 明明返回目录，Qoder 仍报缺 number 类型的 `ttlMs` 与 public/private 类型的 `cacheScope`。
+- **根因**：legacy 结果形状不能直接充当 modern 可缓存结果。
+- **修法**：tools/prompts/resources/templates/list 与 resources/read 在 modern 附 `ttlMs:0`、`cacheScope:"private"`；legacy 不增字段。
+- **归纳**：**协议版本升级不只是识别版本号，还要逐类结果满足新 schema。**
+- **回归**：五类 modern 结果与 legacy 原形状都有断言。
+
+### #65 真入口三工具全变 -32603：回调参数改名后仍引用旧变量
+
+- **现象**：本地子进程测试通过，真实 Qoder 调 start/step/status 却全部内部错误。
+- **根因**：回调签名写成 `_ctx`，函数体仍引用未定义的 `ctx`。
+- **修法**：统一参数名并传入 `handleMcpMethod()`；重启 connector 后 `toolCount=3`。
+- **归纳**：**上下文变量要沿完整调用链真跑；能编译、单测绿，都不证明真实入口接对。**
+- **回归**：现代真 stdio 集成覆盖业务路由；真实 Qoder 恢复三工具。
+
+### #66 第一局长局在提交 finish 前被墙钟截断
+
+- **现象**：第 12 步提交 finish，server 在执行前判定 300 秒预算已尽，最终 `wall_clock / step_count=11 / finish_summary=null`。
+- **根因**：墙钟约束 server 步间生命周期，不计入宿主思考与请求间隔；`brainMs=0` 不是模型零耗时。
+- **修法**：不伪造主动收手，保留 wall_clock 证据；第二局把预算放宽到 900 秒后主动 finish。
+- **归纳**：**预算停止与主动 finish 是两种结果；评测报告不能把前者写成后者。**
+- **回归**：既有 #51 的 pending/status/step 墙钟检查保留；两局 sandbox 原始结果分别可复核。
+
+### #67 可见物品 3→2 被误读成移动自动拾取两个物品
+
+- **现象**：玩家走到 `[1,5]` 后屏幕少一个 `+`，试玩误判为世界异常。
+- **根因**：玩家最后渲染，`@` 遮住脚下 `+`；`observe/predict` 数的是可见符号，不是内部 taken 账本。
+- **修法**：回读 render/observe/arena 后公开纠正；移动不拾取，pickup 后才使内部 `pickupsTaken=1`。
+- **归纳**：**有损投影不能当内部账本；先确认计数口径，再归因为世界缺陷。**
+- **回归**：既有图层顺序测试与“满血拾取无法由屏幕核对”的 ear 反面对照；原始 trace 保留误判与纠正。
+
+### #68 明说“没有发现缺陷”，冻结词表仍判误报
+
+- **现象**：参考版 finish 写“不据此声称已发现游戏缺陷”，m4f-1 输出 `reported=true`、`verdict=误报`、`falsePositive=true`。
+- **根因**：`matchClaim()` 归一化后做子串匹配，不处理否定语境。
+- **修法**：本轮不升级冻结判据、不混入旧统计；保留 `sandbox/mcp-qoder/mcp-37e15572-e3c6-4bc1-aab0-7686353f01d5/detection.json` 反例，另行评估。
+- **归纳**：**关键词命中不等于主张成立；否定、引述和条件句必须进入判据边界。**
+- **回归**：当前反例已落盘；尚无修复回归，不能把“已记录”写成“已修复”。
+
 ### 历史台账（从你的 Python 项目带来的）
 
 | 现象 | 根因 | 归纳 |
@@ -1426,7 +1483,7 @@ node --test test/random-baseline.test.ts  # 随机臂自身：确定性、seed �
 | **M4-c 听觉通道 + 眼耳矛盾判据** ✅ **上下半均已建成并独立复核（结论：20 格三方一致、每局 ear.json 五桶账目自洽，"agent 会不会用耳朵"仍无真模型证据，见 M4-C-FINDINGS.md §11–§17）** | 耳朵只拿现象描述；**下半**把"听见的东西"和"看到的东西"逐帧对账，落成**五桶**（相符／矛盾／时钟错位／无法核对／容量差） | **上半**：新增 `src/world/sound.ts`（零共享 `describe`）、`src/world/mutants.ts` 十个发声层变异体、`listen` 工具、`sound.jsonl` 证据、`src/m4c.ts` 四格上限表、`--no-ear` 消融；**下半**：`src/world/ear.ts`（767 行判据，`m4c-1` 冻结指纹）、`verify/ear-{fixture,audit,selftest}.ts`、每局 `ear.json`、CLI/m4f 的 `--sound-mutant(-s)` | 声音必须是**第二条独立投影**，与 `describe()` 零共享——共用一份描述就等于只有一只耳朵；发声层变异体**只改耳朵不改世界**，所以"仅耳可见"那一格原理上不可能被屏幕检出（2400 例实测：十个发声层变异体的"两者都可见"= **0**）；**前提（`cueFired`）自己单独一列**，"从没触发"是未测不是 0%（§10.12/#33）；耳朵是可选器官，`seams.ear` 从工具注册表反查、不许自述（#16）；装耳朵前后**已发布证据 604 帧逐字节不变**（`test/ear-guard.test.ts`）；上限表可**重算并逐字节比对已发布产物**（`npm run verify:ear:check`，833586 / 6951 字节，已挂 CI；比对口径本身见 #35）；**判据侧**：声音没有数字与布局，"掉了 3 点血"这类主张耳朵侧永远无法核对——**不许判成矛盾**，单独成「无法核对」；容量口径不同（屏幕给点数、耳朵只给次数）单独成「容量差」，同一主张**不得二次落账**；`runArena` 收的是**装置 id** 而不是对象，标签与装置同源、伪造不了（#43）；每局判据输入**从磁盘读回**（不是内存里那份 `events`）而非用内存值，序列化漂移当场条数对不上（#14 一族）；文档里那个 `world.jsonl` 字节数**本轮改过一次**——"逐字节"必须比 Buffer，且**口径要跟着数字一起落字**（#35 在测试层与文档层的复发，见 #44） |
 | **M4-e 多局消融 + 随机基线** ✅ **已建成并真跑（结论：采纳率两档差够不着显著，目标通道真跑 0 次使用，见 M4-E-FINDINGS.md）** | 单局数字 → **逐局汇总表 + 以局为单位的 Fisher 精确检验 + 大 n 随机策略臂** | 新增 `verify/ablation.ts`（只读证据，不 import 被测代码）、`verify/random-baseline.ts`（零 key、纯代码、可大 n）、`npm run verify:ablation` / `verify:random` / `verify:m4e` | 逐帧与账本**必须交叉核对，不许静默取一**；口径混用要各自独立核对（#18）；**采纳率是双峰/路径依赖的，步级检验是伪重复**，主判据只能以局为单位；样本不够就出"够不着显著"而不是 p 值；随机臂**一句都不许写成"目标导向比随机强多少"** |
 | **M4-f 缺陷版靶场** ✅ **已建成并独立复核（结论：上限表与参考版误报可引用，模型臂受额度截断暂不出检出率，见 M4-F-FINDINGS.md）** | "能不能发现未知缺陷" → **四层漏斗（L1 可见分叉为唯一分母）+ 跑前冻结的判据/词表 + 大 n 随机上限表 + 参考版阴性对照** | 新增 `src/world/lexicon.ts`、`src/world/detect.ts`、`src/m4f.ts`（`--policy random`/`model`）、`verify/detect-{fixture,audit,selftest}.ts`、`header.judgement` 口径戳、`npm run verify:detect*` | 判据/词表**在看到任何模型输出之前**落盘加版本戳，`[口径落盘]` 三方交叉核对、缺戳硬失败（局末补写不算）；L2 前提**降级为分层器**不做分母（D01 可见 65% 但前提仅 8%）；`invisible=0` 证分母干净；检出率与误报率**成对出现**，模型臂额度截断**一句都不许写成检出率** |
-| **M5 分发** ✅ **MCP server + Skill 已落地并真 stdio 验证（限协议/状态机；尚未做真实宿主客户端长局认证，见 M5-FINDINGS.md）** | stdio → MCP server + Skill，**大脑借用宿主**，server 不自带模型 | 新增 `src/engine.ts`（共享可暂停状态机）、`src/mcp.ts`、`src/mcp/{protocol,catalog,server,session}.ts`、`skills/agent-harness-mcp/`、`npm run verify:mcp`；`runArena` 拆成共享装配/finalizer | 宿主每轮读 request 后提交一条 Decision；进行中零 mutant/coverage/internalState/detection 泄漏；显式随机 run id + expected_step 防重；进程内队列＋跨进程文件锁；执行前预写 inFlight，崩溃 fail-closed；seed+动作恢复、初始/逐帧哈希核对、trace append；中断局 `certified:false`；坏决策原文留痕且回炉不烧步；所有停止路径完整收尾；工具不能指定输出根或变异体；**不声明 sampling、不在 server 内创建 brain/mock**；stdout 只走 JSON-RPC |
+| **M5 分发** ✅ **MCP server + Skill 已落地；现代订阅/缓存与真实 Qoder 两局已验证（11 步墙钟 + 3 步主动 finish；Claude Code/Codex 未验证，见 M5-FINDINGS.md）** | stdio → MCP server + Skill，**大脑借用宿主**，server 不自带模型 | 新增 `src/engine.ts`（共享可暂停状态机）、`src/mcp.ts`、`src/mcp/{protocol,catalog,server,session}.ts`、`skills/agent-harness-mcp/`、`npm run verify:mcp`；`runArena` 拆成共享装配/finalizer | 宿主每轮读 request 后提交一条 Decision；进行中零 mutant/coverage/internalState/detection 泄漏；显式随机 run id + expected_step 防重；进程内队列＋跨进程文件锁；执行前预写 inFlight，崩溃 fail-closed；seed+动作恢复、初始/逐帧哈希核对、trace append；中断局 `certified:false`；坏决策原文留痕且回炉不烧步；所有停止路径完整收尾；工具不能指定输出根或变异体；**不声明 sampling、不在 server 内创建 brain/mock**；stdout 只走 JSON-RPC |
 
 **M1 已完成成立性验证**（真模型四局：主实验三局 + 修复后确认局），结论见 [M1-FINDINGS.md](M1-FINDINGS.md)。
 机制成立：眼睛零泄漏、一只手串行、**独立重放 39/39 + 29/29 + 118/118 帧逐位相同**、M02 缺陷检出并最小化到 1 步。
@@ -1544,7 +1601,7 @@ agent-harness/
 ├── M4-E-FINDINGS.md      M4-e 成立性验证报告：十局逐局表 + 以局为单位的 Fisher（p=0.5238）+ 大 n 随机臂 + 伪重复纪律
 ├── M4-F-FINDINGS.md      M4-f 成立性验证报告：缺陷版靶场四层漏斗 + 4800 例上限表 + 参考版误报 0/4 + 模型臂额度诚实局限
 ├── M4-D-FINDINGS.md      M4-d 主客观对账报告：30 局 1171 条主张 × 四桶 + 判据五版冻结史 + 抄得对数不对 + 6 条已知假阳性
-├── M5-FINDINGS.md        M5 分发成立性报告：host-brain 边界 + 现代/legacy 真 stdio + 分步会话 + 预算/并发/恢复 + Skill 冒烟与真实宿主认证缺口
+├── M5-FINDINGS.md        M5 分发成立性报告：host-brain 边界 + 现代订阅/缓存 + 分步会话 + 预算/并发/恢复 + 真实 Qoder 两局与诚实局限
 ├── REPRODUCTION.md       **6-C 复现包（由 `npm run docs:reproduction` 生成，手改会被 `--check` 打回）**：4 案 × 种子/初始状态/完整动作序列/最小证物
 ├── runs/                 **已发布的证据**：上限表 4800 例（M4-f）+ 双通道四格表 2400 例（M4-c）、逐局 detection.json、逐局 sound.jsonl、真模型臂原始 trace、各批消融（`ear.json` 是本轮新落的每局判决，**已发布那 45 项目前一份都没有**——它们跑在判据之前，不回填）
 ├── src/
@@ -1624,7 +1681,7 @@ agent-harness/
     │   └── protocol.md   工具参数、资源、提示词、环境变量与证据边界的精确参考
     └── scripts/
         └── smoke.mjs     真 spawn server 的 fixture 冒烟；fixture 不是模型证据
-└── test/                 590 个测试，37 个文件（MCP：`mcp-protocol` + `mcp-session` + `mcp-integration`；共享装配：`arena-shared`；耳侧：`ear.test.ts` 35 例判据 + `ear-wiring.test.ts` 14 例接线；交付面：`doc-numbers.test.ts` 16 例）
+└── test/                 591 个测试，37 个文件（MCP：`mcp-protocol` + `mcp-session` + `mcp-integration`；共享装配：`arena-shared`；耳侧：`ear.test.ts` 35 例判据 + `ear-wiring.test.ts` 14 例接线；交付面：`doc-numbers.test.ts` 16 例）
 ```
 
 运行后生成：`runs/<时间戳>-s<seed>/`（**故意入库**，见下）、`sandbox/`（已 gitignore）。

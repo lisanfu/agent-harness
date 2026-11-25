@@ -1184,7 +1184,7 @@ S01 相符 14／**漏报 4**；S09 相符 22／**误报 4**；S10 **时钟错位
 能在一片整齐的 +1 不符里判断是审计坏了还是文档坏了（提示：**问差值有没有形状**）；
 能解释 `verify:docs` 为什么故意不核测试例数，以及"不核"为什么要打印出来。
 
-**10.18 把循环接出去：MCP 分步会话、恢复与宿主工作流（#47–#61）** 🔴🔴
+**10.18 把循环接出去：MCP 分步会话、恢复与真实宿主（#47–#68）** 🔴🔴
 
 M5 不是把 CLI 套一层 JSON。CLI 可以同步等 `brain.decide()`，MCP 却把一句话拆成多个进程、多次请求、可能重启的长会话。前端类比很直接：**从一次函数调用改成跨页面表单，state、消息、校验和超时都必须自己接住。**
 
@@ -1197,21 +1197,24 @@ M5 不是把 CLI 套一层 JSON。CLI 可以同步等 `brain.decide()`，MCP 却
 6. **判别联合的标签不能被通用对象覆盖。** `{kind:'brain_failed', ...publicResult}` 会被 `kind:'finished'` 覆盖（#50）。错误响应必须连 `kind` 一起断言。
 7. **协议 stdout 是数据通道，日志只走 stderr。** 现代 `_meta` 校验、legacy initialize、通知无响应、EOF 退出、结构化错误都走真子进程验证；桩只能证明本地调用形状。
 8. **进行中只给玩家视图。** mutant、内部状态、coverage、detection 在局末之前不得出现；工具也不能覆盖输出根或选择变异体。安全边界像服务端 API 不把数据库答案提前塞进客户端 bundle。
-9. **Skill 是集成指南，不是策略手册。** 它教宿主读请求、提交 Decision、处理回炉和恢复，不教"下一步走哪"。fixture 冒烟证明脚本能跑，**不能证明模型会玩**；真实客户端注册与长局试玩仍是独立缺口。
+9. **Skill 是集成指南，不是策略手册。** 它教宿主读请求、提交 Decision、处理回炉和恢复，不教"下一步走哪"。fixture 冒烟证明脚本能跑，**不能证明模型会玩**。2026-11-25 已补真实 Qoder 两局（11 步墙钟、3 步主动 finish）；Claude Code/Codex 与长局能力仍未验证。
 10. **脚本的路径假设也要真跑。** Skill 冒烟首跑向上少走一层（#52）；修完必须在仓库内、仓库外各跑一次。对应前端里的 public asset 路径：开发服务器能加载，不代表部署后的 base path 正确。
 11. **副作用前先落执行意图。** 动作执行、trace append、checkpoint 保存之间有崩溃窗口；先持久化 `inFlight`，恢复时见到它就停止为 `interrupted`，不重试动作（#54）。这像支付请求先写幂等单，不能等扣款后才记"我扣过"。
 12. **进程内队列不等于跨进程互斥。** 两个 server 各有自己的 Promise map；共享输出根必须加文件锁，并在锁内刷新磁盘状态（#55）。锁只按 owner 释放；死者锁不自动删，因为多个等待者会竞争误删新锁（#59）。这是 fail-closed，不是分布式锁。
 13. **容量与状态的事实源只能是磁盘。** 重启不能释放仍活跃的局，另一进程收手后旧 manager 也不能继续误拒（#57）。内存只是缓存，不是跨进程事实。
 14. **失败原文与认证状态都不许静默丢失。** 解析失败把原始 decision 与错误写进 trace，并公开 `parse_failures`（#58）；中断局不只写 `evidence_consistent=false`，还要给 result/notary/detection/ear/defect 写 `certified:false`（#61）。一个 false 不能让其余 true 字段继续冒充认证。
+15. **真实客户端会走标准目录与订阅。** `resources/list`、`subscriptions/listen` 的 acknowledged 握手、modern `ttlMs/cacheScope` 都不是可选装饰（#62–#64）；上下文变量接错则所有真入口业务请求变 -32603（#65）。像浏览器按标准先发 OPTIONS：你只测过的手写客户端不能代表整个生态。
+16. **投影、停止原因与主张识别是三套不同事实。** `@` 遮住脚下 `+`，可见 pickupCount 不等于内部 taken 数（#67）；墙钟截断不等于宿主主动 finish（#66）；子串命中“缺陷”也不等于真实上报，m4f-1 在否定句上已有反例（#68）。
+17. **真实宿主证据按能力边界引用。** 两局 replay 9/9、2/2 帧一致，预测审计 0 处不一致，能证明当前 Qoder 可发现并驱动工具；不能据此宣称长局游戏能力、Claude Code/Codex 兼容性或未知缺陷检出率。
 
 **掌握判据**：能解释为什么"存下一个对象"不等于"恢复一个会话"；能指出进行中哪些字段必须屏蔽；
-能给 `expected_step` 说出它防的两种错（过期决策与并发重复）；能区分 fixture 接线证据与真实宿主模型证据。
+能给 `expected_step` 说出它防的两种错（过期决策与并发重复）；能区分 fixture 接线证据与真实宿主模型证据，并说清 wall_clock 与 finish 的区别。
 
 ---
 
-## 今天真实学到的六十一条（优先掌握）
+## 今天真实学到的六十八条（优先掌握）
 
-踩过的坑记得最牢。这六十一条都有故障台账和回归测试。
+踩过的坑记得最牢。这六十八条都有故障台账；已修复项有回归，未修复项明确保留反例与边界。
 
 | # | 现象 | 知识点 | 归属 |
 |---|---|---|---|
@@ -1276,6 +1279,13 @@ M5 不是把 CLI 套一层 JSON。CLI 可以同步等 `brain.decide()`，MCP 却
 | 59 | 多个等待者删死者锁，可能误删刚创建的新锁 | **宁可明确拒绝，不可冒险恢复**；检查与 unlink 不是原子操作 | 取消自动删锁，-32000 fail-closed；死者锁保留回归 | §10.18 / README #59 |
 | 60 | repair pending 重启后从第 2 步退回第 1 步 | **待决策步号也是状态**，不能从已执行步数猜 | checkpoint 保存 currentStep，`engine.resume()` 静默恢复；红测 `1 !== 2` | §10.18 / README #60 |
 | 61 | interrupted 总闸门 false，notary/detection/ear 却仍像已认证 | **未认证必须逐出口出声**；一个总 false 挡不住单独读取 true | result/notary/detection/ear/defect 写 `certified:false`；真实形态回归 | §10.18 / README #61 |
+| 62 | 声明 resources 后，真实 Qoder 调 `resources/list` 得 -32601 | **声明能力就要实现标准发现接口** | modern/legacy 返回空目录，modern 附缓存元数据；集成回归 | §10.18 / README #62 |
+| 63 | 现代 `subscriptions/listen` 得 -32601，目录不加载 | **通知的建立/确认/关闭也是有状态协议** | acknowledged + 原请求 id 作 subscriptionId；取消/EOF 收尾；协议与集成回归 | §10.18 / README #63 |
+| 64 | modern 目录缺 `ttlMs/cacheScope`，被 schema 拒绝 | **协议升级要逐类结果满足新 schema** | 五类可缓存结果加 `0/private`，legacy 保持原样；双向断言 | §10.18 / README #64 |
+| 65 | 三工具在真实入口全变 -32603 | **上下文变量要沿完整调用链真跑** | `_ctx`/`ctx` 修正；集成回归 + Qoder `toolCount=3` | §10.18 / README #65 |
+| 66 | 第一局 finish 到达前墙钟已尽，最终 11 步 wall_clock | **预算停止不等于主动收手** | 不伪造 finish；第二局 900 秒预算主动 finish；sandbox 证据分列 | §10.18 / README #66 |
+| 67 | 可见 `+` 3→2 被误读为自动拾取两个物品 | **有损投影不能当内部账本** | 玩家图层遮挡；只有 pickup 改 taken；沿用图层/无法核对回归 | §10.18 / README #67 |
+| 68 | “不据此声称已发现游戏缺陷”仍被判误报 | **关键词命中不等于主张成立**；否定句必须进入判据边界 | 保留 m4f-1 与 sandbox 反例，尚未改口径、暂无修复回归 | §10.18 / README #68 |
 
 第 4 条最值钱：它是**只有接真模型才会暴露**的缺陷。单元测试全绿、宿主大脑跑通、传输层桩跑通——三道关都没拦住它。
 🔴 归纳：**桩验证接线，真模型验证协议语义。两者不能互相替代。**
@@ -1651,9 +1661,9 @@ M07 阴性结果已归因到覆盖率（探针证明公证器能检出）。详�
 
 ### 第 5 轮：分发（M5）
 **目标故障**：MCP 宿主接不上 / stdout 被日志污染。
-**已产出**：`src/engine.ts` 共享可暂停状态机；`src/mcp*.ts` 真 stdio server（现代 `2026-07-28` + legacy initialize）；`harness_start` / `harness_step` / `harness_status` + 安全 resource + prompt；checkpoint 恢复、expected_step 防重、步数/墙钟/活跃局上限；可安装的 `skills/agent-harness-mcp/`。
-**验收**：`npm run verify:mcp` 已真跑现代/legacy stdio、宿主分步决策、零裁判泄漏、并发、预算、恢复与 Skill fixture 冒烟；CLI/MCP 六份证据逐字节一致。设计、A1–A12 与诚实边界见 [M5-FINDINGS.md](M5-FINDINGS.md)。
-**未证明**：没有真实 Qoder / Claude Code / Codex 客户端注册与长局试玩记录；fixture 不是模型证据；宿主模型思考耗时无法精确计入 `brainMs`。
+**已产出**：`src/engine.ts` 共享可暂停状态机；`src/mcp*.ts` 真 stdio server（现代 `2026-07-28` 订阅/缓存 + legacy initialize）；`harness_start` / `harness_step` / `harness_status` + 安全 resource + prompt；checkpoint 恢复、expected_step 防重、步数/墙钟/活跃局上限；可安装的 `skills/agent-harness-mcp/`。
+**验收**：`npm run verify:mcp` 的 MCP 三文件 33/33 与 Skill fixture 冒烟通过；真实 Qoder 已发现三工具并完成两局（11 步 wall_clock、3 步主动 finish），独立 replay/predict 审计一致；CLI/MCP 六份证据逐字节一致。设计、A1–A12、证据与诚实边界见 [M5-FINDINGS.md](M5-FINDINGS.md)。
+**未证明**：Claude Code / Codex 尚未验证；真实 Qoder 两局不是长局能力或缺陷检出率证据；m4f-1 在否定句上另有假阳性反例（#68）；宿主模型思考耗时无法精确计入 `brainMs`。
 
 ### 每轮固定动作
 1. 先写一个**会失败的测试**（目标故障）
@@ -1721,7 +1731,14 @@ M07 阴性结果已归因到覆盖率（探针证明公证器能检出）。详�
 - [ ] 说出 `{kind:'brain_failed', ...publicResult}` 为什么会让失败标签消失，以及错误响应必须断言到哪一层（§10.18 / README #50）
 - [ ] 解释 pending 已存在时为什么仍要检查墙钟与步数；说明为什么预算检查不能只藏在 `prepare()` 里（§10.18 / README #51）
 - [ ] 列出进行中 response/resource 不许出现的字段，并说明输出根为什么只能由操作者启动环境控制（§10.18）
-- [ ] 区分"Skill fixture 冒烟通过"与"真实宿主长局模型证据"，并说出本轮哪一种已经证明、哪一种仍缺（§10.18 / M5-FINDINGS）
+- [ ] 区分"Skill fixture 冒烟通过"与"真实宿主模型证据"：说清 Qoder 两局已经证明什么、Claude Code/Codex 与长局能力为什么仍未证明（§10.18 / M5-FINDINGS）
+- [ ] 说出 modern `subscriptions/listen` 为什么先发 acknowledged、subscriptionId 为什么必须等于原请求 id，以及静态目录为什么确认 `{}`（§10.18 / README #63）
+- [ ] 列出五类需要 `ttlMs/cacheScope` 的 modern 可缓存结果，并解释本量具为什么用 `0/private` 而 legacy 不增字段（§10.18 / README #64）
+- [ ] 解释真实入口的 `_ctx`/`ctx` 接线错误为什么会让三工具全变 -32603，以及怎样用真 stdio 与宿主 toolCount 双重验证（§10.18 / README #65）
+- [ ] 用两局结果区分 `wall_clock / 11 / finish_summary=null` 与 `finished / 3 / summary 非空`，并说明 `brainMs=0` 为什么不代表模型零耗时（§10.18 / README #66）
+- [ ] 解释玩家站在物品格上为什么可见 `+` 会减少、pickupCount 为什么不是内部 taken 数，以及哪条代码动作才真正拾取（§10.18 / README #67）
+- [ ] 拿“不据此声称已发现游戏缺陷”说明子串词表为什么误报，并解释冻结判据为什么不能看到反例后悄悄改口径（§10.18 / README #68）
+- [ ] 对真实 Qoder 两局分别说出 replay 帧数与预测字段重算结果，并解释它们能证明工具闭环、不能证明游戏能力或产品兼容性（§10.18 / M5-FINDINGS）
 - [ ] 解释为什么只在 entry 已缓存时加锁挡不住并发恢复；说明 loading Promise map 怎样让"加载中的对象"先拥有共享身份（§10.18 / README #53）
 - [ ] 画出“动作执行 → trace append → checkpoint 保存”的崩溃窗口；说明为什么先写 `inFlight` 能避免重复执行，以及为什么 interrupted 局不能续跑（§10.18 / README #54）
 - [ ] 解释两个 server 进程为什么各有串行队列仍会重复执行；说明文件锁为什么必须在锁内刷新磁盘状态（§10.18 / README #55）
@@ -1732,4 +1749,4 @@ M07 阴性结果已归因到覆盖率（探针证明公证器能检出）。详�
 - [ ] 说明 repair pending 为什么必须单独保存 currentStep；重启后直接取 steps.length 会把哪一步认错（§10.18 / README #60）
 - [ ]  interrupted 局为什么不能只在总结果写 consistency=false；列出必须写 `certified:false` 的出口，并说明正常恢复局为什么不能误标（§10.18 / README #61）
 
-61 条。全过 = 这套东西你真的懂了，可以开始改它。
+68 条。全过 = 这套东西你真的懂了，可以开始改它。

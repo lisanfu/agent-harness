@@ -12,6 +12,7 @@ const PROTOCOL_VERSION_META_KEY = 'io.modelcontextprotocol/protocolVersion';
 const CLIENT_CAPABILITIES_META_KEY = 'io.modelcontextprotocol/clientCapabilities';
 const CLIENT_INFO_META_KEY = 'io.modelcontextprotocol/clientInfo';
 const SERVER_INFO_META_KEY = 'io.modelcontextprotocol/serverInfo';
+const SUBSCRIPTION_ID_META_KEY = 'io.modelcontextprotocol/subscriptionId';
 const SUPPORTED_PROTOCOL_VERSIONS: readonly string[] = [
   MCP_PROTOCOL_VERSION,
   ...LEGACY_PROTOCOL_VERSIONS,
@@ -234,6 +235,21 @@ export async function runMcpStdio(opts: {
   });
   const serverInfo = { ...opts.serverInfo };
   let negotiatedLegacyContext: RpcContext | undefined;
+  const openSubscriptions = new Map<RpcId, RpcContext>();
+
+  async function writeMessage(message: Record<string, unknown>): Promise<void> {
+    if (!process.stdout.write(`${JSON.stringify(message)}\n`)) {
+      await once(process.stdout, 'drain');
+    }
+  }
+
+  function closeSubscription(id: RpcId, context: RpcContext): PendingResponse {
+    openSubscriptions.delete(id);
+    return {
+      id,
+      message: makeResult(id, { _meta: { [SUBSCRIPTION_ID_META_KEY]: id } }, context, serverInfo),
+    };
+  }
 
   async function dispatchLine(line: string): Promise<PendingResponse | undefined> {
     let msg: Record<string, unknown>;
@@ -249,7 +265,12 @@ export async function runMcpStdio(opts: {
       if (method === 'notifications/initialized') {
         // The legacy handshake is complete. Notifications never receive a response.
       } else if (method === 'notifications/cancelled') {
-        // Cancellation is accepted; this minimal transport does not abort handlers.
+        // Cancellation closes only the matching modern subscription stream.
+        const requestId = isRecord(msg.params) ? msg.params.requestId : undefined;
+        if (typeof requestId === 'string' || (typeof requestId === 'number' && Number.isInteger(requestId))) {
+          const context = openSubscriptions.get(requestId);
+          if (context !== undefined) return closeSubscription(requestId, context);
+        }
       }
       return undefined;
     }
@@ -284,6 +305,26 @@ export async function runMcpStdio(opts: {
           capabilities: opts.capabilities,
           ...(opts.instructions === undefined ? {} : { instructions: opts.instructions }),
         };
+      } else if (method === 'subscriptions/listen') {
+        if (!context.modern) {
+          throw new RpcError(-32601, 'Method not found');
+        }
+        if (params.notifications !== undefined && !isRecord(params.notifications)) {
+          throw new RpcError(-32602, 'Invalid params: notifications must be an object');
+        }
+        // 本量具的 tools/resources/prompts 目录是静态的，listChanged 均为 false，
+        // 因此不接受任何变更通知。现代客户端必须先收到 ack 才会继续加载目录。
+        await writeMessage({
+          jsonrpc: '2.0',
+          method: 'notifications/subscriptions/acknowledged',
+          params: {
+            _meta: { [SUBSCRIPTION_ID_META_KEY]: id },
+            notifications: {},
+          },
+        });
+        // 没有变更事件可推送，但订阅流仍保持打开；取消或 stdin EOF 时才优雅关闭。
+        openSubscriptions.set(id, context);
+        return undefined;
       } else if (method === 'ping') {
         result = {};
       } else {
@@ -325,5 +366,10 @@ export async function runMcpStdio(opts: {
     if (!process.stdout.write(`${encoded}\n`)) {
       await once(process.stdout, 'drain');
     }
+  }
+
+  // stdin EOF is the stdio transport's graceful-shutdown signal for every open stream.
+  for (const [id, context] of openSubscriptions) {
+    await writeMessage(closeSubscription(id, context).message);
   }
 }

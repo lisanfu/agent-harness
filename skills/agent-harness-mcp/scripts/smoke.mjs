@@ -23,12 +23,17 @@ const child = spawn(process.execPath, [entry], {
   stdio: ['pipe', 'pipe', 'pipe'],
 });
 let stderr = '';
+const acknowledgements = [];
 child.stderr.setEncoding('utf8');
 child.stderr.on('data', (chunk) => { stderr += chunk; });
 const waiting = new Map();
 let nextId = 1;
 createInterface({ input: child.stdout, crlfDelay: Infinity }).on('line', (line) => {
   const response = JSON.parse(line);
+  if (response.method === 'notifications/subscriptions/acknowledged') {
+    acknowledgements.push(response);
+    return;
+  }
   const pending = waiting.get(response.id);
   if (pending) {
     waiting.delete(response.id);
@@ -68,16 +73,60 @@ async function call(name, args = {}) {
   return result.structuredContent;
 }
 
+function assertCacheable(result, label) {
+  assert.equal(result.ttlMs, 0, `${label} 缺少现代缓存新鲜度`);
+  assert.equal(result.cacheScope, 'private', `${label} 缺少按 run 隔离的缓存范围`);
+}
+
 async function main() {
   assert.ok(existsSync(entry), `找不到 server 入口；请设置 AGENT_HARNESS_ROOT：${root}`);
   const discovered = await request('server/discover');
   assert.equal(discovered.resultType, 'complete');
   assert.equal(discovered.capabilities.sampling, undefined);
 
+  // 现代宿主先建立长寿命订阅；ack 是通知，不能用等待普通响应的方法收。
+  const listenId = nextId++;
+  child.stdin.write(`${JSON.stringify({
+    jsonrpc: '2.0', id: listenId, method: 'subscriptions/listen',
+    params: {
+      notifications: { toolsListChanged: true, resourcesListChanged: true, promptsListChanged: true },
+      _meta: {
+        'io.modelcontextprotocol/protocolVersion': '2026-07-28',
+        'io.modelcontextprotocol/clientCapabilities': { tools: {}, resources: {}, prompts: {} },
+        'io.modelcontextprotocol/clientInfo': { name: 'agent-harness-skill-smoke', version: '1' },
+      },
+    },
+  })}\n`);
+  const tools = await request('tools/list');
+  assert.equal(tools.error, undefined);
+  assert.deepEqual(tools.tools.map((tool) => tool.name), ['harness_start', 'harness_step', 'harness_status']);
+  assertCacheable(tools, 'tools/list');
+  assert.equal(acknowledgements.length, 1, '未收到订阅 acknowledged 通知');
+  assert.deepEqual(acknowledgements[0].params, {
+    _meta: { 'io.modelcontextprotocol/subscriptionId': listenId },
+    notifications: {},
+  });
+
+  const resources = await request('resources/list');
+  assert.deepEqual(resources.resources, []);
+  assertCacheable(resources, 'resources/list');
+  const templates = await request('resources/templates/list');
+  assert.equal(templates.resourceTemplates[0].uriTemplate, 'harness://run/{run_id}/agent-view');
+  assertCacheable(templates, 'resources/templates/list');
+  const prompts = await request('prompts/list');
+  assert.equal(prompts.prompts[0].name, 'arena-play');
+  assertCacheable(prompts, 'prompts/list');
+
   const started = await call('harness_start', { seed: 6, max_steps: 3 });
   assert.equal(started.kind, 'started');
   assert.equal(started.request.step, 1);
   assert.doesNotMatch(JSON.stringify(started), /mutant|internalState|coverage|detection/i);
+
+  const uri = `harness://run/${started.run_id}/agent-view`;
+  const view = await request('resources/read', { uri });
+  assert.equal(view.contents[0].uri, uri);
+  assert.equal(view.contents[0].mimeType, 'application/json');
+  assertCacheable(view, 'resources/read');
 
   const looked = await call('harness_step', {
     run_id: started.run_id,

@@ -3,7 +3,7 @@
 > 配套书籍：《AI Agent避坑实战：让智能体少犯错、不失控、靠谱干活》<br>
 > 作者：吴岸城<br>
 > 工程案例：agent-harness<br>
-> 整理日期：2026 年 11 月 24 日
+> 整理日期：2026 年 11 月 25 日
 
 ## 1. 这份文档怎么用
 
@@ -50,13 +50,14 @@
 
 ### 1.4 当前工程状态
 
-本文应用篇对应本地 M5 工作树。写作时已经实跑：
+本文应用篇对应本地 M5 工作树。2026-11-25 收尾时已经实跑：
 
-- `npm test`：590/590。
-- `npm run verify:mcp`：32/32，并通过 Skill fixture 冒烟。
-- `npm run verify:docs`：61 条故障台账与 61 条自测清单一致。该脚本核的是 README、HAND-CODING、KNOWLEDGE 等既有文档与磁盘事实，不核本文中的 590/32 等数字；本文的命令、路径、链接和结构另行校验。
+- `npm test`：591/591。
+- `npm run verify:mcp`：33/33，并通过 Skill fixture 真 stdio 冒烟。
+- `npm run verify:docs`：68 条故障台账与 68 条自测清单一致。该脚本核的是 README、HAND-CODING、KNOWLEDGE 等既有文档与磁盘事实，不核本文中的 591/33 等数字；本文的命令、路径、链接和结构另行校验。
+- 真实 Qoder：一局 11 步 `wall_clock`，一局 3 步主动 `finish`；两局独立 replay 分别为 9/9、2/2 帧一致，预测审计总计 0 处不一致。
 
-这些数字描述的是**本地含 M5 改动的当前工作树**。M5 的 `src/engine.ts`、`src/mcp*`、新增测试和 `M5-FINDINGS.md` 尚未推送时，远端克隆不具备同样的 M5 测试面。本文只同步学习文档，不把 M5 未提交改动夹带推送。
+M5 主体已经由提交 `34f3e10` 推送；本轮 Qoder 现代订阅/缓存与真实入口接线修复已纳入后续仓库提交。真实证据留在 gitignored `sandbox/mcp-qoder/`，不夹带进入已发布 `runs/`。
 
 ## 2. 环境与学习纪律
 
@@ -163,7 +164,7 @@ HarnessEngine ───────► 工具执行器 ───────► 
 | `src/notary/ddmin.ts` | 最小化 | 非单调谓词下缩小证物 |
 | `verify/` | replay/audit/selftest | 独立重算与篡改自检 |
 
-### 4.2 M5 新增或修改（本地工作树）
+### 4.2 M5 新增或修改（本地工作树，含 Qoder 兼容补丁）
 
 | 路径 | 核心符号 | 学习重点 |
 | --- | --- | --- |
@@ -171,9 +172,9 @@ HarnessEngine ───────► 工具执行器 ───────► 
 | `src/loop.ts` | `runHarness()` | 修改：CLI 薄门面，只负责向 brain 要决策 |
 | `src/trace.ts` | `TraceWriter.resume()`、`event()` | 修改：追加恢复、保留失败原文 |
 | `src/mcp.ts` | server 入口 | 新增：stdout 只走 JSON-RPC |
-| `src/mcp/protocol.ts` | JSON-RPC 与版本协商 | 新增：现代与 legacy 协议 |
+| `src/mcp/protocol.ts` | JSON-RPC、版本协商、订阅生命周期 | 新增：modern acknowledged/取消/EOF + legacy initialize |
 | `src/mcp/catalog.ts` | tools/resources/prompts | 新增：能力目录与 schema |
-| `src/mcp/server.ts` | 路由 | 新增：协议入口与业务入口分离 |
+| `src/mcp/server.ts` | 路由、标准目录、缓存元数据 | 新增：resources/list；modern 可缓存结果用 `ttlMs:0` + `cacheScope:"private"` |
 | `src/mcp/session.ts` | `McpSessionManager` | 新增：handle、队列、文件锁、checkpoint、恢复 |
 | `src/world/harness.ts` | `createArenaWorld()`、`finalizeArenaWorld()` | 修改：CLI 与 MCP 共用世界和局末收尾 |
 | `test/mcp-*.test.ts` | 协议、会话、双进程测试 | 新增：不是只测 happy path |
@@ -713,7 +714,28 @@ npm run verify:mcp
 
 该命令运行真实 stdio 协议、会话、双进程与恢复测试，再跑 Skill fixture。它证明接线和状态机，不证明真实宿主模型一定会玩得好。
 
-## 7. M5 故障台账：15 次真实失败
+### 6.6 真实 Qoder：从“工具能调”到“宿主真的会用”
+
+2026-11-25，用户级 Qoder connector 加载修复后的 server，协商 modern `2026-07-28`，真实会话显示三工具已连接。随后由当前 Qoder LLM 逐帧读取 request、自主产生 Decision；没有 fixture、剧本、mock 或启发式兜底。两局均为 seed=6、参考版、`provenance=real`、`brainId=mcp-host`，只写 gitignored `sandbox/mcp-qoder/`。
+
+| run | 预算 | 停止 | 步数 | 世界动作 | 证据结论 |
+|---|---|---|---:|---:|---|
+| `mcp-47cecfc5-070b-4cc1-bab6-0c533ea063d4` | 12 步 / 300 秒 | `wall_clock` | 11 | 8 | 第 12 步 finish 在执行前被拒，summary 为空；证据完整 |
+| `mcp-37e15572-e3c6-4bc1-aab0-7686353f01d5` | 4 步 / 900 秒 | `finished` | 3 | 1 | 宿主主动 finish；7/7 预测字段相符 |
+
+两局 `evidenceConsistent=true`、`brainRetries=0`、`parseFailures=0`。独立 replay 分别核 **9/9** 与 **2/2** 帧；独立预测审计重算 29 + 7 个字段，与引擎 actual/status **0 处不一致**。准确结论是：当前 Qoder 能完成发现、分步决策、观察和收手；不能扩张成“长局能力强”“所有宿主兼容”或“能发现未知缺陷”。
+
+### 6.7 真实入口补上的四课
+
+**第一，现代协议是一组行为，不是一个版本字符串。** 真实 Qoder 依次暴露了 `resources/list` 缺失、`subscriptions/listen` 缺失、modern 可缓存结果缺 `ttlMs/cacheScope`，以及回调 `_ctx`/`ctx` 接错导致三工具全变 -32603（#62–#65）。修复分别对应标准空目录、acknowledged 订阅握手、私有不缓存元数据和完整上下文传递。
+
+**第二，停止原因不能美化。** 第一局 finish 到达时墙钟已尽，所以只能写 `wall_clock / 11`，不能写成主动完成。`brainMs=0` 也不表示模型没有思考，只表示 server 无法精确计量宿主思考与请求间隔。
+
+**第三，有损投影会制造“看起来像缺陷”的现象。** 玩家最后画，`@` 会遮住脚下 `+`；`pickupCount` 数可见符号，不是内部未拾取对象数。第一局可见物品 3→2 曾被误读为移动自动拾取，回读代码后纠正：只有 `pickup` 才把内部物品标为 taken。先问“这个量从哪里投影出来”，再问“世界是否出错”。
+
+**第四，仪器自己也会误判。** 第二局 finish 明说“不据此声称已发现游戏缺陷”，m4f-1 仍因子串命中判 `reported=true` / `误报`。这说明关键词命中不等于主张成立。按冻结纪律，本轮保留反例、不偷偷改词表，也不混入旧“参考版误报 0/4”的统计。
+
+## 7. M5 故障台账：22 次真实失败
 
 | 编号 | 失败 | 根因 | 工程归纳 |
 | --- | --- | --- | --- |
@@ -732,8 +754,15 @@ npm run verify:mcp
 | #59 | 删死锁可能误删新锁 | unlink 与新建之间无 CAS | 宁可 fail-closed |
 | #60 | repair pending 重启后退步 | currentStep 未保存 | 待决策步号也是状态 |
 | #61 | interrupted 仍像已认证 | 只降级总闸门 | 未认证必须传到公开 result 与裁判产物 |
+| #62 | `resources/list` 返回 -32601 | 声明能力却漏标准目录 | 声明与标准发现接口必须成对 |
+| #63 | 现代订阅返回 -32601 | 只实现 legacy 初始化 | acknowledged、订阅 id、取消/EOF 都要实现 |
+| #64 | modern 目录被 schema 拒绝 | 缺 `ttlMs/cacheScope` | 版本升级要逐类结果满足新 schema |
+| #65 | 真实入口三工具全 -32603 | `_ctx`/`ctx` 接线错误 | 上下文必须沿完整调用链真跑 |
+| #66 | finish 到达前墙钟已尽 | 宿主思考不计入 `brainMs` | 预算停止不能写成主动收手 |
+| #67 | 可见 `+` 减少被误读为自动拾取 | 玩家图层遮挡、投影计数 | 有损投影不能当内部账本 |
+| #68 | “没有发现缺陷”仍被判误报 | 子串词表不处理否定 | 冻结判据保留反例，升级前不混统计 |
 
-学习这 15 条时，不要只背结论。对每一条找到对应测试，问：如果把修复删掉，哪条测试会红？如果测试不会红，说明回归保护还不完整。
+学习这 22 条时，不要只背结论。对每一条找到对应测试或原始证据，问：如果把修复删掉，哪条测试会红？尚未修复的 #68 要能说清“已有反例、暂无修复回归”，不能把记录当完成。
 
 ## 8. 实验目录
 
@@ -900,15 +929,16 @@ Prompt 不是权限系统。最小权限、白名单、沙箱、审批和审计�
 
 ## 12. 当前仍未证明或未实现
 
-- 没有真实 Qoder／Claude Code／Codex 客户端注册与长局试玩记录。
-- fixture 不是模型能力证据。
+- 真实 Qoder 已完成两局（11 步墙钟、3 步主动 finish），但 Claude Code／Codex 尚未验证；两局也不是长局游戏能力或未知缺陷检出率证据。
+- m4f-1 在“没有发现缺陷”的否定句上存在真实假阳性（#68），本轮未升级冻结判据。
+- fixture 不是模型能力证据；真实宿主试玩同样必须按任务、样本与预算限定结论。
 - MCP 的 `brainMs` 无法精确包含宿主模型思考时间，当前如实记录为 0。
 - 文件锁只保护同一本地文件系统，不是跨主机分布式锁。
 - 没有磁盘配额；单个工具动作执行期间没有强制中断超时。
 - stdio 单进程不等于多租户服务。
 - 没有通用 DAG 调度器、多 Agent 共识、Saga 框架、按金额计费或完整灰度发布。
 - 没有 VLM 视频 Agent、农业机器人或完整 Coding Agent。
-- M5 未提交工作树不等于远端已发布内容。
+- M5 主体与本轮 Qoder 现代订阅/缓存、真实入口接线修复均已纳入仓库版本；Claude Code／Codex 的兼容性仍未验证。
 - 正版电子书不提供源文件，本文依据公开目录与简介整理，不包含正文摘录。
 
 把这些边界写清楚，不是削弱项目，而是避免“局部证据被扩大成全面结论”。
@@ -943,6 +973,12 @@ Prompt 不是权限系统。最小权限、白名单、沙箱、审批和审计�
 
 - [当当商品页：公开简介、完整目录与作者简介](https://e.dangdang.com/products/1901404305.html)（销售渠道，不是出版社官方页）
 - [知阅在线：电子工业出版社电子书平台首页](https://www.zhiyuebook.com/)（用于确认平台存在，不是本书详情页）
+
+### MCP 协议来源
+
+- [MCP 2026-07-28：Subscriptions](https://modelcontextprotocol.io/specification/2026-07-28/basic/patterns/subscriptions)
+- [MCP 2026-07-28：Schema](https://modelcontextprotocol.io/specification/2026-07-28/schema)
+- [Python SDK migration guide](https://py.sdk.modelcontextprotocol.io/migration/)
 
 ### 仓库内文档
 

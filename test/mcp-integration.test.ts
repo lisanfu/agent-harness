@@ -162,10 +162,36 @@ test('modern discover / catalog / prompt：server 声明能力但不出 sampling
   assert.deepEqual(Object.keys(discovered.result?.capabilities).sort(), ['prompts', 'resources', 'tools']);
   assert.equal(JSON.stringify(discovered.result).includes('sampling'), false);
 
+  server.send({
+    jsonrpc: '2.0', id: 'listen:0', method: 'subscriptions/listen',
+    params: {
+      notifications: { toolsListChanged: true, promptsListChanged: true, resourcesListChanged: true },
+      _meta: META,
+    },
+  });
   const tools = await server.request('tools/list');
   assert.deepEqual(tools.result?.tools.map((x: any) => x.name), ['harness_start', 'harness_step', 'harness_status']);
+  assert.equal(tools.result?.ttlMs, 0);
+  assert.equal(tools.result?.cacheScope, 'private');
+  const acknowledgement = server.stdout().trim().split('\n').map((line) => JSON.parse(line))
+    .find((message) => message.method === 'notifications/subscriptions/acknowledged');
+  assert.equal(acknowledgement.params._meta['io.modelcontextprotocol/subscriptionId'], 'listen:0');
+  assert.deepEqual(acknowledgement.params.notifications, {});
+  // 声明 resources 能力后，标准客户端还会请求固定资源列表。
+  // 没有 run_id 就没有可枚举的固定 URI，但空列表本身必须是成功响应。
+  const resources = await server.request('resources/list');
+  assert.equal(resources.error, undefined);
+  assert.deepEqual(resources.result?.resources, []);
+  assert.equal(resources.result?.ttlMs, 0);
+  assert.equal(resources.result?.cacheScope, 'private');
   const templates = await server.request('resources/templates/list');
   assert.equal(templates.result?.resourceTemplates[0].uriTemplate, 'harness://run/{run_id}/agent-view');
+  assert.equal(templates.result?.ttlMs, 0);
+  assert.equal(templates.result?.cacheScope, 'private');
+  const prompts = await server.request('prompts/list');
+  assert.equal(prompts.result?.prompts[0].name, 'arena-play');
+  assert.equal(prompts.result?.ttlMs, 0);
+  assert.equal(prompts.result?.cacheScope, 'private');
   const prompt = await server.request('prompts/get', { name: 'arena-play', arguments: {} });
   assert.match(prompt.result?.messages[0].content.text, /harness_start/);
   assert.match(prompt.result?.messages[0].content.text, /harness_step/);
@@ -182,6 +208,8 @@ test('start→观察→note→goal→finish：同一引擎记账，局末证据�
   assertNoRefereeLeak(started);
 
   const view = await server.request('resources/read', { uri: `harness://run/${started.run_id}/agent-view` });
+  assert.equal(view.result?.ttlMs, 0);
+  assert.equal(view.result?.cacheScope, 'private');
   const agentView = JSON.parse(view.result?.contents[0].text);
   assert.deepEqual(agentView.request, started.request);
   assert.match(agentView.screen, /HP|生命|血量/);
@@ -335,6 +363,11 @@ test('legacy initialize 仍可 start/step，结果不冒充 modern complete', as
   const listed = await server.request('tools/list', {}, false);
   assert.equal(listed.result?.resultType, undefined);
   assert.equal(listed.result?.tools.length, 3);
+  assert.equal(listed.result?.ttlMs, undefined);
+  assert.equal(listed.result?.cacheScope, undefined);
+  const resources = await server.request('resources/list', {}, false);
+  assert.equal(resources.error, undefined);
+  assert.deepEqual(resources.result?.resources, []);
   const started = await server.request('tools/call', { name: 'harness_start', arguments: { seed: 6 } }, false);
   assert.equal(started.result?.resultType, undefined);
   assert.equal(started.result.structuredContent.request.step, 1);

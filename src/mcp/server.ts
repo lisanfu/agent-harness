@@ -17,14 +17,20 @@ function textResult(payload: Record<string, unknown>) {
   };
 }
 
+/** 2026-07-28 的可缓存目录/读取结果必须显式给出新鲜度与共享范围。 */
+function cacheableResult(payload: Record<string, unknown>, context: RpcContext): Record<string, unknown> {
+  return context.modern ? { ...payload, ttlMs: 0, cacheScope: 'private' } : payload;
+}
+
 async function handleMcpMethod(
   method: string,
   params: Record<string, unknown>,
   manager: McpSessionManager,
+  context: RpcContext,
 ): Promise<Record<string, unknown>> {
   switch (method) {
     case 'tools/list':
-      return { tools: [...TOOLS] };
+      return cacheableResult({ tools: [...TOOLS] }, context);
     case 'tools/call': {
       if (typeof params.name !== 'string') throw new RpcError(-32602, 'tools/call 缺少工具名 name');
       const args = params.arguments === undefined ? {} : params.arguments;
@@ -38,8 +44,12 @@ async function handleMcpMethod(
       }
       return textResult(payload);
     }
+    case 'resources/list':
+      // 本 server 只暴露需要 run_id 的模板，不注册固定 URI 资源。
+      // 标准客户端会在能力发现时请求此接口；声明 resources 就不能返回 -32601。
+      return cacheableResult({ resources: [] }, context);
     case 'resources/templates/list':
-      return { resourceTemplates: [...RESOURCE_TEMPLATES] };
+      return cacheableResult({ resourceTemplates: [...RESOURCE_TEMPLATES] }, context);
     case 'resources/read': {
       const uri = params.uri;
       const prefix = 'harness://run/';
@@ -50,12 +60,12 @@ async function handleMcpMethod(
       const runId = uri.slice(prefix.length, -suffix.length);
       if (runId.includes('/')) throw new RpcError(-32602, 'resource uri 形状不正确');
       const view = await manager.agentView({ run_id: runId });
-      return {
+      return cacheableResult({
         contents: [{ uri, mimeType: 'application/json', text: JSON.stringify(view, null, 2) }],
-      };
+      }, context);
     }
     case 'prompts/list':
-      return { prompts: [...PROMPTS] };
+      return cacheableResult({ prompts: [...PROMPTS] }, context);
     case 'prompts/get':
       if (params.name !== 'arena-play') throw new RpcError(-32602, '没有这个 prompt；可用：arena-play');
       if (params.arguments !== undefined && (!isRecord(params.arguments) || Object.keys(params.arguments).length)) {
@@ -80,8 +90,8 @@ export async function runHarnessMcpServer(
     capabilities: CAPABILITIES,
     instructions: '宿主负责决策；本 server 只执行与核对。先读 arena-play，再用 harness_start / harness_step 分步试玩。',
     log: opts.log ?? ((line) => process.stderr.write(`${line}\n`)),
-    async handle(method: string, params: Record<string, unknown>, _ctx: RpcContext) {
-      return handleMcpMethod(method, params, manager);
+    async handle(method: string, params: Record<string, unknown>, ctx: RpcContext) {
+      return handleMcpMethod(method, params, manager, ctx);
     },
   });
 }

@@ -45,9 +45,9 @@ M5 要解决的不是“再做一个会玩游戏的 agent”，而是：**已有
 
 ### Step 3：MCP 传输与目录
 
-- `src/mcp/protocol.ts`：stdio JSON-RPC、现代 `2026-07-28`、legacy `initialize`、发现、ping、错误信封。
+- `src/mcp/protocol.ts`：stdio JSON-RPC、现代 `2026-07-28`、legacy `initialize`、发现、ping、错误信封；现代 `subscriptions/listen` 先发 acknowledged 通知，再用原请求 id 维护长寿命订阅，取消或 stdin EOF 时返回完成结果。
 - `src/mcp/catalog.ts`：三个工具、一个 resource template、一个 prompt。
-- `src/mcp/server.ts`：tools/resources/prompts 路由。
+- `src/mcp/server.ts`：tools/resources/prompts 路由；声明 resources 时实现标准 `resources/list`，并对 modern 的可缓存目录/读取结果附 `ttlMs:0`、`cacheScope:"private"`。
 - `src/mcp.ts`：唯一进程入口；stdout 只走协议，启动错误只走 stderr。
 
 ### Step 4：显式 handle 与分步会话
@@ -99,26 +99,88 @@ M5 要解决的不是“再做一个会玩游戏的 agent”，而是：**已有
 | #59 | 多个等待者回收死者锁时，可能删掉刚创建的新锁 | 自动 unlink 与 owner 校验之间仍有竞态 | 取消自动删锁，-32000 fail-closed，操作者确认后手动清理；**宁可拒绝，不可冒险恢复** |
 | #60 | repair pending 重启后请求从第 2 步退回第 1 步 | checkpoint 只存已执行步数，未存 currentStep | checkpoint 保存 currentStep，新增 `engine.resume()` 静默重建上下文；**待决策步号也是状态** |
 | #61 | interrupted 局 consistency=false，但 notary/detection/ear 的 true 字段仍像已认证 | 只降级总闸门，没有显式标记各裁判输出未认证 | replay/screens 强制 false，result/notary/detection/ear/defect 写 `certified:false`；**未认证必须逐出口出声** |
+| #62 | 真实 Qoder 发现 resources 后调用 `resources/list`，得到 -32601 | 声明了 resources 能力，却没有实现标准空目录接口 | modern/legacy 均返回 `{resources:[]}`；modern 再附缓存元数据；集成测试断言不再 -32601 |
+| #63 | 现代客户端调用 `subscriptions/listen` 得到 -32601，后续目录不加载 | 只实现 legacy initialize，没有现代订阅握手 | 先发 acknowledged，subscriptionId 等于原请求 id；静态目录确认 `{}`；订阅保持打开，取消/EOF 优雅关闭；协议与集成回归 |
+| #64 | modern 目录响应被客户端 schema 拒绝：缺 `ttlMs` 与 `cacheScope` | 把 legacy 结果形状直接用于 modern 可缓存结果 | 五类目录/读取结果按 run 隔离附 `ttlMs:0`、`cacheScope:"private"`；legacy 保持原样，双向断言 |
+| #65 | 三工具在真实入口全部变成 -32603 | server 回调参数名为 `_ctx`，业务路由却引用未定义的 `ctx` | 修正参数传递；真 stdio 集成与 Qoder 重启后 `toolCount=3` 双重验证；**每个上下文变量都要沿调用链真跑** |
+| #66 | 第一局 11 步后墙钟停止；第 12 步 finish 在执行前被拒，`finish_summary=null` | 墙钟只约束 server 步间生命周期，宿主思考/等待不计入 `brainMs`；300 秒预算对真实长会话不够 | 不伪造 finish，保留 `wall_clock`；第二局用 900 秒预算主动 finish；**墙钟停止与主动收手必须分开报** |
+| #67 | 试玩把可见 `+` 从 3 变 2 误读成“移动自动拾取两个物品” | 玩家最后渲染，`@` 遮住脚下 `+`；`observe/predict` 数的是可见符号，不是内部未拾取账本 | 回读 render/observe/arena 后公开纠正；移动不拾取，第 11 步 pickup 才使内部 taken +1；沿用图层与“无法核对”回归；**有损投影不能当内部账本** |
+| #68 | 参考版 finish 明说“不据此声称已发现游戏缺陷”，仍被判 `reported=true` / `误报` | `matchClaim()` 归一化后做子串匹配，不处理否定语境；m4f-1 是冻结判据 | **本轮不悄悄改词表**：保留 sandbox 反例与 `falsePositive=true`，另立升级评估；它不影响本局 evidence/replay 一致性，但说明 m4f-1 不能宣称已覆盖否定句 |
 
-每条故障均有对应回归；共同归纳是：**会话恢复不是序列化一个对象，而是恢复“对象 + 待处理消息 + 外部世界 + 时间预算”四个一致性面；跨进程与崩溃窗口还必须补上磁盘事实源、先写执行意图和明确的未认证出口。**
+前五条均有代码回归；#66–#68 是真实宿主暴露的运行/认知/判据边界，证据与处置分别记录，不伪装成已修复。共同归纳是：**协议握手、结果 schema、上下文接线、有损投影和冻结判据都必须经过真实入口；测试客户端能调用，不等于真实客户端愿意且能够调用。**
 
-## 5. 已验证与未证明
+## 5. 真实 Qoder 宿主验证
 
-已验证：共享 CLI/MCP 装配及六份证据逐字节一致；现代/legacy 真 stdio；分步调用与局末证据；进行中零泄漏；进程内与双进程并发防重；回炉及失败原文留痕；步数/墙钟/磁盘活跃局上限；初始与逐帧哈希恢复校验；inFlight 预写先于执行；崩溃局不重复动作且 `certified:false`；repair pending 跨重启保持步号；死者锁 fail-closed；输出根真实入口守卫；Skill 结构及仓库内/仓库外 fixture 冒烟。最终 `npm test` 590 例、MCP 三文件 32 例、Skill 冒烟均通过，`npm run verify:docs` 与证据审计通过；`runs/` 保持 45 项 / 291 个文件、无新增 ear.json。
+2026-11-25，用户级 Qoder MCP connector 协商到 modern `2026-07-28`。修复 #62–#65 后重启 connector，真实会话显示 `status=connected`、`hasError=false`、`toolCount=3`。随后由**当前 Qoder LLM** 读取每帧 request、自主提交 Decision；server 没有提供剧本、mock 或策略兜底。两局 `provenance=real`、`brainId=mcp-host`、`mutant=null`、seed=6，证据只落 gitignored `sandbox/mcp-qoder/`。
+
+| run | 预算 | 最终停止 | Decision 步数 | 世界动作 | 结果 |
+|---|---|---|---:|---:|---|
+| `mcp-47cecfc5-070b-4cc1-bab6-0c533ea063d4` | maxSteps=12 / maxWallMs=300000 | `wall_clock` | 11 | 8 | 第 12 步 finish 在执行前被墙钟拒绝，`finish_summary=null`；证据完整且一致 |
+| `mcp-37e15572-e3c6-4bc1-aab0-7686353f01d5` | maxSteps=4 / maxWallMs=900000 | `finished` | 3 | 1 | 宿主主动 finish，summary 非空；7/7 预测字段相符 |
+
+两局 `evidenceConsistent=true`、`brainRetries=0`、`parseFailures=0`。独立 `verify/replay.ts` 分别重算 **9/9 帧**与 **2/2 帧**，初始哈希与逐帧哈希全部相同；独立 `verify/predict-audit.ts` 重算第一局 29 个字段、第二局 7 个字段，**与引擎 actual/status 总计 0 处不一致**。这证明真实 Qoder 能发现工具、按步提交、观察结果并完成协议闭环；它**不是**长局游戏能力、产品兼容性或缺陷检出率的证明。
+
+## 6. 两局复盘：哪些成立，哪些仍是误判
+
+### 6.1 长局：预算停止必须如实记账
+
+第一局动作是 `look → attack → note(H1) → goal(G1) → move down ×5 → move right → pickup`。覆盖账本为 8 tick、7/64 格、1 次击杀、1 次拾取；H1 虽被宿主标为 `confirmed`，客观 `checks=0`。G1 的 `playerAt=[1,5]` 在第 10 步已满足，却一直没有闭合成 `achieved`（`metNotClosed=1`）。这两项都是真实宿主行为，不能用“接口存在”替代“接口被正确使用”。
+
+第 12 步 finish 到达时墙钟已过期，server 在执行前停止，所以最终只能是 `wall_clock / 11`。`brainMs=0` 也不是“模型零耗时”：宿主思考与请求间隔无法由 server 精确计入。
+
+### 6.2 有损投影：物品没有自动消失
+
+第 10 步站在 `[1,5]` 后，可见 `+` 从 3 变 2。试玩中曾误读为“移动自动拾取两个物品”，事后回读代码纠正：
+
+- `render()` 最后画玩家，`@` 遮住脚下 `+`；
+- `observe()` 与 `predict()` 的 `pickupCount` 数的是**画面上可见符号**；
+- 只有 `pickup` 动作会把内部物品标为 taken。
+
+第 11 步 pickup 后内部 `pickupsTaken=1`，可见计数仍是 2。ear 侧把满血拾取判为“无法核对”，因为屏幕既不能证明拿起、也不出现血量变化。**看到符号减少，不等于内部对象减少；先核对投影语义，再归因为世界缺陷。**
+
+### 6.3 主动 finish：闭环成立，但检出词表出现假阳性
+
+第二局仅 `look → attack → finish`，覆盖 1 tick、1 次击杀，ear 侧 6 相符、0 矛盾。finish 原文明确说“不据此声称已发现游戏缺陷”，m4f-1 却因为子串命中“缺陷”与“冷却/分数”而给出：
+
+```text
+claim.reported=true
+verdict=误报
+falsePositive=true
+```
+
+这是冻结词表不处理否定语境的真实反例（#68）。本局仍是参考版，公证器没有可见分叉；假阳性属于**上报识别层**，不是游戏缺陷，也不破坏证据与重放一致性。按冻结纪律，本轮保留 m4f-1 与原反例，不把新样本混进已发布的“参考版误报 0/4”统计，也不悄悄升级口径。
+
+## 7. 已验证与未证明
+
+已验证：共享 CLI/MCP 装配及六份证据逐字节一致；现代订阅握手、标准资源目录与 modern 缓存元数据；legacy 真 stdio；真实 Qoder 三工具发现、11 步预算停止与 3 步主动 finish；进行中零泄漏；进程内与双进程并发防重；回炉及失败原文留痕；初始与逐帧哈希恢复校验；inFlight 预写先于执行；崩溃局不重复动作且 `certified:false`；输出根真实入口守卫；Skill 仓库内/仓库外 fixture 冒烟。收尾验证为 `npm test` **591/591**、MCP 三文件 **33/33**、Skill 冒烟通过，`verify:docs` 与两局 replay/predict 独立审计通过；`runs/` 保持 45 项 / 291 个文件，真实宿主证据不进入 `runs/`。
 
 未证明：
 
-- **没有真实 Qoder/Claude Code/Codex 客户端注册与长局试玩记录**。本轮证明的是协议、状态机与宿主工作流可接入，不是这些宿主产品的兼容性认证。
-- **没有新的模型能力结论**。Fixture 决策由测试客户端提供，不是模型行为证据，不进入 `runs/`。
-- 当前墙钟只约束 server 生命周期，不能精确计算宿主模型思考耗时；MCP trace 的 `brainMs` 如实为 0。
+- **Claude Code / Codex 客户端仍未验证**。Qoder 的两局证明当前版本、当前配置与当前宿主可接入，不是所有宿主产品的兼容性认证。
+- **没有新的长局游戏能力或缺陷检出率结论**。第一局被预算截断，第二局主动提前收手；两局都是参考版，不能用于估计未知缺陷检出率。
+- **m4f-1 的否定句边界尚未修复**。#68 说明词表仍有假阳性；已发布的旧统计保持原口径，新反例单列。
+- 墙钟只约束 server 步间生命周期，不能精确计算宿主模型思考耗时；MCP trace 的 `brainMs` 如实为 0。
 - 文件锁只保护共享同一本地输出根的进程，不是跨主机分布式锁；死锁 fail-closed，需操作者确认后手动清理。
-- 单进程 stdio 不是多租户服务；输出根与并发上限是资源保护，不替代 OS 级隔离。
+- 单进程 stdio 不是多租户服务；输出根与并发上限是资源保护，不替代 OS 级隔离；没有磁盘配额，单个动作执行期间没有强制中断超时。
 
-## 6. 复核入口
+## 8. 复核入口
 
 ```bash
 npm run verify:mcp
+npm test
 npm run verify:docs
+
+node verify/replay.ts sandbox/mcp-qoder/mcp-47cecfc5-070b-4cc1-bab6-0c533ea063d4
+node verify/replay.ts sandbox/mcp-qoder/mcp-37e15572-e3c6-4bc1-aab0-7686353f01d5
+node verify/predict-audit.ts \
+  sandbox/mcp-qoder/mcp-47cecfc5-070b-4cc1-bab6-0c533ea063d4 \
+  sandbox/mcp-qoder/mcp-37e15572-e3c6-4bc1-aab0-7686353f01d5
 ```
 
-M5 不写已发布的 `runs/`。需要真实宿主试玩时，由操作者配置专用输出根与客户端；产物默认落在 gitignored `sandbox/mcp/`。
+M5 不写已发布的 `runs/`。真实宿主产物默认落在 gitignored `sandbox/mcp-qoder/`；`sandbox/` 可复核但不随仓库发布。
+
+## 9. 协议来源
+
+- [MCP 2026-07-28：Subscriptions](https://modelcontextprotocol.io/specification/2026-07-28/basic/patterns/subscriptions)
+- [MCP 2026-07-28：Schema](https://modelcontextprotocol.io/specification/2026-07-28/schema)
+- [Python SDK migration guide](https://py.sdk.modelcontextprotocol.io/migration/)

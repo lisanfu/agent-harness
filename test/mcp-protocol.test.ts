@@ -15,6 +15,7 @@ import {
 } from '../src/mcp/protocol.ts';
 
 const SERVER_INFO_META_KEY = 'io.modelcontextprotocol/serverInfo';
+const SUBSCRIPTION_ID_META_KEY = 'io.modelcontextprotocol/subscriptionId';
 const PROTOCOL_VERSION_META_KEY = 'io.modelcontextprotocol/protocolVersion';
 const CLIENT_CAPABILITIES_META_KEY = 'io.modelcontextprotocol/clientCapabilities';
 const MODERN_META = {
@@ -285,6 +286,41 @@ test('modern server/discover returns completion metadata over real stdio', async
   });
   assert.equal(server.stdout().includes('stderr-log:'), false);
   for (const line of server.stdout().trim().split('\n')) assert.doesNotThrow(() => JSON.parse(line));
+  await server.close();
+});
+
+test('modern subscriptions/listen acknowledges before gracefully closing a static catalog', async (t) => {
+  const server = startMcpServer(t);
+  server.send(modernRequest('listen:0', 'subscriptions/listen', {
+    notifications: { toolsListChanged: true, promptsListChanged: true, resourcesListChanged: true },
+  }));
+  const acknowledged = await server.nextResponse();
+  assert.equal(acknowledged.id, undefined);
+  assert.equal(acknowledged.error, undefined);
+  assert.deepEqual(acknowledged.result, undefined);
+  assert.deepEqual(acknowledged, {
+    jsonrpc: '2.0',
+    method: 'notifications/subscriptions/acknowledged',
+    params: {
+      _meta: { [SUBSCRIPTION_ID_META_KEY]: 'listen:0' },
+      notifications: {},
+    },
+  });
+  // 订阅流保持打开时，普通目录请求必须仍能继续。
+  server.send(modernRequest(2, 'tools/list'));
+  const listed = await server.nextResponse();
+  assert.equal(listed.id, 2);
+  assert.equal(listed.result?.tools[0].name, 'echo');
+
+  server.send({ jsonrpc: '2.0', method: 'notifications/cancelled', params: { requestId: 'listen:0' } });
+  const closed = await server.nextResponse();
+  assert.equal(closed.id, 'listen:0');
+  assert.equal(closed.error, undefined);
+  assert.equal(closed.result?.resultType, 'complete');
+  assert.deepEqual(closed.result?._meta, {
+    [SUBSCRIPTION_ID_META_KEY]: 'listen:0',
+    [SERVER_INFO_META_KEY]: { name: 'test-server', version: '2.3.4' },
+  });
   await server.close();
 });
 

@@ -70,6 +70,8 @@ Decision 形状：
 - `checkpoint` / `replayed state hash mismatch`：停止使用该局，保留现场；不要手改 checkpoint 或证据来“修好”它。
 - `interrupted`：动作执行前已预写，但进程中断，无法证明是否执行完。不要重试该动作；`evidence_consistent=false`，裁判侧会写 `certified:false`，这些数值不能作为认证结果引用。
 - 文件锁 `-32000`：先用 `ps` 核对锁内 pid 是否仍存活。死者锁不会自动删除；确认没有活动 server 后，由操作者显式删除对应 `.mcp-lock.json` 或 `.mcp-start.lock`，不要正在运行时清理。
+- 现代宿主工具目录为空：检查 connector 日志中的 `resources/list` / `subscriptions/listen` 是否为 -32601，或目录结果是否因缺 `ttlMs` / `cacheScope` 被 schema 拒绝。确认加载的是更新后的 server，再重启 connector；不要用脚本代替宿主决策。
+- 三工具都返回 -32603：检查启动 stderr 与完整业务路由，不要只验证 JSON-RPC ping；真实 start/step/status 都必须走通。
 - server 无响应：检查启动 stderr 与 Node 路径。stdout 只能出现 MCP JSON-RPC，日志不应混入。
 
 ## 验证

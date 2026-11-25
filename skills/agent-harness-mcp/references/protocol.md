@@ -9,7 +9,13 @@ Server：`agent-harness`，入口 `src/mcp.ts`，stdio 一行一个 JSON-RPC 消
 - `io.modelcontextprotocol/protocolVersion`
 - `io.modelcontextprotocol/clientCapabilities`
 
-`server/discover` 返回 `resultType: "complete"`。legacy 初始化后发 `notifications/initialized`，legacy result 不含 `resultType`。宿主 MCP 客户端通常已封装这些细节；手写客户端时才直接处理。
+`server/discover` 返回 `resultType: "complete"`。legacy 初始化后发 `notifications/initialized`，legacy result 不含 `resultType`。
+
+现代客户端可调用 `subscriptions/listen`。server 先发送 `notifications/subscriptions/acknowledged`，其中 `params._meta["io.modelcontextprotocol/subscriptionId"]` 等于原 JSON-RPC 请求 id；本量具目录静态，接受的过滤器是 `{}`。订阅流保持打开，普通 tools/resources/prompts 请求仍可处理；`notifications/cancelled` 或 stdin EOF 时返回该订阅的完成结果。
+
+modern 的可缓存结果必须带 `ttlMs` 与 `cacheScope`。本量具按 run 隔离，tools/list、prompts/list、resources/list、resources/templates/list、resources/read 均返回 `ttlMs:0`、`cacheScope:"private"`；legacy 结果不添加这两个字段。tools/call 与 prompts/get 不是目录缓存结果，也不添加。
+
+宿主 MCP 客户端通常已封装这些细节；手写客户端或排查“目录为空 / schema 拒绝 / -32601”时才直接处理。
 
 ## 工具
 
@@ -49,6 +55,8 @@ Server：`agent-harness`，入口 `src/mcp.ts`，stdio 一行一个 JSON-RPC 消
 
 ## 资源与提示
 
+- `resources/list`：固定返回空数组 `resources:[]`；本量具没有无需 run_id 的固定资源。
+- `resources/templates/list`：返回 `harness://run/{run_id}/agent-view`。
 - `harness://run/{run_id}/agent-view`：玩家侧屏幕与当前 `request`；停止后转为局末结果。
 - prompt `arena-play`：宿主 start → 读 request → step 的工作流。
 
