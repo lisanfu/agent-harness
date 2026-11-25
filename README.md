@@ -698,6 +698,7 @@ result.json    stopReason + steps + notes + actionSequence      ← 三要素之
 ```bash
 npm test                              # 591 个，约 37 秒
 npm run verify:mcp                    # M5：现代订阅/缓存 + legacy 真 stdio + 分步会话 + Skill fixture 冒烟
+npm run verify:business               # 业务最小底座：12 个 runtime/MCP 测试 + 真实 stdio fixture 冒烟
 node --test test/loop.test.ts         # 单跑一层
 node --test --test-name-pattern="回炉" test/loop.test.ts
 node --test test/notary.test.ts       # M3 公证器 + ddmin
@@ -1468,6 +1469,19 @@ node --test test/random-baseline.test.ts  # 随机臂自身：确定性、seed �
 ---
 
 ## 9. M1–M5 怎么接进来
+
+### 业务最小底座
+
+不绑定游戏或模型供应商的客服工单切片已落在 `business/`：宿主通过 `case_start` / `case_step` / `case_status` 分步决策，runtime 负责工具契约、参数校验、read/draft/external 权限、一次性审批 token、expectedStep/revision、预算、审计与可替换存储。默认只读和保存草稿，外部写入不暴露且必须审批；server 不启动模型。
+
+快速验证与启动：
+
+```bash
+npm run verify:business
+npm run business
+```
+
+完整接入、Decision 示例、权限矩阵、工具/存储/审批扩展和生产 checklist 见 [DOC/业务Agent最小底座.md](./DOC/业务Agent最小底座.md)。该切片仍是单进程内存会话，不是生产平台；fixture 只证明接线。
 
 地基已经打好，后面每一步都是**替换某个器官，接口不变**。
 

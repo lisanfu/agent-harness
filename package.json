@@ -8,6 +8,10 @@
   "scripts": {
     "start": "node src/cli.ts",
     "mcp": "node src/mcp.ts",
+    "business": "node business/main.ts",
+    "business:smoke": "node business/smoke.ts",
+    "test:business": "node --test business/test/*.test.ts",
+    "verify:business": "npm run test:business && npm run business:smoke",
     "test": "node --test test/*.test.ts",
     "smoke": "node src/cli.ts --brain mock --task \"机械冒烟：只验接线，mock 不是大脑\" --max-steps 6 --i-know-mock-is-not-a-brain --out sandbox/smoke",
     "verify:replay": "node verify/replay.ts runs/20261113-204204-s6",
